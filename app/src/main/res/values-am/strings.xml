@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="language">ቋንቋ</string>
+
+    <string name="price_in_ethio">%1$.2f ብር</string>
+    <string name="added_to_cart">ታክሏል።</string>
+
+    <!--  MESSAGES  -->
+    <string name="invalid">ኢሜይል አይመስልም</string>
+    <string name="required">ያስፈልጋል</string>
+    <string name="btn_cancel">አቋርጥ</string>
+    <string name="msg_connection_error">ኮኔክሽን ችግር</string>
+    <string name="msg_not_connected">ስልኮት ከኢንተርነት ጋር አልተገናኘም። እባክዎትን ለመቀጠል ከኢንተርኔት ጋር ያገናኙ።</string>
+
+    <!--  LABELS   -->
+    <string name="btn_connect">አገናኝ</string>
+
+    <string name="lbl_recommended">የሚመከሩ ምርቶች</string>
+    <string name="lbl_see_all">ሁሉንም ይመልከቱ</string>
+
+    <string name="settings">መቼቶች</string>
+
+    <string name="edit_profile">ማስተካከያ</string>
+    <string name="sign_out">ይዉጡ</string>
+
+    <string name="password_error">አሃዙ ከ 5 መብለጥ አለበት።</string>
+    <string name="don_t_match">አይመሳሰልም</string>
+
+    <string name="terms_and_condition">አዲስ መለያ ስፈጥሩ፣ የእኛን <a href="https://t.me/lee_crey">ውሎች፣ ሁኔታዎች</a> እና <a href="https://googl.come"> የግላዊ መመሪያ</a> ተስማምተዋል።</string>
+    <string name="forgot_password">ይለፍ ቃል ረስተዋል?</string>
+    <string name="lbl_first_name">ስም</string>
+    <string name="lbl_last_name">የአባት ስም</string>
+    <string name="lbl_email">ኢሜይል</string>
+    <string name="lbl_password">ይለፍ ቃል</string>
+    <string name="lbl_password_confirmation">ይለፍ ቃል ማረጋገጫ</string>
+    <string name="sign_up">አዲስ መለያ ይፍጠሩ</string>
+    <string name="or">ወይም</string>
+    <string name="msg_welcome">እንኳን በደህና መጡ</string>
+    <string name="btn_send">ላክ</string>
+    <string name="trending">ወቅታዊ</string>
+    <string name="detail">ዝርዝር</string>
+    <string name="location">አድራሻ</string>
+    <string name="query_text">የእቃዉን ወይም የብራንድ ስም ያስገብ</string>
+    <string name="lbl_price">ዋጋ</string>
+    <string name="lbl_rates">ደረጃ</string>
+    <string name="add_to_cart">ወደ ጋሪ ጨምር</string>
+    <string name="lbl_description">መግለጫ</string>
+    <string name="categories">አይነቶች</string>
+    <string name="sign_in">ግባ</string>
+    <string name="share">አጋራ</string>
+    <string name="lbl_feedback">ግብረ መልስ</string>
+    <string name="clear_carts">ሁሉንም ያፅዱ</string>
+    <string name="password_instruction">ከመለያዎ ጋር የተያያዘውን ኢሜይል አስገባ እና የመለያ ዳግም ማስጀመሪያ መመሪያን ወደ ኢሜልህ እንልካለን።</string>
+    <string name="confirm_instruction">ከመለያዎ ጋር የተያያዘውን ኢሜል ያስገቡ እና የመለያ ማረጋገጫ አገናኝን ወደ ኢሜልዎ እንልካለን።</string>
+    <string name="lbl_rate">ደረጃ ይስጡ</string>
+    <string name="lbl_unlock">መለያ ክፈት</string>
+    <string name="msg_account_locked">መለያ ተቆልፏል?</string>
+    <string name="msg_sign_in_to_continue">ለመቀጠል ይግቡ</string>
+    <string name="remember_me">አስታውስ</string>
+    <string name="lbl_related_products">ተዛማጅ ምርቶች</string>
+    <string name="feedback_msg">እባክዎን አስተያየትዎን እዚህ ያቅርቡ</string>
+    <string name="lbl_confirm">መለያ ያረጋግጡ</string>
+    <string name="not_confirmed_yet">እስካሁን አልተረጋገጠም?</string>
+    <string name="lbl_origin">መነሻ</string>
+    <string name="shop_location">አካባቢ</string>
+    <string name="map_type">የካርታ አይነት</string>
+    <string name="normal">መደበኛ</string>
+    <string name="map_zoom_level">የካርታ ማጉላት ደረጃ</string>
+    <string name="map_z_level">የማጉላት ደረጃ</string>
+    <string name="map_type_title">የካርታ አይነት</string>
+    <string name="feedbacks">አስተያየቶች</string>
+    <string name="nav_header_subtitle">ለመቀጠል በመለያ ይግቡ</string>
+    <string name="nav_header_title">እንግዳ-ተጠቃሚ</string>
+    <string name="font_size">የቅርጸ ቁምፊ መጠን</string>
+    <string name="font_size_msg">የምርቱ የጽሑፍ መግለጫ የፊደል መጠን</string>
+    <string name="lbl_home">ዋና</string>
+    <string name="lbl_carts">ጋሪዎች</string>
+    <string name="lbl_search">ፈልግ</string>
+    <string name="night_mode">የምሽት ሁነታ</string>
+    <string name="delete">ሰርዝ</string>
+</resources>
