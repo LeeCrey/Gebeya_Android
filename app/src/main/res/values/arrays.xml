@@ -1,0 +1,35 @@
+<resources>
+    <!--  Dark Mode   -->
+    <string-array name="theme_entries">
+        <item>On</item>
+        <item>Off</item>
+        <item>Automatic</item>
+    </string-array>
+    <string-array name="theme_values" translatable="false">
+        <item>on</item>
+        <item>off</item>
+        <item>auto</item>
+    </string-array>
+
+    <!--    Language-->
+    <string-array name="language_entries" translatable="false">
+        <item>@string/english</item>
+        <item>@string/amharic</item>
+    </string-array>
+    <string-array name="language_values" translatable="false">
+        <item>en</item>
+        <item>am</item>
+    </string-array>
+
+    <!--  MAP   -->
+    <string-array name="map_entries">
+        <item>Normal</item>
+        <item>Satellite</item>
+        <item>Hybrid</item>
+    </string-array>
+    <string-array name="map_value" translatable="false">
+        <item>normal</item>
+        <item>satellite</item>
+        <item>hybrid</item>
+    </string-array>
+</resources>
