@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    tool:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_profile_edit"
+            android:icon="@drawable/ic_edit"
+            android:title="@string/edit_profile" />
+
+        <item
+            android:id="@+id/v"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
+    </group>
+
+    <item android:title="@string/others">
+        <menu>
+            <item
+                android:id="@+id/menu_item_rate_app"
+                android:icon="@drawable/ic_rate"
+                android:title="@string/lbl_rate" />
+
+            <item
+                android:id="@+id/navigation_feedback"
+                android:icon="@drawable/ic_feedback"
+                android:title="@string/lbl_feedback" />
+
+            <item
+                android:id="@+id/menu_item_share"
+                android:icon="@drawable/ic_share"
+                android:title="@string/share" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/sign_out" />
+</menu>
