@@ -33,6 +33,7 @@ public class ApplicationHelper {
             switch (networkInfo.getType()) {
                 case ConnectivityManager.TYPE_WIFI:
                 case ConnectivityManager.TYPE_MOBILE:
+                case ConnectivityManager.TYPE_BLUETOOTH:
                     connected = true;
                     break;
             }
