@@ -16,6 +16,9 @@
         <action
             android:id="@+id/to_product_detail"
             app:destination="@id/navigation_product" />
+        <action
+            android:id="@+id/open_sessions"
+            app:destination="@id/navigation_sessions" />
     </fragment>
 
     <fragment
@@ -33,18 +36,55 @@
         android:id="@+id/navigation_product"
         android:name="com.example.online_ethio_gebeya.ui.fragments.ProductFragment"
         android:label="{productName}"
-        tools:layout="@layout/fragment_product" >
+        tools:layout="@layout/fragment_product">
         <argument
             android:name="productName"
             app:argType="string" />
         <argument
             android:name="productId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_navigation_product_self"
             app:destination="@id/navigation_product"
             app:popUpTo="@id/navigation_product"
             app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_sessions"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.account.SessionsFragment"
+        android:label="@string/sign_in"
+        tools:layout="@layout/fragment_sessions">
+        <action
+            android:id="@+id/open_navigation_registrations"
+            app:destination="@id/navigation_registrations" />
+        <action
+            android:id="@+id/action_navigation_sessions_to_navigation_instructions"
+            app:destination="@id/navigation_instructions" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_registrations"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.account.RegistrationsFragment"
+        android:label="@string/sign_up"
+        tools:layout="@layout/fragment_registrations" />
+
+    <fragment
+        android:id="@+id/navigation_instructions"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.account.InstructionsFragment"
+        android:label="{lbl_name}"
+        tools:layout="@layout/fragment_instructions">
+        <argument
+            android:name="instructionType"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <argument
+            android:name="lbl_name"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_navigation_instructions_self"
+            app:destination="@id/navigation_instructions" />
     </fragment>
 </navigation>
