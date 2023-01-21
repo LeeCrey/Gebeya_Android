@@ -10,7 +10,7 @@
             android:title="@string/edit_profile" />
 
         <item
-            android:id="@+id/v"
+            android:id="@+id/navigation_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/settings" />
     </group>
