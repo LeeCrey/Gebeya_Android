@@ -13,12 +13,12 @@ import com.example.online_ethio_gebeya.data.repositories.account.RegistrationsRe
 import com.example.online_ethio_gebeya.helpers.InputHelper;
 import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.models.FormErrors;
-import com.example.online_ethio_gebeya.models.responses.RegistrationResponse;
+import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
 import java.util.Map;
 
 public class RegistrationsViewModel extends AndroidViewModel {
-    private final MutableLiveData<RegistrationResponse> mRegistrationResponse;
+    private final MutableLiveData<InstructionsResponse> mRegistrationResponse;
     private final MutableLiveData<FormErrors> mFormState;
     private final RegistrationsRepository repository;
     private Map<String, String> map;
@@ -31,7 +31,7 @@ public class RegistrationsViewModel extends AndroidViewModel {
         mRegistrationResponse = repository.getRegistrationResponse();
     }
 
-    public LiveData<RegistrationResponse> getRegistrationResponse() {
+    public LiveData<InstructionsResponse> getRegistrationResponse() {
         return mRegistrationResponse;
     }
 
