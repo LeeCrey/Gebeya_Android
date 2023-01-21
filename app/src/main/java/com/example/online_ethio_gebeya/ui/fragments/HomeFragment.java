@@ -16,6 +16,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.callbacks.SearchCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentHomeBinding;
@@ -57,6 +58,12 @@ public class HomeFragment extends Fragment implements MenuProvider, SearchCallBa
 
     @Override
     public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+        String token = callBackInterface.getAuthorizationToken();
+        if (token != null) {
+            return;
+        }
+
+        menuInflater.inflate(R.menu.home_menu, menu);
         ProductHelper.registerSearchFunctionality(requireContext(), menu, this);
     }
 
