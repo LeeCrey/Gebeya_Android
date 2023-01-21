@@ -120,8 +120,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
                 PreferenceHelper.clearPref(MainActivity.this);
                 recreate(); // for the sake of opt menu
             } else {
-//                NavigationUI.onNavDestinationSelected(item, navController);
-//                navController.navigate(R.id.navigation_settings);
+                NavigationUI.onNavDestinationSelected(item, navController);
             }
             drawerLayout.close();
             return false;

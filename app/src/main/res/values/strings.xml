@@ -113,4 +113,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="instruction_sent">Instruction Sent</string>
+    <string name="lbl_settings">Settings</string>
 </resources>
