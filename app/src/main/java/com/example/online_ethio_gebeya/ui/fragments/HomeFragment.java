@@ -1,6 +1,8 @@
 package com.example.online_ethio_gebeya.ui.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,20 +15,36 @@ import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.online_ethio_gebeya.R;
+import com.example.online_ethio_gebeya.adapters.CategoryAdapter;
+import com.example.online_ethio_gebeya.adapters.ProductAdapter;
+import com.example.online_ethio_gebeya.adapters.TrendingAdapter;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
-import com.example.online_ethio_gebeya.callbacks.SearchCallBackInterface;
+import com.example.online_ethio_gebeya.callbacks.ProductCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentHomeBinding;
 import com.example.online_ethio_gebeya.helpers.ProductHelper;
 import com.example.online_ethio_gebeya.models.Product;
+import com.example.online_ethio_gebeya.models.responses.ProductResponse;
+import com.example.online_ethio_gebeya.viewmodels.FragmentHomeViewModel;
 
-public class HomeFragment extends Fragment implements MenuProvider, SearchCallBackInterface {
+public class HomeFragment extends Fragment implements MenuProvider, ProductCallBackInterface {
+    private SwipeRefreshLayout refreshLayout;
     private FragmentHomeBinding binding;
+    private ProductAdapter productAdapter, recommendedAdapter;
+    private TrendingAdapter trendingAdapter;
+
+    private Runnable productsRunnable, recommendRunnable;
+    private Handler customHandler;
+    private HandlerThread handlerThread;
     private MainActivityCallBackInterface callBackInterface;
     private NavController navController;
+    private FragmentHomeViewModel viewModel;
 
     @Nullable
     @Override
@@ -38,22 +56,60 @@ public class HomeFragment extends Fragment implements MenuProvider, SearchCallBa
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(this).get(FragmentHomeViewModel.class);
         callBackInterface = (MainActivityCallBackInterface) requireActivity();
         navController = Navigation.findNavController(view);
 
-        // for menu
-        if (callBackInterface.getAuthorizationToken() == null) {
-            requireActivity().addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
-        }
+        //
+        refreshLayout = binding.refreshLayout;
+
+        // init
+        requireActivity().addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+        refreshLayout.setRefreshing(true);
+        trendingAdapter = ProductHelper.initTrending(this, binding.trendingProductList);
+        trendingAdapter.setCallBack(this);
+        CategoryAdapter categoryAdapter = ProductHelper.initCategory(view, requireActivity());
+        productAdapter = ProductHelper.initProducts(this, binding.productsRecyclerView, true, false);
+        productAdapter.setCalculateProductWidth(false);
+        productAdapter.setCallBack(this);
+        recommendedAdapter = ProductHelper.initRecommendedProducts(this, binding.recommendedProducts);
+        recommendedAdapter.setCallBack(this);
+
+        // observers
+        viewModel.getProductIndex().observe(getViewLifecycleOwner(), this::setProductInAsync);
+        viewModel.getCategoryList().observe(getViewLifecycleOwner(), categoryAdapter::setCategories);
+
+        // event
+        refreshLayout.setOnRefreshListener(() -> {
+            refreshLayout.setRefreshing(false);
+        });
+
+        // handlers
+        handlerThread = new HandlerThread("customUiHandler");
+        handlerThread.start();
+        customHandler = new Handler(handlerThread.getLooper());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-        callBackInterface = null;
+        /* stop handler  */
+        handlerThread.quit();
+        customHandler.removeCallbacks(productsRunnable);
+        customHandler.removeCallbacks(recommendRunnable);
+
+        handlerThread = null;
+        customHandler = null;
+        productsRunnable = null;
+
         binding = null;
+        refreshLayout = null;
+        productAdapter = null;
+        recommendedAdapter = null;
         navController = null;
+        callBackInterface = null;
+        viewModel = null;
     }
 
     @Override
@@ -69,7 +125,7 @@ public class HomeFragment extends Fragment implements MenuProvider, SearchCallBa
 
     @Override
     public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
-        return false;
+        return NavigationUI.onNavDestinationSelected(menuItem, navController);
     }
 
     @Override
@@ -79,6 +135,32 @@ public class HomeFragment extends Fragment implements MenuProvider, SearchCallBa
 
     @Override
     public void onProductClick(Product product) {
+        viewModel.setCurrentProduct(product);
+        callBackInterface.onProductClick(product); // do the navigation part
+    }
+
+    // custom
+    private void setProductInAsync(ProductResponse productResponse) {
+        if (productResponse == null) {
+            return;
+        }
+
+        trendingAdapter.setProducts(productResponse.getProducts());
+
+        // product list
+        productsRunnable = () -> requireActivity().runOnUiThread(() -> {
+            refreshLayout.setRefreshing(false);
+            productAdapter.setProducts(productResponse.getProducts());
+        });
+        customHandler.postDelayed(productsRunnable, 1_000);
+
+        // recommended
+        recommendRunnable = () -> requireActivity().runOnUiThread(() -> recommendedAdapter.setProducts(productResponse.getProducts()));
+        customHandler.postDelayed(recommendRunnable, 2_000);
+    }
+
+    @Override
+    public void onCategorySelected(int position) {
 
     }
 }
