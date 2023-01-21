@@ -117,7 +117,7 @@
     <fragment
         android:id="@+id/navigation_instruction_sent"
         android:name="com.example.online_ethio_gebeya.ui.fragments.account.InstructionSentFragment"
-        android:label="fragment_instruction_sent"
+        android:label="@string/instruction_sent"
         tools:layout="@layout/fragment_instruction_sent">
         <argument
             android:name="message"
