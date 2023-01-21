@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -102,6 +101,23 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
             NavigationUI.setupWithNavController(bottomNavigationView, navController);
             NavigationUI.setupWithNavController(navigationView, navController);
         }
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            final int id = item.getItemId();
+            if (id == R.id.menu_item_rate_app) {
+                rateApp();
+            } else if (id == R.id.menu_item_share) {
+                shareApp();
+            } else if (id == R.id.logout) {
+                PreferenceHelper.clearPref(MainActivity.this);
+                recreate(); // for the sake of opt menu
+            } else {
+//                NavigationUI.onNavDestinationSelected(item, navController);
+//                navController.navigate(R.id.navigation_settings);
+            }
+            drawerLayout.close();
+            return false;
+        });
     }
 
     @Override
