@@ -2,7 +2,6 @@ package com.example.online_ethio_gebeya.data.apis.account;
 
 import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
-import com.example.online_ethio_gebeya.models.responses.RegistrationResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,12 +17,12 @@ public interface RegistrationsApi {
     // create account
     @Headers("accept: application/json")
     @POST("customers")
-    Call<RegistrationResponse> signUp(@Body Customer customer);
+    Call<InstructionsResponse> signUp(@Body Customer customer);
 
     // edit account
     @Headers("accept: application/json")
     @PATCH("customers")
-    Call<RegistrationResponse> updateAccount(@Header("Authorization") String authorizationToken, @Body Customer customer);
+    Call<InstructionsResponse> updateAccount(@Header("Authorization") String authorizationToken, @Body Customer customer);
 
     // edit account
     @Headers("accept: application/json")
@@ -33,7 +32,5 @@ public interface RegistrationsApi {
     // delete account
     @Headers("accept: application/json")
     @DELETE("customers")
-    Call<RegistrationResponse> destroyAccount(@Header("Authorization") String authorizationToken);
-
-
+    Call<InstructionsResponse> destroyAccount(@Header("Authorization") String authorizationToken);
 }
