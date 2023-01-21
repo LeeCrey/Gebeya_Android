@@ -1,5 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <color name="primaryDark">#273238</color>
     <color name="window">#313335</color>
     <color name="textPrimaryColor">@color/white</color>
@@ -7,6 +6,7 @@
     <color name="drawerHeaderBackground">#1b91cf</color>
     <color name="surface">#333a40</color>
     <color name="category">#36474f</color>
+
     <style name="Theme.OnlineGebeya" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/onPrimary</item>

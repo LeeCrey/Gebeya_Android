@@ -1,10 +1,9 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <color name="primaryDark">#4C8BBB</color>
     <color name="window">#f3f3f3</color>
     <color name="surface">@color/white</color>
     <color name="textPrimaryColor">#484e57</color>
-    <color name="drawerHeaderBackground">#1b91cf </color>
+    <color name="drawerHeaderBackground">#1b91cf</color>
     <color name="category">@color/white</color>
     <color name="shimmer_color">@color/teal_200</color>
 
