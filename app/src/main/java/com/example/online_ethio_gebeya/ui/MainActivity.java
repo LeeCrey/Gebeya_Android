@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         final int home = R.id.navigation_home;
         final int carts = R.id.navigation_carts;
         final int search = R.id.navigation_search;
+        final int product = R.id.navigation_product;
 
         final DrawerLayout drawerLayout = binding.drawerLayout;
         final Toolbar toolbar = binding.toolBar;
@@ -124,6 +126,25 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
             }
             drawerLayout.close();
             return false;
+        });
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
+                switch (navDestination.getId()) {
+                    case home:
+                        toolbar.setVisibility(View.VISIBLE);
+                    case carts:
+                    case search:
+                        bottomNavigationView.setVisibility(authorizationToken == null ? View.GONE : View.VISIBLE);
+                        break;
+                    case product:
+                        toolbar.setVisibility(View.VISIBLE);
+                        bottomNavigationView.setVisibility(View.GONE);
+                        break;
+                    default:
+                        bottomNavigationView.setVisibility(View.GONE);
+                }
+            }
         });
 
         setCurrentUser();
