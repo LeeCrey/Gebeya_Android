@@ -37,5 +37,14 @@
         <argument
             android:name="productName"
             app:argType="string" />
+        <argument
+            android:name="productId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_navigation_product_self"
+            app:destination="@id/navigation_product"
+            app:popUpTo="@id/navigation_product"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
