@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_settingsFragment"
             app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/to_product_detail"
+            app:destination="@id/navigation_product" />
     </fragment>
 
     <fragment
@@ -25,4 +28,14 @@
         android:id="@+id/navigation_settings"
         android:name="com.example.online_ethio_gebeya.ui.fragments.SettingsFragment"
         android:label="@string/lbl_settings" />
+
+    <fragment
+        android:id="@+id/navigation_product"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.ProductFragment"
+        android:label="{productName}"
+        tools:layout="@layout/fragment_product" >
+        <argument
+            android:name="productName"
+            app:argType="string" />
+    </fragment>
 </navigation>
