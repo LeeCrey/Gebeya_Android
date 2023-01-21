@@ -196,6 +196,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         return 0;
     }
 
+    @Override
+    public void openEmailApp() {
+        Intent mailClient = new Intent(Intent.ACTION_VIEW);
+        mailClient.setClassName("com.google.android.gm", "com.google.android.gm.ConversationListActivity");
+        startActivity(mailClient);
+        finish();
+    }
+
     private void rateApp() {
         final String pkgName = "com.example.lastproject";
         final String appStoreUrl = "https://play.google.com/store/apps/details?id=" + pkgName;

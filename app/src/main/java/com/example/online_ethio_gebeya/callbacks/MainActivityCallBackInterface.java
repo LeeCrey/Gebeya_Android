@@ -16,4 +16,6 @@ public interface MainActivityCallBackInterface {
     String getMapType();
 
     int getFontSizeForDescription();
+
+    void openEmailApp();
 }
