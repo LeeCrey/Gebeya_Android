@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -102,6 +103,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
             NavigationUI.setupWithNavController(navigationView, navController);
         }
 
+        headerView = navigationView.getHeaderView(0);
+        Menu menu = navigationView.getMenu();
+        editProfile = menu.findItem(R.id.navigation_profile_edit);
+        feedback = menu.findItem(R.id.navigation_feedback);
+        signOut = menu.findItem(R.id.logout);
+
+        // event
         navigationView.setNavigationItemSelectedListener(item -> {
             final int id = item.getItemId();
             if (id == R.id.menu_item_rate_app) {
@@ -118,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
             drawerLayout.close();
             return false;
         });
+
+        setCurrentUser();
     }
 
     @Override
