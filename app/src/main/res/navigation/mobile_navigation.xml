@@ -68,7 +68,13 @@
         android:id="@+id/navigation_registrations"
         android:name="com.example.online_ethio_gebeya.ui.fragments.account.RegistrationsFragment"
         android:label="@string/sign_up"
-        tools:layout="@layout/fragment_registrations" />
+        tools:layout="@layout/fragment_registrations">
+        <action
+            android:id="@+id/open_instruction_sent_nav"
+            app:destination="@id/navigation_instruction_sent"
+            app:popUpTo="@id/navigation_sessions"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_instructions"
@@ -81,10 +87,40 @@
             app:argType="integer" />
         <argument
             android:name="lbl_name"
+            android:defaultValue="Wait"
             app:argType="string"
             app:nullable="true" />
         <action
             android:id="@+id/action_navigation_instructions_self"
             app:destination="@id/navigation_instructions" />
+        <argument
+            android:name="unlockToken"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <deepLink
+            android:id="@+id/deepLink2"
+            android:autoVerify="true"
+            app:uri="https://online-gebeya.loca.lt/customers/unlock?unlock_token={unlockToken}" />
+        <argument
+            android:name="confirmationToken"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/open_instruction_sent_nav"
+            app:destination="@id/navigation_instruction_sent"
+            app:popUpTo="@id/navigation_sessions"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_instruction_sent"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.account.InstructionSentFragment"
+        android:label="fragment_instruction_sent"
+        tools:layout="@layout/fragment_instruction_sent">
+        <argument
+            android:name="message"
+            app:argType="string" />
     </fragment>
 </navigation>
