@@ -8,7 +8,7 @@ public class RegistrationResponse {
     private Boolean okay;
 
     @JsonProperty("message")
-    private String msg;
+    private String message;
 
     @JsonProperty("errors")
     private FormErrors errors;
@@ -29,11 +29,11 @@ public class RegistrationResponse {
         this.errors = errors;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
     public void setMsg(String msg) {
-        this.msg = msg;
+        message = msg;
     }
 }
