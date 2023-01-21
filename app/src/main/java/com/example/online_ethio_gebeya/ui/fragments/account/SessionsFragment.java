@@ -66,7 +66,7 @@ public class SessionsFragment extends Fragment {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 
         // event list...
-//        signUp.setOnClickListener(v -> navController.navigate(R.id.action_navigation_sessions_to_navigation_registrations));
+        signUp.setOnClickListener(v -> navController.navigate(R.id.open_navigation_registrations));
         textView.setOnClickListener(v -> openInstructionFragment(InstructionsFragment.UNLOCK_INSTRUCTION));
         forgotPassword.setOnClickListener(v -> openInstructionFragment(InstructionsFragment.PASSWORD_INSTRUCTION));
 
