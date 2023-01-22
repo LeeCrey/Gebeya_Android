@@ -28,7 +28,11 @@
         android:id="@+id/navigation_carts"
         android:name="com.example.online_ethio_gebeya.ui.fragments.CartsFragment"
         android:label="@string/lbl_carts"
-        tools:layout="@layout/fragment_carts" />
+        tools:layout="@layout/fragment_carts" >
+        <action
+            android:id="@+id/open_cart_items"
+            app:destination="@id/navigation_cart_items" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_settings"
@@ -142,4 +146,23 @@
         android:name="com.example.online_ethio_gebeya.ui.fragments.SearchFragment"
         android:label="@string/lbl_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/navigation_cart_items"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" >
+        <argument
+            android:name="cartName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="cartId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="merchantId"
+            app:argType="string"
+            android:defaultValue="-1" />
+    </fragment>
 </navigation>
