@@ -2,39 +2,118 @@ package com.example.online_ethio_gebeya.ui.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.online_ethio_gebeya.databinding.FragmentCartsBinding;
+import com.example.online_ethio_gebeya.R;
+import com.example.online_ethio_gebeya.adapters.CartsAdapter;
+import com.example.online_ethio_gebeya.callbacks.CartCallBackInterface;
+import com.example.online_ethio_gebeya.models.Cart;
+import com.example.online_ethio_gebeya.viewmodels.CartsViewModel;
 
-public class CartsFragment extends Fragment {
-    private FragmentCartsBinding binding;
+public class CartsFragment extends Fragment implements MenuProvider, CartCallBackInterface {
+    private CartsAdapter cartsAdapter;
+    private CartsViewModel viewModel;
     private NavController navController;
+    private RecyclerView recyclerView;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentCartsBinding.inflate(inflater, container, false);
-
-        return binding.getRoot();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_carts, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(view);
+        viewModel = new ViewModelProvider(this).get(CartsViewModel.class);
+        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view;
+
+        initRecyclerView(view);
+
+        refreshLayout.setOnRefreshListener(() -> {
+            viewModel.getCarts();
+            refreshLayout.setRefreshing(false);
+        });
+
+        // observers
+        viewModel.getCartResponse().observe(getViewLifecycleOwner(), cartsAdapter::setCarts);
+
+        // add menu host
+        requireActivity().addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-        binding = null;
+        cartsAdapter = null;
+        viewModel = null;
         navController = null;
+        recyclerView = null;
+    }
+
+    @Override
+    public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.carts_menu, menu);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+        final int id = menuItem.getItemId();
+        if (id == R.id.clear_carts) {
+            viewModel.deleteAllCarts();
+        }
+        return false;
+    }
+
+    @Override
+    public void onCartClick(@NonNull Cart cart) {
+        Bundle arg = new Bundle();
+        arg.putString("cartName", cart.getName());
+        arg.putInt("cartId", cart.getId());
+        arg.putString("merchantId", cart.getMerchantId());
+//        navController.navigate(R.id.open_cart, arg);
+    }
+
+    private void initRecyclerView(View view) {
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(requireActivity());
+        recyclerView = view.findViewById(R.id.carts_recycler_view);
+        recyclerView.setLayoutManager(manager);
+
+        cartsAdapter = new CartsAdapter(requireActivity(), this);
+        recyclerView.setAdapter(cartsAdapter);
+
+
+        // event
+        ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Cart cart = cartsAdapter.getCurrentList().get(viewHolder.getAdapterPosition());
+                viewModel.deleteCart(cart);
+            }
+        });
+        touchHelper.attachToRecyclerView(recyclerView);
     }
 }
