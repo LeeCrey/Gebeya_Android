@@ -19,6 +19,9 @@
         <action
             android:id="@+id/open_sessions"
             app:destination="@id/navigation_sessions" />
+        <action
+            android:id="@+id/action_navigation_home_to_feedbackFragment"
+            app:destination="@id/navigation_feedback" />
     </fragment>
 
     <fragment
@@ -83,8 +86,8 @@
         tools:layout="@layout/fragment_instructions">
         <argument
             android:name="instructionType"
-            app:argType="integer"
-            android:defaultValue="1" />
+            android:defaultValue="1"
+            app:argType="integer" />
         <argument
             android:name="lbl_name"
             android:defaultValue="Wait"
@@ -101,7 +104,7 @@
         <deepLink
             android:id="@+id/deepLink2"
             android:autoVerify="true"
-            app:uri="https://online-gebeya.loca.lt/customers/unlock?unlock_token={unlockToken}" />
+            app:uri="https://gebeya-app.loca.lt/customers/unlock?unlock_token={unlockToken}" />
         <argument
             android:name="confirmationToken"
             android:defaultValue="@null"
@@ -112,6 +115,10 @@
             app:destination="@id/navigation_instruction_sent"
             app:popUpTo="@id/navigation_sessions"
             app:popUpToInclusive="true" />
+        <deepLink
+            android:id="@+id/deepLink"
+            android:autoVerify="true"
+            app:uri="https://gebeya-app.loca.lt/customers/confirmation?confirmation_token={confirmationToken}" />
     </fragment>
 
     <fragment
@@ -123,4 +130,11 @@
             android:name="message"
             app:argType="string" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_feedback"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.FeedbackFragment"
+        android:label="@string/lbl_feedback"
+        tools:layout="@layout/fragment_feedback" />
 </navigation>
