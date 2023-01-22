@@ -62,15 +62,15 @@ public class RegistrationsFragment extends Fragment {
             }
 
             if (registrationResponse.getOkay()) {
-                navController.navigateUp();
+                Bundle arg = new Bundle();
+                arg.putString(InstructionSentFragment.MESSAGE, registrationResponse.getMessage());
+                navController.navigate(R.id.open_instruction_sent_nav, arg);
             } else {
-                if (null != registrationResponse.getMsg()) {
-                    Toast.makeText(requireContext(), registrationResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                String msg = registrationResponse.getMessage();
+                if (null != msg) {
+                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show();
                     loading.setVisibility(View.GONE);
                     signUp.setEnabled(true);
-                } else {
-                    setStatusForPlaceholders(true);
-                    showFormError(registrationResponse.getErrors());
                 }
             }
         });
