@@ -149,7 +149,7 @@
     <fragment
         android:id="@+id/navigation_cart_items"
         android:name="com.example.online_ethio_gebeya.ui.fragments.CartFragment"
-        android:label="fragment_cart"
+        android:label="{cartName}"
         tools:layout="@layout/fragment_cart" >
         <argument
             android:name="cartName"
