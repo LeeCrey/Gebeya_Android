@@ -58,10 +58,10 @@ public class CartFragment extends Fragment implements MenuProvider {
         cartItemViewModel.getCartItemResponse().observe(getViewLifecycleOwner(), cartItemAdapter::updateList);
 
 //        // api
-//        CartFragmentArgs args = CartFragmentArgs.fromBundle(getArguments());
-//        cartId = args.getCartId();
-//        merchantId = args.getMerchantId();
-//        cartItemViewModel.getCartItems(cartId);
+        CartFragmentArgs args = CartFragmentArgs.fromBundle(getArguments());
+        cartId = args.getCartId();
+        merchantId = args.getMerchantId();
+        cartItemViewModel.getCartItems(cartId);
     }
 
     @Override
