@@ -110,12 +110,13 @@
     <string name="checkout">Checkout</string>
     <string name="others">Others</string>
     <string name="lbl_confirmation">Confirmation</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="instruction_sent">Instruction Sent</string>
     <string name="lbl_settings">Settings</string>
     <string name="deepLink">Wait</string>
     <string name="ope_email">Open Email</string>
     <string name="confirm_later">Skip, I\'ll check later</string>
     <string name="msg_check_ur_email">Check your email</string>
+
+    <string name="msg_account_confirmed">Account not confirmed?</string>
 </resources>

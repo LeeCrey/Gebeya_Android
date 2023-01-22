@@ -78,4 +78,13 @@
     <string name="lbl_search">ፈልግ</string>
     <string name="night_mode">የምሽት ሁነታ</string>
     <string name="delete">ሰርዝ</string>
+    <string name="msg_account_confirmed">መለያ አልተረጋገጠም?</string>
+    <string name="msg_check_ur_email">ኢሜልዎን ያረጋግጡ</string>
+    <string name="confirm_later">ዝለል፣ በኋላ አረጋግጣለሁ።</string>
+    <string name="ope_email">ኢሜይል ክፈት</string>
+    <string name="deepLink">ጠብቅ</string>
+    <string name="lbl_settings">ቅንብሮች</string>
+    <string name="lbl_confirmation">ማረጋገጫ</string>
+    <string name="others">ሌሎች</string>
+    <string name="instruction_sent">መመሪያ ተልኳል።</string>
 </resources>

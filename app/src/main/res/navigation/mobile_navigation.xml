@@ -83,8 +83,8 @@
         tools:layout="@layout/fragment_instructions">
         <argument
             android:name="instructionType"
-            android:defaultValue="-1"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="1" />
         <argument
             android:name="lbl_name"
             android:defaultValue="Wait"
