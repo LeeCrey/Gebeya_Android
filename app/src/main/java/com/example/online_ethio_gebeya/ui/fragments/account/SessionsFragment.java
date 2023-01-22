@@ -120,7 +120,7 @@ public class SessionsFragment extends Fragment {
         String lblName = "lbl_name";
         // There is only two possible condition here(-1, 0 )
         String lbl = instructionType == InstructionsFragment.PASSWORD_INSTRUCTION ? getString(R.string.lbl_password) : getString(R.string.lbl_unlock);
-        arg.putInt("instruction_type", instructionType);
+        arg.putInt("instructionType", instructionType);
         arg.putString(lblName, lbl);
         navController.navigate(R.id.action_navigation_sessions_to_navigation_instructions, arg);
     }
