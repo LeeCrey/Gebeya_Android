@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +23,6 @@ import com.example.online_ethio_gebeya.viewmodels.InstructionsViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
-
 
 /**
  * This fragment is for
@@ -77,25 +77,27 @@ public class InstructionsFragment extends Fragment {
 
             if (instructionsResponse.isUnlockPasswordConfirm()) {
                 Bundle arg = new Bundle();
-                arg.putString("message", instructionsResponse.getMessage());
-//                navController.navigate(R.id.open_instruction_sent, arg);
+                arg.putString(InstructionSentFragment.MESSAGE, instructionsResponse.getMessage());
+                navController.navigate(R.id.open_instruction_sent_nav, arg);
             } else {
-                sendButton.setEnabled(true);
+                Toast.makeText(requireContext(), instructionsResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                // show success modal here
+                navController.navigateUp();
             }
         });
 
         // if came through deep link
-//        String unlockToken = args.getUnlockToken();
-//        String confirmationToken = args.getConfirmationToken();
-//        if (unlockToken != null || confirmationToken != null) {
-//            // disable both
-//            email.setEnabled(false);
-//            sendButton.setEnabled(false);
-//
-//            fullUrl += unlockToken != null ? ("unlock?unlock_token=" + unlockToken) : ("confirmation?confirmation_token=" + confirmationToken);
-//            viewModel.sendFinishRequest(fullUrl);
-//            return;
-//        }
+        String unlockToken = args.getUnlockToken();
+        String confirmationToken = args.getConfirmationToken();
+        if (unlockToken != null || confirmationToken != null) {
+            // disable both
+            email.setEnabled(false);
+            sendButton.setEnabled(false);
+
+            fullUrl += unlockToken != null ? ("unlock?unlock_token=" + unlockToken) : ("confirmation?confirmation_token=" + confirmationToken);
+            viewModel.sendFinishRequest(fullUrl);
+            return;
+        }
 
         // else
         if (type == UNLOCK_INSTRUCTION) {
@@ -107,6 +109,7 @@ public class InstructionsFragment extends Fragment {
         } else {
             fullUrl += "confirmation";
             confirmation.setVisibility(View.GONE);
+            binding.headerForInstruction.setText(R.string.msg_account_confirmed);
             binding.textView2.setText(R.string.confirm_instruction);
         }
 
