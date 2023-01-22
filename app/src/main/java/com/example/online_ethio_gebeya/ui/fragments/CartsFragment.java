@@ -89,7 +89,7 @@ public class CartsFragment extends Fragment implements MenuProvider, CartCallBac
         arg.putString("cartName", cart.getName());
         arg.putInt("cartId", cart.getId());
         arg.putString("merchantId", cart.getMerchantId());
-//        navController.navigate(R.id.open_cart, arg);
+        navController.navigate(R.id.open_cart_items, arg);
     }
 
     private void initRecyclerView(View view) {
@@ -99,7 +99,6 @@ public class CartsFragment extends Fragment implements MenuProvider, CartCallBac
 
         cartsAdapter = new CartsAdapter(requireActivity(), this);
         recyclerView.setAdapter(cartsAdapter);
-
 
         // event
         ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
