@@ -80,9 +80,13 @@ public class InstructionsFragment extends Fragment {
                 arg.putString(InstructionSentFragment.MESSAGE, instructionsResponse.getMessage());
                 navController.navigate(R.id.open_instruction_sent_nav, arg);
             } else {
-                Toast.makeText(requireContext(), instructionsResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                if (instructionsResponse.getOkay()) {
+                    Toast.makeText(requireContext(), instructionsResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), instructionsResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 // show success modal here
-                navController.navigateUp();
+//                navController.navigateUp();
             }
         });
 

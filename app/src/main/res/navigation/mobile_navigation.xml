@@ -137,4 +137,9 @@
         android:name="com.example.online_ethio_gebeya.ui.fragments.FeedbackFragment"
         android:label="@string/lbl_feedback"
         tools:layout="@layout/fragment_feedback" />
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.SearchFragment"
+        android:label="@string/lbl_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>
