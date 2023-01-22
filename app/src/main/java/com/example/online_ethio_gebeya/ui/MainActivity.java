@@ -183,7 +183,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
 
     @Override
     public void onProductClick(@NonNull Product product) {
-
+        final Bundle args = new Bundle();
+        args.putString("productName", product.getName());
+        args.putInt("productId", product.getId());
+        navController.navigate(R.id.to_product_detail, args);
     }
 
     @Override
