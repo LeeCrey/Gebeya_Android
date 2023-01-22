@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
                         bottomNavigationView.setVisibility(authorizationToken == null ? View.GONE : View.VISIBLE);
                         break;
                     case product:
-                        toolbar.setVisibility(View.VISIBLE);
+                        toolbar.setVisibility(View.GONE);
                         bottomNavigationView.setVisibility(View.GONE);
                         break;
                     default:
