@@ -22,13 +22,16 @@
         <action
             android:id="@+id/action_navigation_home_to_feedbackFragment"
             app:destination="@id/navigation_feedback" />
+        <action
+            android:id="@+id/open_profile_edit"
+            app:destination="@id/navigation_profile_edit" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_carts"
         android:name="com.example.online_ethio_gebeya.ui.fragments.CartsFragment"
         android:label="@string/lbl_carts"
-        tools:layout="@layout/fragment_carts" >
+        tools:layout="@layout/fragment_carts">
         <action
             android:id="@+id/open_cart_items"
             app:destination="@id/navigation_cart_items" />
@@ -150,19 +153,23 @@
         android:id="@+id/navigation_cart_items"
         android:name="com.example.online_ethio_gebeya.ui.fragments.CartFragment"
         android:label="{cartName}"
-        tools:layout="@layout/fragment_cart" >
+        tools:layout="@layout/fragment_cart">
         <argument
             android:name="cartName"
+            android:defaultValue="@null"
             app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <argument
             android:name="cartId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <argument
             android:name="merchantId"
-            app:argType="string"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_profile_edit"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.ProfileFragment"
+        android:label="@string/edit_profile" />
 </navigation>
