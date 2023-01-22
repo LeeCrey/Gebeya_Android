@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/msg_account_locked"
+        android:text="@string/msg_check_ur_email"
         android:textAlignment="center"
         android:textColor="?android:textColorPrimary"
         android:textSize="26sp"
