@@ -117,4 +117,5 @@
     <string name="deepLink">Wait</string>
     <string name="ope_email">Open Email</string>
     <string name="confirm_later">Skip, I\'ll check later</string>
+    <string name="msg_check_ur_email">Check your email</string>
 </resources>
