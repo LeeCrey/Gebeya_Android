@@ -1,4 +1,4 @@
-package com.example.online_ethio_gebeya.data.repositories;
+package com.example.online_ethio_gebeya.data.repositories.account;
 
 import android.app.Application;
 
@@ -7,9 +7,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.online_ethio_gebeya.data.RetrofitConnectionUtil;
 import com.example.online_ethio_gebeya.data.apis.InstructionsApi;
+import com.example.online_ethio_gebeya.helpers.JsonHelper;
 import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +32,7 @@ public class InstructionRepository {
     }
 
     // APIs
-    public void sendRequest(Customer customer, @NonNull String path) {
+    public void sendRequest(@NonNull Customer customer, @NonNull String path) {
         cancelConnection();
 
         instructionsResponseCall = api.sendInstruction(path, customer);
@@ -62,10 +65,24 @@ public class InstructionRepository {
         instructionsResponseCall.enqueue(new Callback<InstructionsResponse>() {
             @Override
             public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
-                final InstructionsResponse resp = response.body();
-                if (resp != null) {
-                    mInstructionResponse.postValue(resp);
+                InstructionsResponse resp = null;
+                if (response.isSuccessful()) {
+                    resp = response.body();
+                    if (resp != null) {
+                        resp.setOkay(true);
+                    }
+                } else {
+                    ResponseBody body = response.errorBody();
+                    if (body != null) {
+                        try {
+                            resp = JsonHelper.parseOperationError(body.toString());
+                            resp.setOkay(false);
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
+                mInstructionResponse.postValue(resp);
             }
 
             @Override

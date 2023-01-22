@@ -33,6 +33,7 @@ import com.example.online_ethio_gebeya.viewmodels.ProductDetailFragmentViewModel
 import com.example.online_ethio_gebeya.viewmodels.ProductDetailFragmentViewModelFactory;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
+// detail page for product
 public class ProductFragment extends Fragment implements SingleProductCallBack {
     private FragmentProductBinding binding;
     private ViewPager viewPager;

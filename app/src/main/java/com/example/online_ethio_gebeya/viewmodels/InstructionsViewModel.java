@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.online_ethio_gebeya.data.repositories.InstructionRepository;
+import com.example.online_ethio_gebeya.data.repositories.account.InstructionRepository;
 import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
