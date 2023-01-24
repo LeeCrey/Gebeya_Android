@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import java.io.File;
+
 // for session and registration
 @JsonRootName(value = "customer")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -27,8 +29,12 @@ public class Customer {
     @JsonProperty("password_confirmation")
     private String passwordConfirmation;
 
-    @JsonProperty("profile_image")
+    @JsonProperty("profile_image_url")
     private String profileImageUrl;
+
+    // update
+    @JsonProperty("profile")
+    private File profile;
 
     public String getLastName() {
         return lastName;
@@ -99,5 +105,13 @@ public class Customer {
 
     public Integer getId() {
         return id;
+    }
+
+    public File getProfile() {
+        return profile;
+    }
+
+    public void setProfile(File profile) {
+        this.profile = profile;
     }
 }
