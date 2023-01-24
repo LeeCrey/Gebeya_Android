@@ -20,7 +20,6 @@ import com.example.online_ethio_gebeya.viewholders.CategoryViewHolder;
 import java.util.List;
 
 public class CategoryAdapter extends ListAdapter<Category, CategoryViewHolder> {
-    private static final String TAG = "CategoryAdapter";
     private static final DiffUtil.ItemCallback<Category> DIFF_CALC_CALLBACK = new DiffUtil.ItemCallback<Category>() {
         @Override
         public boolean areItemsTheSame(@NonNull Category oldItem, @NonNull Category newItem) {
@@ -37,7 +36,6 @@ public class CategoryAdapter extends ListAdapter<Category, CategoryViewHolder> {
     };
     private final LayoutInflater inflater;
     private final Context context;
-    private final boolean loadShimmer = true;
     private final boolean isAmharic;
     private int selectedCategoryPosition;
     private ProductCallBackInterface callBackInterface;
@@ -49,8 +47,6 @@ public class CategoryAdapter extends ListAdapter<Category, CategoryViewHolder> {
         context = activity.getApplicationContext();
         selectedCategoryPosition = 0;
         isAmharic = false;
-
-//        isAmharic = LocaleHelper.isAmharic(activity);
     }
 
     @NonNull
@@ -63,7 +59,6 @@ public class CategoryAdapter extends ListAdapter<Category, CategoryViewHolder> {
 
         // event ...
         final CardView cardView = (CardView) view;
-//        cardView.setOnLongClickListener(v -> callBackInterface.onCategorySelected(vh.getAdapterPosition()));
         cardView.setOnClickListener(v -> callBackInterface.onCategorySelected(vh.getAdapterPosition()));
 
         return vh;
