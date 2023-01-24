@@ -154,17 +154,25 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
             return;
         }
 
-        trendingAdapter.setProducts(productResponse.getProducts());
+        if (trendingAdapter != null) {
+            trendingAdapter.setProducts(productResponse.getProducts());
+        }
 
         // product list
         productsRunnable = () -> requireActivity().runOnUiThread(() -> {
             refreshLayout.setRefreshing(false);
-            productAdapter.setProducts(productResponse.getProducts());
+            if (productAdapter != null) {
+                productAdapter.setProducts(productResponse.getProducts());
+            }
         });
-        customHandler.postDelayed(productsRunnable, 1_000);
+        customHandler.postDelayed(productsRunnable, 1_500);
 
         // recommended
-        recommendRunnable = () -> requireActivity().runOnUiThread(() -> recommendedAdapter.setProducts(productResponse.getProducts()));
-        customHandler.postDelayed(recommendRunnable, 2_000);
+        recommendRunnable = () -> requireActivity().runOnUiThread(() -> {
+            if (recommendedAdapter != null) {
+                recommendedAdapter.setProducts(productResponse.getProducts());
+            }
+        });
+        customHandler.postDelayed(recommendRunnable, 2_500);
     }
 }
