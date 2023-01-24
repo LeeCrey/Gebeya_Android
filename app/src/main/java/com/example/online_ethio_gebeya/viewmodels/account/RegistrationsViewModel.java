@@ -18,16 +18,16 @@ import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 import java.util.Map;
 
 public class RegistrationsViewModel extends AndroidViewModel {
-    private final MutableLiveData<InstructionsResponse> mRegistrationResponse;
-    private final MutableLiveData<FormErrors> mFormState;
-    private final RegistrationsRepository repository;
-    private Map<String, String> map;
+    protected final MutableLiveData<InstructionsResponse> mRegistrationResponse;
+    protected final MutableLiveData<FormErrors> mFormState;
+    protected final RegistrationsRepository repository;
+    protected Map<String, String> map;
 
     public RegistrationsViewModel(@NonNull Application application) {
         super(application);
 
-        mFormState = new MutableLiveData<>();
         repository = new RegistrationsRepository(application);
+        mFormState = new MutableLiveData<>();
         mRegistrationResponse = repository.getRegistrationResponse();
     }
 
@@ -76,6 +76,7 @@ public class RegistrationsViewModel extends AndroidViewModel {
     public void confirmAccount(@NonNull String confirmUrl) {
         repository.confirmAccount(confirmUrl);
     }
+
 
     @Override
     protected void onCleared() {
