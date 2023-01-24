@@ -35,7 +35,6 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements MainActivityCallBackInterface {
     private final String authTokenKey = "auth_token";
-
     private NavController navController;
     private String authorizationToken;
     private View headerView;
@@ -81,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
             }
             setCurrentUser();
         };
+        preferences.registerOnSharedPreferenceChangeListener(listener);
+        pref.registerOnSharedPreferenceChangeListener(customListener);
 
         final int home = R.id.navigation_home;
         final int carts = R.id.navigation_carts;
