@@ -12,6 +12,8 @@ import com.example.online_ethio_gebeya.data.apis.account.RegistrationsApi;
 import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,32 +112,34 @@ public class RegistrationsRepository {
     public void updateProfile(@NonNull Customer customer, String authorizationToken) {
         cancelConnection();
 
-        Log.d(TAG, "updateProfile: " + authorizationToken);
-        return;
-//        RequestBody firstName = RequestBody.create(customer.getFirstName(), MediaType.parse("text/plain"));
-//        RequestBody lastName = RequestBody.create(customer.getLastName(), MediaType.parse("text/plain"));
-//        RequestBody currentPassword = RequestBody.create(customer.getPassword(), MediaType.parse("text/plain"));
-//        RequestBody profilePic = RequestBody.create(customer.getProfile(), MediaType.parse("image/*"));
+        RequestBody firstName = RequestBody.create(customer.getFirstName(), MediaType.parse("text/plain"));
+        RequestBody lastName = RequestBody.create(customer.getLastName(), MediaType.parse("text/plain"));
+        RequestBody currentPassword = RequestBody.create(customer.getPassword(), MediaType.parse("text/plain"));
+        RequestBody profilePic = null;
+        if (customer.getProfile() != null) {
+            profilePic = RequestBody.create(customer.getProfile(), MediaType.parse("multipart/form-data"));
+        }
 
-//        apiCall = api.updateAccount(authorizationToken, firstName, lastName, currentPassword);
-//        apiCall.enqueue(new Callback<InstructionsResponse>() {
-//            @Override
-//            public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
-//                if (response.isSuccessful()) {
-//                    mRegResponse.postValue(response.body());
-//                } else {
-////                    if (response.code() == 401) {
-////                        // clear pref
-////                        PreferenceHelper.clearPref(application);
-////                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
-//
-//            }
-//        });
+        Log.d(TAG, "updateProfile: " + (customer.getProfile() == null));
+        apiCall = api.updateAccount(authorizationToken, firstName, lastName, currentPassword, profilePic);
+        apiCall.enqueue(new Callback<InstructionsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
+                if (response.isSuccessful()) {
+                    mRegResponse.postValue(response.body());
+                } else {
+                    if (response.code() == 401) {
+                        // clear pref
+//                        PreferenceHelper.clearPref(application);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
+            }
+        });
     }
 
     // delete account

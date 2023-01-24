@@ -28,7 +28,8 @@ public interface RegistrationsApi {
     Call<InstructionsResponse> updateAccount(@Header("Authorization") String authorizationToken,
                                              @Part("first_name") RequestBody firstName,
                                              @Part("last_name") RequestBody lastName,
-                                             @Part("current_password") RequestBody currentPassword);
+                                             @Part("current_password") RequestBody currentPassword,
+                                             @Part("profile") RequestBody profile);
 
     @Headers("accept: application/json")
     @GET("/customer")

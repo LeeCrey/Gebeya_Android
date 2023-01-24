@@ -33,7 +33,7 @@ public class Customer {
     private String profileImageUrl;
 
     // update
-    @JsonProperty("profile")
+//    @JsonProperty("profile")
     private File profile;
 
     public String getLastName() {
