@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
     private MainActivityCallBackInterface callBackInterface;
     private NavController navController;
     private FragmentHomeViewModel viewModel;
+    private CategoryAdapter categoryAdapter;
 
     @Nullable
     @Override
@@ -68,7 +69,8 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         refreshLayout.setRefreshing(true);
         trendingAdapter = ProductHelper.initTrending(this, binding.trendingProductList);
         trendingAdapter.setCallBack(this);
-        CategoryAdapter categoryAdapter = ProductHelper.initCategory(view, requireActivity());
+        categoryAdapter = ProductHelper.initCategory(view, requireActivity());
+        categoryAdapter.setCallBack(this);
         productAdapter = ProductHelper.initProducts(this, binding.productsRecyclerView, true, false);
         productAdapter.setCalculateProductWidth(false);
         productAdapter.setCallBack(this);
@@ -80,9 +82,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         viewModel.getCategoryList().observe(getViewLifecycleOwner(), categoryAdapter::setCategories);
 
         // event
-        refreshLayout.setOnRefreshListener(() -> {
-            refreshLayout.setRefreshing(false);
-        });
+        refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
 
         // handlers
         handlerThread = new HandlerThread("customUiHandler");
@@ -110,6 +110,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         navController = null;
         callBackInterface = null;
         viewModel = null;
+        categoryAdapter = null;
     }
 
     @Override
@@ -139,6 +140,14 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         callBackInterface.onProductClick(product); // do the navigation part
     }
 
+    @Override
+    public void onCategorySelected(int position) {
+        categoryAdapter.setSelectedCategoryPosition(position);
+
+        String lst = categoryAdapter.getSelectedCategoryName();
+        viewModel.searchProductWithCategory(position);
+    }
+
     // custom
     private void setProductInAsync(ProductResponse productResponse) {
         if (productResponse == null) {
@@ -157,10 +166,5 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         // recommended
         recommendRunnable = () -> requireActivity().runOnUiThread(() -> recommendedAdapter.setProducts(productResponse.getProducts()));
         customHandler.postDelayed(recommendRunnable, 2_000);
-    }
-
-    @Override
-    public void onCategorySelected(int position) {
-
     }
 }
