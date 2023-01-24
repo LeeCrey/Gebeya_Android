@@ -119,4 +119,9 @@
     <string name="msg_check_ur_email">Check your email</string>
 
     <string name="msg_account_confirmed">Account not confirmed?</string>
+    <string name="save_changes">Save</string>
+    <string name="lbl_current_password">Current Password</string>
+    <string name="lbl_new_password">New Password (Optional)</string>
+    <string name="lbl_new_password_confirmation">Password Confirmation (Optional)</string>
+    <string name="lbl_email_opt">Email (Optional)</string>
 </resources>
