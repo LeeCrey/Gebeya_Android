@@ -32,4 +32,12 @@ public class FragmentHomeViewModel extends ProductsViewModel {
     public void setCurrentProduct(Product product) {
         currentProduct = product;
     }
+
+    public void searchProductWithCategory(int position) {
+        List<Category> list = getCategoryList().getValue();
+        if (list != null) {
+            Category category = list.get(position);
+            repository.getListFromApi(category.getName());
+        }
+    }
 }
