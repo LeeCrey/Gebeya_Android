@@ -18,10 +18,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.adapters.ProductAdapter;
+import com.example.online_ethio_gebeya.adapters.ProductImagesAdapter;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.callbacks.SingleProductCallBack;
 import com.example.online_ethio_gebeya.data.repositories.CartItemRepository;
@@ -36,11 +37,12 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 // detail page for product
 public class ProductFragment extends Fragment implements SingleProductCallBack {
     private FragmentProductBinding binding;
-    private ViewPager viewPager;
     private ProductAdapter adapter;
     private CartItemRepository cartItemRepository;
     private NavController navController;
     private MainActivityCallBackInterface callBackInterface;
+
+    private ProductImagesAdapter productImagesAdapter;
 
     @Nullable
     @Override
@@ -59,6 +61,11 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         cartItemRepository = new CartItemRepository(app);
         cartItemRepository.setAuthorizationToken(callBackInterface.getAuthorizationToken());
 
+        // product images
+        productImagesAdapter = new ProductImagesAdapter(null, requireContext());
+        ViewPager2 pager2 = binding.productImages;
+        pager2.setAdapter(productImagesAdapter);
+
         // we don't need view model here
         adapter = ProductHelper.initRecommendedProducts(this, binding.recommendedProducts);
         adapter.setCallBack(this);
@@ -66,7 +73,6 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
 
         // p-holders
         final Button addToCart = binding.addItemToCart;
-        viewPager = binding.productImages;
 
         // view models
         ProductDetailFragmentViewModel thisViewModel = new ViewModelProvider(this, (
@@ -96,7 +102,6 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         super.onDestroyView();
 
         binding = null;
-        viewPager = null;
         adapter = null;
         cartItemRepository = null;
         navController = null;
@@ -157,9 +162,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         productRate.setBackground(null);
         productRate.setRating(product.getRate());
 
-        // detail
-//        ProductImagesAdapter adapter = new ProductImagesAdapter(requireContext(), product.getImages());
-//        viewPager.setAdapter(adapter);
+        productImagesAdapter.setImagesList(product.getImages());
     }
 
     private void stopShimmer(@NonNull ShimmerFrameLayout shimmerFrameLayout) {

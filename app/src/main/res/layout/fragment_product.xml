@@ -19,7 +19,7 @@
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
-            <androidx.viewpager.widget.ViewPager
+            <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/product_images"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/view_page_height"
