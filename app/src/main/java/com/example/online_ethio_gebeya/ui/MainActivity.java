@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     private MenuItem editProfile, feedback, signOut;
 
     private AppBarConfiguration appBarConfiguration;
+    private String locale;
+    private int fontSize;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,17 +59,24 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences pref = PreferenceHelper.getSharePref(this);
 
-        String lkl = preferences.getString("language", "en");
-        LocaleHelper.setLocale(this, lkl);
+        locale = preferences.getString("language", "en");
+        fontSize = preferences.getInt("font_size", 16);
+        LocaleHelper.setLocale(this, locale);
 
         // listeners
         listener = (sharedPreferences, key) -> {
-            if (key.equals("theme_mode")) {
-                onThemeChange(sharedPreferences);
-            } else if (key.equals("language")) {
-                // set lang first then recreate activity
-                LocaleHelper.setLocale(MainActivity.this, preferences.getString(key, "en"));
-                recreate();
+            switch (key) {
+                case "theme_mode":
+                    onThemeChange(sharedPreferences);
+                    break;
+                case "language":
+                    // set lang first then recreate activity
+                    LocaleHelper.setLocale(MainActivity.this, preferences.getString(key, "en"));
+                    recreate();
+                    break;
+                case "font_size":
+                    fontSize = sharedPreferences.getInt(key, 16);
+                    break;
             }
         };
         customListener = (sharedPreferences, key) -> {
@@ -197,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
 
     @Override
     public int getFontSizeForDescription() {
-        return 0;
+        return fontSize;
     }
 
     @Override
@@ -206,6 +215,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         gmail.setClassName("com.google.android.gm", "com.google.android.gm.ConversationListActivityGmail");
         startActivity(gmail);
         finish();
+    }
+
+    @Override
+    public String getLocale() {
+        return locale;
     }
 
     private void rateApp() {

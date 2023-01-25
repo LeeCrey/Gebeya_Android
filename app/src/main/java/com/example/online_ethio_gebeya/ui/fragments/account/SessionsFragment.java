@@ -61,7 +61,6 @@ public class SessionsFragment extends Fragment {
         loading = binding.progressCircular;
         TextView textView = binding.unlockAccount;
         TextView forgotPassword = binding.forgotPassword;
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 
         // event list...
         signUp.setOnClickListener(v -> navController.navigate(R.id.open_navigation_registrations));
