@@ -77,7 +77,8 @@ public class SessionsFragment extends Fragment {
             if (ApplicationHelper.checkConnection(requireActivity())) {
                 setUiPlace(false);
                 String locale = preferences.getString("language", null);
-                sessionsViewModel.login(locale);
+                String lkl = locale.equals("english") ? "en" : "am";
+                sessionsViewModel.login(lkl);
             }
         });
         afterInputChanged();
