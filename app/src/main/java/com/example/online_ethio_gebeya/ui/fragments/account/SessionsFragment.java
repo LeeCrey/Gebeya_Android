@@ -1,6 +1,5 @@
 package com.example.online_ethio_gebeya.ui.fragments.account;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.preference.PreferenceManager;
 
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
@@ -63,7 +61,7 @@ public class SessionsFragment extends Fragment {
         loading = binding.progressCircular;
         TextView textView = binding.unlockAccount;
         TextView forgotPassword = binding.forgotPassword;
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
 
         // event list...
         signUp.setOnClickListener(v -> navController.navigate(R.id.open_navigation_registrations));
@@ -76,9 +74,7 @@ public class SessionsFragment extends Fragment {
             callBackInterface.checkPermission();
             if (ApplicationHelper.checkConnection(requireActivity())) {
                 setUiPlace(false);
-                String locale = preferences.getString("language", null);
-                String lkl = locale.equals("english") ? "en" : "am";
-                sessionsViewModel.login(lkl);
+                sessionsViewModel.login(callBackInterface.getLocale());
             }
         });
         afterInputChanged();
