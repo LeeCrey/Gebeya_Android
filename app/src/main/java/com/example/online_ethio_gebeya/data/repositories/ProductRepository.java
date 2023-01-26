@@ -67,6 +67,9 @@ public class ProductRepository {
             @Override
             public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
                 // ignore
+                ProductResponse rep = new ProductResponse();
+                rep.setProducts(new ArrayList<>());
+                mProductIndex.postValue(rep);
             }
         });
     }
