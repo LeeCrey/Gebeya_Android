@@ -26,4 +26,8 @@ public class ProductResponse {
     public List<Product> getRecommended() {
         return recommended;
     }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }
