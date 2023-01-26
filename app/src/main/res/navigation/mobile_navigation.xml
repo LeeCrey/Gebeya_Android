@@ -59,6 +59,9 @@
             app:destination="@id/navigation_product"
             app:popUpTo="@id/navigation_product"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_product_to_rateFragment"
+            app:destination="@id/navigation_rate" />
     </fragment>
 
     <fragment
@@ -172,4 +175,13 @@
         android:id="@+id/navigation_profile_edit"
         android:name="com.example.online_ethio_gebeya.ui.fragments.ProfileFragment"
         android:label="@string/edit_profile" />
+    <fragment
+        android:id="@+id/navigation_rate"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.RateFragment"
+        android:label="{productName}"
+        tools:layout="@layout/fragment_rate">
+        <argument
+            android:name="productName"
+            app:argType="string" />
+    </fragment>
 </navigation>
