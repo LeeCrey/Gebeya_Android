@@ -43,6 +43,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
     private MainActivityCallBackInterface callBackInterface;
 
     private ProductImagesAdapter productImagesAdapter;
+    private RatingBar rate;
 
     @Nullable
     @Override
@@ -57,7 +58,8 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         final Application app = requireActivity().getApplication();
         navController = Navigation.findNavController(view);
         callBackInterface = (MainActivityCallBackInterface) requireActivity();
-        final int productId = ProductFragmentArgs.fromBundle(getArguments()).getProductId();
+        ProductFragmentArgs arg = ProductFragmentArgs.fromBundle(getArguments());
+        final int productId = arg.getProductId();
         cartItemRepository = new CartItemRepository(app);
         cartItemRepository.setAuthorizationToken(callBackInterface.getAuthorizationToken());
 
@@ -73,6 +75,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
 
         // p-holders
         final Button addToCart = binding.addItemToCart;
+        rate = binding.productRates;
 
         // view models
         ProductDetailFragmentViewModel thisViewModel = new ViewModelProvider(this, (
@@ -89,7 +92,11 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
 
         // event ...
         addToCart.setOnClickListener(v -> cartItemRepository.addItemToCart(productId, addToCart));
-
+        binding.rateProduct.setOnClickListener(v -> {
+            Bundle parg = new Bundle();
+            parg.putString("productName", arg.getProductName());
+            navController.navigate(R.id.action_navigation_product_to_rateFragment, parg);
+        });
         // observers
         thisViewModel.getShowResponse().observe(getViewLifecycleOwner(), this::setUiData);
 
@@ -106,6 +113,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         cartItemRepository = null;
         navController = null;
         callBackInterface = null;
+        rate = null;
     }
 
     @Override
@@ -158,9 +166,9 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         // rating
         ShimmerFrameLayout ratingShimmer = binding.ratingShimmer;
         stopShimmer(ratingShimmer);
-        RatingBar productRate = binding.productRates;
-        productRate.setBackground(null);
-        productRate.setRating(product.getRate());
+        rate.setBackground(null);
+        rate.setRating(product.getRate());
+        rate.setLongClickable(true);
 
         productImagesAdapter.setImagesList(product.getImages());
     }
