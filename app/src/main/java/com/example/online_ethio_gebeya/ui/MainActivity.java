@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         final int carts = R.id.navigation_carts;
         final int search = R.id.navigation_search;
         final int product = R.id.navigation_product;
+        final int rate = R.id.navigation_rate;
 
         final DrawerLayout drawerLayout = binding.drawerLayout;
         final Toolbar toolbar = binding.toolBar;
@@ -137,23 +138,23 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
             drawerLayout.close();
             return false;
         });
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
-                switch (navDestination.getId()) {
-                    case home:
-                        toolbar.setVisibility(View.VISIBLE);
-                    case carts:
-                    case search:
-                        bottomNavigationView.setVisibility(authorizationToken == null ? View.GONE : View.VISIBLE);
-                        break;
-                    case product:
-                        toolbar.setVisibility(View.GONE);
-                        bottomNavigationView.setVisibility(View.GONE);
-                        break;
-                    default:
-                        bottomNavigationView.setVisibility(View.GONE);
-                }
+        navController.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
+            switch (navDestination.getId()) {
+                case home:
+                case carts:
+                case search:
+                    bottomNavigationView.setVisibility(authorizationToken == null ? View.GONE : View.VISIBLE);
+                    break;
+                case rate:
+                    toolbar.setVisibility(View.VISIBLE);
+                    bottomNavigationView.setVisibility(View.GONE);
+                    break;
+                case product:
+                    toolbar.setVisibility(View.GONE);
+                    bottomNavigationView.setVisibility(View.GONE);
+                    break;
+                default:
+                    bottomNavigationView.setVisibility(View.GONE);
             }
         });
 
@@ -195,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     public void onProductClick(@NonNull Product product) {
         final Bundle args = new Bundle();
         args.putString("productName", product.getName());
-        args.putInt("productId", product.getId());
+        args.putLong("productId", product.getId());
         navController.navigate(R.id.to_product_detail, args);
     }
 
