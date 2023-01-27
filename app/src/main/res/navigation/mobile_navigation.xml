@@ -50,10 +50,6 @@
         <argument
             android:name="productName"
             app:argType="string" />
-        <argument
-            android:name="productId"
-            android:defaultValue="-1"
-            app:argType="integer" />
         <action
             android:id="@+id/action_navigation_product_self"
             app:destination="@id/navigation_product"
@@ -62,6 +58,10 @@
         <action
             android:id="@+id/action_navigation_product_to_rateFragment"
             app:destination="@id/navigation_rate" />
+        <argument
+            android:name="productId"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
 
     <fragment

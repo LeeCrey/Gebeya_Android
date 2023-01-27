@@ -22,7 +22,7 @@ public interface ProductApi {
     // controllers/products_controllers.rb#method => show
     @Headers({"accept: application/json"})
     @GET("products/{id}")
-    Call<ProductShowResponse> show(@Header("Authorization") String token, @Path("id") int productId);
+    Call<ProductShowResponse> show(@Header("Authorization") String token, @Path("id") long productId);
 
     // controllers/products_controller.rb#method => categories
     @Headers({"accept: application/json"})
