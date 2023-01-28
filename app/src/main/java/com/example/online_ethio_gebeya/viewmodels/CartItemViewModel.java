@@ -32,7 +32,7 @@ public class CartItemViewModel extends AndroidViewModel {
     }
 
     // get list
-    public void getCartItems(int cartId) {
+    public void getCartItems(long cartId) {
         repository.getCartItems(cartId, authToken);
     }
 

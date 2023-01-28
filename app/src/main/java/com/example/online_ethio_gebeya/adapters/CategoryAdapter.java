@@ -23,8 +23,8 @@ public class CategoryAdapter extends ListAdapter<Category, CategoryViewHolder> {
     private static final DiffUtil.ItemCallback<Category> DIFF_CALC_CALLBACK = new DiffUtil.ItemCallback<Category>() {
         @Override
         public boolean areItemsTheSame(@NonNull Category oldItem, @NonNull Category newItem) {
-            final int oldItemId = oldItem.getCategoryId();
-            final int newItemId = newItem.getCategoryId();
+            final long oldItemId = oldItem.getCategoryId();
+            final long newItemId = newItem.getCategoryId();
 
             return oldItemId == newItemId;
         }

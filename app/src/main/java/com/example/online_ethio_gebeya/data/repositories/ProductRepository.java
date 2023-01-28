@@ -20,6 +20,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductRepository {
+    private static final String TAG = "ProductRepository";
+
     private final MutableLiveData<ProductResponse> mProductIndex;
     private final MutableLiveData<List<Category>> mCategories;
     private final MutableLiveData<ProductShowResponse> mShowResponse;
@@ -67,6 +69,7 @@ public class ProductRepository {
             @Override
             public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
                 // ignore
+                t.printStackTrace();
                 ProductResponse rep = new ProductResponse();
                 rep.setProducts(new ArrayList<>());
                 mProductIndex.postValue(rep);
@@ -106,7 +109,7 @@ public class ProductRepository {
     }
 
     // show
-    public void getProductDetail(int productId) {
+    public void getProductDetail(long productId) {
         if (showResponseCall != null) {
             showResponseCall.cancel();
         }

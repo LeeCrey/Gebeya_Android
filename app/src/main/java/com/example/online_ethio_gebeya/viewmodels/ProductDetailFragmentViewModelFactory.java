@@ -10,10 +10,10 @@ import com.example.online_ethio_gebeya.data.repositories.ProductRepository;
 
 public class ProductDetailFragmentViewModelFactory implements Factory {
     private final String autToken;
-    private final int productId;
+    private final long productId;
     private final Application application;
 
-    public ProductDetailFragmentViewModelFactory(@NonNull Application application, String autToken, int productId) {
+    public ProductDetailFragmentViewModelFactory(@NonNull Application application, String autToken, long productId) {
         this.autToken = autToken;
         this.productId = productId;
         this.application = application;

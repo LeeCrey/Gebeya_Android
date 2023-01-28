@@ -40,4 +40,8 @@ public class FragmentHomeViewModel extends ProductsViewModel {
             repository.getListFromApi(category.getName());
         }
     }
+
+    public void makeApiRequest(String cat) {
+        repository.getListFromApi(cat);
+    }
 }

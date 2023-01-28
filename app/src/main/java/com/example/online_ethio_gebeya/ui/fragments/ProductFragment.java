@@ -59,7 +59,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         navController = Navigation.findNavController(view);
         callBackInterface = (MainActivityCallBackInterface) requireActivity();
         ProductFragmentArgs arg = ProductFragmentArgs.fromBundle(getArguments());
-        final int productId = arg.getProductId();
+        final long productId = arg.getProductId();
         cartItemRepository = new CartItemRepository(app);
         cartItemRepository.setAuthorizationToken(callBackInterface.getAuthorizationToken());
 
@@ -120,7 +120,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
     public void onProductClick(Product product) {
         Bundle arg = new Bundle();
         arg.putString("productName", product.getName());
-        arg.putInt("productId", product.getId());
+        arg.putLong("productId", product.getId());
         navController.navigate(R.id.action_navigation_product_self, arg);
     }
 

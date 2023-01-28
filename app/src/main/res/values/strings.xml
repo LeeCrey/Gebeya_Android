@@ -124,4 +124,7 @@
     <string name="lbl_new_password">New Password (Optional)</string>
     <string name="lbl_new_password_confirmation">Password Confirmation (Optional)</string>
     <string name="lbl_email_opt">Email (Optional)</string>
+    <string name="rate_this_product">Rate this product</string>
+    <string name="write_comment">Write comment ..</string>
+    <string name="submit">Submit</string>
 </resources>

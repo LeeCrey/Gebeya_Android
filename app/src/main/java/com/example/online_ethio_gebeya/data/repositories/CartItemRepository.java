@@ -44,7 +44,7 @@ public class CartItemRepository {
     }
 
     //    index
-    public void getCartItems(int cartId, String authToken) {
+    public void getCartItems(long cartId, String authToken) {
         if (listCall != null) {
             listCall.cancel();
         }
@@ -66,7 +66,7 @@ public class CartItemRepository {
     }
 
     // add item to cart
-    public void addItemToCart(int productId, Button addToCart) {
+    public void addItemToCart(long productId, Button addToCart) {
         cancelConnection();
 
         addToCart.setEnabled(false);

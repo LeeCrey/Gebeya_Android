@@ -1,14 +1,9 @@
 package com.example.online_ethio_gebeya.models;
 
 public class Shop {
-    private Integer id;
+    private long id;
     private String name;
     private Double latitude, longitude;
-
-    // id
-    public Integer getId() {
-        return id;
-    }
 
     public Shop setId(Integer id) {
         this.id = id;
@@ -43,5 +38,9 @@ public class Shop {
     public Shop setLongitude(Double longitude) {
         this.longitude = longitude;
         return this;
+    }
+
+    public long getId() {
+        return id;
     }
 }

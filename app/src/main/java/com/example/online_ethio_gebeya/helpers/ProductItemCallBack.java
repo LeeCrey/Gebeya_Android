@@ -9,8 +9,8 @@ public class ProductItemCallBack extends DiffUtil.ItemCallback<Product> {
 
     @Override
     public boolean areItemsTheSame(@NonNull Product oldItem, @NonNull Product newItem) {
-        final int oldItemId = oldItem.getId();
-        final int newItemId = newItem.getId();
+        final long oldItemId = oldItem.getId();
+        final long newItemId = newItem.getId();
         return oldItemId == newItemId;
     }
 

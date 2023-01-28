@@ -165,8 +165,8 @@
             app:nullable="true" />
         <argument
             android:name="cartId"
-            android:defaultValue="-1"
-            app:argType="integer" />
+            android:defaultValue="-1L"
+            app:argType="long" />
         <argument
             android:name="merchantId"
             android:defaultValue="-1"

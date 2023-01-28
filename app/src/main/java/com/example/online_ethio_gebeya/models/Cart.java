@@ -6,21 +6,13 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonRootName("cart")
 public class Cart {
     @JsonProperty("id")
-    private Integer id;
+    private long id;
 
     @JsonProperty("name")
     private String name;
 
     @JsonProperty("merchant_id")
     private String merchantId;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -32,5 +24,13 @@ public class Cart {
 
     public String getMerchantId() {
         return merchantId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

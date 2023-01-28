@@ -19,15 +19,15 @@ import retrofit2.http.Query;
 public interface CartItemApi {
     // index
     @GET("carts/{cart_id}/cart_items")
-    Call<List<CartItem>> getCartList(@Header("Authorization") String authorization, @Path("cart_id") int cartId);
+    Call<List<CartItem>> getCartList(@Header("Authorization") String authorization, @Path("cart_id") long cartId);
 
     // create
     @POST("cart_items")
-    Call<CartItemResponse> addItem(@Header("Authorization") String authorization, @Query("product_id") int id);
+    Call<CartItemResponse> addItem(@Header("Authorization") String authorization, @Query("product_id") long id);
 
     // delete
     @DELETE("cart_items/{id}")
-    Call<CartItemResponse> deleteItem(@Header("Authorization") String authorization, @Path("id") int cartItemId);
+    Call<CartItemResponse> deleteItem(@Header("Authorization") String authorization, @Path("id") long cartItemId);
 
     // update
     @PATCH("cart_items/{id}")
