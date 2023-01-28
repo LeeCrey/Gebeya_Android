@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Category {
     @JsonProperty("id")
-    private long categoryId;
+    private Long categoryId;
 
     @JsonProperty("name")
     private String name;
@@ -52,7 +52,7 @@ public class Category {
         isSelected = selected;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
     }
 
