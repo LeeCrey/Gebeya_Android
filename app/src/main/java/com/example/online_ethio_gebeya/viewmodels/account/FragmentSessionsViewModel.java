@@ -16,14 +16,14 @@ import com.example.online_ethio_gebeya.models.FormErrors;
 import com.example.online_ethio_gebeya.models.responses.SessionResponse;
 
 // view model for both login and logout
-public class SessionsViewModel extends AndroidViewModel {
+public class FragmentSessionsViewModel extends AndroidViewModel {
     private final MutableLiveData<FormErrors> mFormErrors;
     private final LiveData<SessionResponse> mSessionResult;
     private final LiveData<SessionResponse> mLogoutResult;
     private final SessionsRepository repository;
     private String email, password;
 
-    public SessionsViewModel(@NonNull Application application) {
+    public FragmentSessionsViewModel(@NonNull Application application) {
         super(application);
 
         repository = new SessionsRepository(application);

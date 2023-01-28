@@ -17,13 +17,13 @@ import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
 import java.util.Map;
 
-public class RegistrationsViewModel extends AndroidViewModel {
+public class FragmentRegistrationsViewModel extends AndroidViewModel {
     protected final MutableLiveData<InstructionsResponse> mRegistrationResponse;
     protected final MutableLiveData<FormErrors> mFormState;
     protected final RegistrationsRepository repository;
     protected Map<String, String> map;
 
-    public RegistrationsViewModel(@NonNull Application application) {
+    public FragmentRegistrationsViewModel(@NonNull Application application) {
         super(application);
 
         repository = new RegistrationsRepository(application);

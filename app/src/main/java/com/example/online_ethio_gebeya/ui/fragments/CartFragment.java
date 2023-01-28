@@ -27,13 +27,13 @@ import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.adapters.CartItemAdapter;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
-import com.example.online_ethio_gebeya.viewmodels.CartItemViewModel;
+import com.example.online_ethio_gebeya.viewmodels.FragmentCartItemViewModel;
 
 // show cart items
 public class CartFragment extends Fragment implements MenuProvider {
     long cartId = -1L;
     private CartItemAdapter cartItemAdapter;
-    private CartItemViewModel cartItemViewModel;
+    private FragmentCartItemViewModel fragmentCartItemViewModel;
     private String merchantId;
     private NavController navController;
 
@@ -46,22 +46,22 @@ public class CartFragment extends Fragment implements MenuProvider {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(view);
-        cartItemViewModel = new ViewModelProvider(this).get(CartItemViewModel.class);
+        fragmentCartItemViewModel = new ViewModelProvider(this).get(FragmentCartItemViewModel.class);
         MainActivityCallBackInterface callBackInterface = (MainActivityCallBackInterface) requireActivity();
 
         // init
         initView(view);
-        cartItemViewModel.init(callBackInterface.getAuthorizationToken());
+        fragmentCartItemViewModel.init(callBackInterface.getAuthorizationToken());
         requireActivity().addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         // observer
-        cartItemViewModel.getCartItemResponse().observe(getViewLifecycleOwner(), cartItemAdapter::updateList);
+        fragmentCartItemViewModel.getCartItemResponse().observe(getViewLifecycleOwner(), cartItemAdapter::updateList);
 
 //        // api
         CartFragmentArgs args = CartFragmentArgs.fromBundle(getArguments());
         cartId = args.getCartId();
         merchantId = args.getMerchantId();
-        cartItemViewModel.getCartItems(cartId);
+        fragmentCartItemViewModel.getCartItems(cartId);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class CartFragment extends Fragment implements MenuProvider {
         super.onDestroyView();
 
         cartItemAdapter = null;
-        cartItemViewModel = null;
+        fragmentCartItemViewModel = null;
         merchantId = null;
         navController = null;
     }
@@ -89,7 +89,7 @@ public class CartFragment extends Fragment implements MenuProvider {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                cartItemViewModel.removeItemFromCart(viewHolder.getAdapterPosition());
+                fragmentCartItemViewModel.removeItemFromCart(viewHolder.getAdapterPosition());
             }
         });
         touchHelper.attachToRecyclerView(recyclerView);

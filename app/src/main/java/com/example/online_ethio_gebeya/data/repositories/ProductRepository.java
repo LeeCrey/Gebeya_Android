@@ -21,12 +21,11 @@ import retrofit2.Response;
 
 public class ProductRepository {
     private static final String TAG = "ProductRepository";
-
     private final MutableLiveData<ProductResponse> mProductIndex;
     private final MutableLiveData<List<Category>> mCategories;
     private final MutableLiveData<ProductShowResponse> mShowResponse;
-
     private final ProductApi api;
+    private Application application;
     private String authorizationToken = null;
     private Call<ProductResponse> productResponseCall;
     private Call<List<Category>> categoryCall;
@@ -34,6 +33,7 @@ public class ProductRepository {
 
     public ProductRepository(@NonNull Application application) {
         api = RetrofitConnectionUtil.getRetrofitInstance(application).create(ProductApi.class);
+
         mProductIndex = new MutableLiveData<>();
         mCategories = new MutableLiveData<>();
         mShowResponse = new MutableLiveData<>();
@@ -147,5 +147,9 @@ public class ProductRepository {
     //
     public void setAuthToken(String authToken) {
         authorizationToken = authToken;
+    }
+
+    public Application getApplication() {
+        return application;
     }
 }

@@ -23,7 +23,7 @@ import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentSessionsBinding;
 import com.example.online_ethio_gebeya.helpers.ApplicationHelper;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
-import com.example.online_ethio_gebeya.viewmodels.account.SessionsViewModel;
+import com.example.online_ethio_gebeya.viewmodels.account.FragmentSessionsViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -34,7 +34,7 @@ public class SessionsFragment extends Fragment {
     private NavController navController;
     private TextInputEditText email, password;
     private TextInputLayout passwordLayout;
-    private SessionsViewModel sessionsViewModel;
+    private FragmentSessionsViewModel fragmentSessionsViewModel;
     private Button signIn;
     private ProgressBar loading;
     private FragmentSessionsBinding binding;
@@ -51,7 +51,7 @@ public class SessionsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         callBackInterface = (MainActivityCallBackInterface) requireActivity();
         navController = Navigation.findNavController(view);
-        sessionsViewModel = new ViewModelProvider(this).get(SessionsViewModel.class);
+        fragmentSessionsViewModel = new ViewModelProvider(this).get(FragmentSessionsViewModel.class);
 
         email = binding.email;
         password = binding.password;
@@ -73,13 +73,13 @@ public class SessionsFragment extends Fragment {
             callBackInterface.checkPermission();
             if (ApplicationHelper.checkConnection(requireActivity())) {
                 setUiPlace(false);
-                sessionsViewModel.login(callBackInterface.getLocale());
+                fragmentSessionsViewModel.login(callBackInterface.getLocale());
             }
         });
         afterInputChanged();
 
         // observers
-        sessionsViewModel.getSessionResult().observe(getViewLifecycleOwner(), sessionResult -> {
+        fragmentSessionsViewModel.getSessionResult().observe(getViewLifecycleOwner(), sessionResult -> {
             if (sessionResult == null) {
                 return;
             }
@@ -94,7 +94,7 @@ public class SessionsFragment extends Fragment {
                 setUiPlace(true);
             }
         });
-        sessionsViewModel.getFormErrors().observe(getViewLifecycleOwner(), errors -> {
+        fragmentSessionsViewModel.getFormErrors().observe(getViewLifecycleOwner(), errors -> {
             if (errors == null) {
                 return;
             }
@@ -126,7 +126,7 @@ public class SessionsFragment extends Fragment {
         super.onPause();
 
         // when from login to signUp and back pressed, it shows previous errors
-        sessionsViewModel.nullifyLiveData();
+        fragmentSessionsViewModel.nullifyLiveData();
     }
 
     @Override
@@ -138,7 +138,7 @@ public class SessionsFragment extends Fragment {
         password = null;
         navController = null;
         callBackInterface = null;
-        sessionsViewModel = null;
+        fragmentSessionsViewModel = null;
         signIn = null;
         loading = null;
         binding = null;
@@ -169,7 +169,7 @@ public class SessionsFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 String emailValue = Objects.requireNonNull(email.getText()).toString();
                 String passwordValue = Objects.requireNonNull(password.getText()).toString();
-                sessionsViewModel.loginInputChanged(requireContext(), emailValue, passwordValue);
+                fragmentSessionsViewModel.loginInputChanged(requireContext(), emailValue, passwordValue);
             }
         };
 

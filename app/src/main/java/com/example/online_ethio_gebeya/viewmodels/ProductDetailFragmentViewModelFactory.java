@@ -23,10 +23,10 @@ public class ProductDetailFragmentViewModelFactory implements Factory {
     @Override
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(ProductDetailFragmentViewModel.class)) {
+        if (modelClass.isAssignableFrom(FragmentProductDetailViewModel.class)) {
             ProductRepository repository = new ProductRepository(application);
             repository.setAuthToken(autToken);
-            return (T) new ProductDetailFragmentViewModel(repository, productId);
+            return (T) new FragmentProductDetailViewModel(repository, productId);
         } else {
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

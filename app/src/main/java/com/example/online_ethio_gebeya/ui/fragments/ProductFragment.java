@@ -30,7 +30,7 @@ import com.example.online_ethio_gebeya.databinding.FragmentProductBinding;
 import com.example.online_ethio_gebeya.helpers.ProductHelper;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.models.responses.ProductShowResponse;
-import com.example.online_ethio_gebeya.viewmodels.ProductDetailFragmentViewModel;
+import com.example.online_ethio_gebeya.viewmodels.FragmentProductDetailViewModel;
 import com.example.online_ethio_gebeya.viewmodels.ProductDetailFragmentViewModelFactory;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
@@ -78,9 +78,9 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         rate = binding.productRates;
 
         // view models
-        ProductDetailFragmentViewModel thisViewModel = new ViewModelProvider(this, (
+        FragmentProductDetailViewModel thisViewModel = new ViewModelProvider(this, (
                 new ProductDetailFragmentViewModelFactory(app, callBackInterface.getAuthorizationToken(), productId)))
-                .get(ProductDetailFragmentViewModel.class);
+                .get(FragmentProductDetailViewModel.class);
 
         // config
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();

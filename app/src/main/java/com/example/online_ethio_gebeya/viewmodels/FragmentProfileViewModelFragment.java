@@ -2,7 +2,6 @@ package com.example.online_ethio_gebeya.viewmodels;
 
 import android.app.Application;
 import android.content.Context;
-import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -11,15 +10,15 @@ import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.helpers.InputHelper;
 import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.models.FormErrors;
-import com.example.online_ethio_gebeya.viewmodels.account.RegistrationsViewModel;
+import com.example.online_ethio_gebeya.viewmodels.account.FragmentRegistrationsViewModel;
 
 import java.io.File;
 import java.util.Map;
 
-public class ProfileFragmentViewModel extends RegistrationsViewModel {
+public class FragmentProfileViewModelFragment extends FragmentRegistrationsViewModel {
     private final LiveData<Customer> oCustomer;
 
-    public ProfileFragmentViewModel(@NonNull Application application) {
+    public FragmentProfileViewModelFragment(@NonNull Application application) {
         super(application);
 
         repository.initForAccountUpdate();

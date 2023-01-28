@@ -1,11 +1,7 @@
 package com.example.online_ethio_gebeya.ui.fragments;
 
-import android.annotation.SuppressLint;
-import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -25,7 +21,7 @@ import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentProfileBinding;
 import com.example.online_ethio_gebeya.models.Customer;
-import com.example.online_ethio_gebeya.viewmodels.ProfileFragmentViewModel;
+import com.example.online_ethio_gebeya.viewmodels.FragmentProfileViewModelFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
@@ -40,7 +36,7 @@ public class ProfileFragment extends Fragment {
     private TextInputEditText firstName, lastName, currentPassword, password, passwordConfirmation;
     private FragmentProfileBinding binding;
     private CircleImageView profile;
-    private ProfileFragmentViewModel viewModel;
+    private FragmentProfileViewModelFragment viewModel;
 
     @Nullable
     @Override
@@ -54,7 +50,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         MainActivityCallBackInterface callBackInterface = (MainActivityCallBackInterface) requireActivity();
 
-        viewModel = new ViewModelProvider(this).get(ProfileFragmentViewModel.class);
+        viewModel = new ViewModelProvider(this).get(FragmentProfileViewModelFragment.class);
 
         //
         final File[] profilePath = {null};

@@ -1,10 +1,9 @@
 package com.example.online_ethio_gebeya.viewmodels;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
+import com.example.online_ethio_gebeya.data.repositories.ProductRepository;
 import com.example.online_ethio_gebeya.models.Category;
 import com.example.online_ethio_gebeya.models.Product;
 
@@ -14,8 +13,8 @@ public class FragmentHomeViewModel extends ProductsViewModel {
     private final LiveData<List<Category>> categoryList;
     private Product currentProduct; // for show
 
-    public FragmentHomeViewModel(@NonNull Application application) {
-        super(application);
+    public FragmentHomeViewModel(@NonNull ProductRepository repository) {
+        super(repository);
 
         categoryList = repository.getCategories();
         repository.makeApiRequestForCategory();

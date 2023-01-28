@@ -1,7 +1,5 @@
 package com.example.online_ethio_gebeya.viewmodels;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -12,12 +10,11 @@ import com.example.online_ethio_gebeya.models.responses.ProductResponse;
 public class ProductsViewModel extends AndroidViewModel {
     private final LiveData<ProductResponse> oProductIndex;
     protected ProductRepository repository;
-    protected String authToken = null;
 
-    public ProductsViewModel(@NonNull Application application) {
-        super(application);
+    public ProductsViewModel(@NonNull ProductRepository _repository) {
+        super(_repository.getApplication());
 
-        repository = new ProductRepository(application);
+        repository = _repository;
         oProductIndex = repository.getProductIndex();
         repository.getListFromApi("all");
     }

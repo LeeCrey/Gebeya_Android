@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +32,7 @@ import com.example.online_ethio_gebeya.helpers.ProductHelper;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.models.responses.ProductResponse;
 import com.example.online_ethio_gebeya.viewmodels.FragmentHomeViewModel;
+import com.example.online_ethio_gebeya.viewmodels.ProductsViewModelFactory;
 
 public class HomeFragment extends Fragment implements MenuProvider, ProductCallBackInterface {
     private SwipeRefreshLayout refreshLayout;
@@ -58,8 +58,10 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(FragmentHomeViewModel.class);
         callBackInterface = (MainActivityCallBackInterface) requireActivity();
+
+        ProductsViewModelFactory factory = new ProductsViewModelFactory(requireActivity().getApplication(), callBackInterface.getAuthorizationToken());
+        viewModel = new ViewModelProvider(this, factory).get(FragmentHomeViewModel.class);
         navController = Navigation.findNavController(view);
 
         //
@@ -83,9 +85,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         viewModel.getCategoryList().observe(getViewLifecycleOwner(), categoryAdapter::setCategories);
 
         // event
-        refreshLayout.setOnRefreshListener(() -> {
-            viewModel.makeApiRequest("all");
-        });
+        refreshLayout.setOnRefreshListener(() -> viewModel.makeApiRequest(categoryAdapter.getSelectedCategoryName()));
 
         // handlers
         handlerThread = new HandlerThread("customUiHandler");

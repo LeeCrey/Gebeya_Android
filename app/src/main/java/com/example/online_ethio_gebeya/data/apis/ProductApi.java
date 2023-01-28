@@ -28,5 +28,4 @@ public interface ProductApi {
     @Headers({"accept: application/json"})
     @GET("categories")
     Call<List<Category>> categories();
-
 }
