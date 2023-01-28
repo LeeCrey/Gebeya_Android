@@ -2,6 +2,7 @@ package com.example.online_ethio_gebeya.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,11 @@ public class CategoryAdapter extends ListAdapter<Category, CategoryViewHolder> {
     }
 
     public String getSelectedCategoryName() {
-        return getItem(selectedCategoryPosition).getName();
+        try {
+            return getItem(selectedCategoryPosition).getName();
+        } catch (Exception ex) {
+            return "all";
+        }
     }
 
     public int getSelectedCategoryPosition() {
