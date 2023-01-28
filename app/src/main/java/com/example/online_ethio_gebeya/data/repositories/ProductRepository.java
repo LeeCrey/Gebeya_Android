@@ -88,7 +88,7 @@ public class ProductRepository {
             @Override
             public void onResponse(@NonNull Call<List<Category>> call, @NonNull Response<List<Category>> response) {
                 Category all = new Category();
-                all.setCategoryId(-1);
+                all.setCategoryId(-1L);
                 all.setName("All");
                 all.setAmharic("ሁሉም");
                 all.setSelected(true);
