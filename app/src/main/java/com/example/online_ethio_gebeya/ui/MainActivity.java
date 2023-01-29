@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -143,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
                 case home:
                 case carts:
                 case search:
+                    toolbar.setVisibility(View.VISIBLE);
                     bottomNavigationView.setVisibility(authorizationToken == null ? View.GONE : View.VISIBLE);
                     break;
                 case rate:
@@ -151,8 +151,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
                     break;
                 case product:
                     toolbar.setVisibility(View.GONE);
-                    bottomNavigationView.setVisibility(View.GONE);
-                    break;
                 default:
                     bottomNavigationView.setVisibility(View.GONE);
             }

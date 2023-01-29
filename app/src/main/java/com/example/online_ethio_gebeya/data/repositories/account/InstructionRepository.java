@@ -22,7 +22,7 @@ public class InstructionRepository {
     private final InstructionsApi api;
     private Call<InstructionsResponse> instructionsResponseCall;
 
-    public InstructionRepository(Application application) {
+    public InstructionRepository(@NonNull Application application) {
         api = RetrofitConnectionUtil.getRetrofitInstance(application).create(InstructionsApi.class);
         mInstructionResponse = new MutableLiveData<>();
     }
@@ -136,5 +136,8 @@ public class InstructionRepository {
                 instructionsResponseCall.cancel();
             }
         }
+    }
+
+    public void setAuthorizationToken(String authToken) {
     }
 }

@@ -95,6 +95,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         binding.rateProduct.setOnClickListener(v -> {
             Bundle parg = new Bundle();
             parg.putString("productName", arg.getProductName());
+            parg.putLong("productId", productId);
             navController.navigate(R.id.action_navigation_product_to_rateFragment, parg);
         });
         // observers

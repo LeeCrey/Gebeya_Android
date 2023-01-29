@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/surface"
     android:padding="@dimen/app_margin"
     tools:context=".ui.fragments.RateFragment">
 
@@ -35,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:autofillHints=""
+        android:background="@color/surface"
         android:gravity="top|start"
         android:hint="@string/write_comment"
         android:inputType="textMultiLine"
@@ -54,6 +54,7 @@
         style="@style/custom_un_elevated_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/comment" />

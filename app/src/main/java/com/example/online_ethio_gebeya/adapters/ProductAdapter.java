@@ -21,7 +21,6 @@ import com.example.online_ethio_gebeya.viewholders.ProductViewHolder;
 import java.util.List;
 
 public class ProductAdapter extends ListAdapter<Product, ProductViewHolder> {
-    private static final String TAG = "ProductAdapter";
     protected final LayoutInflater inflater;
     protected final Activity activity;
     private SingleProductCallBack callBack;
@@ -76,10 +75,6 @@ public class ProductAdapter extends ListAdapter<Product, ProductViewHolder> {
 
     public void setProducts(final List<Product> list) {
         if (list == null) {
-            return;
-        }
-
-        if (list.isEmpty()) {
             return;
         }
 
