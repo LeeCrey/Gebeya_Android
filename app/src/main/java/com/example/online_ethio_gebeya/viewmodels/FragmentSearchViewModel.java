@@ -9,11 +9,11 @@ import androidx.lifecycle.LiveData;
 import com.example.online_ethio_gebeya.data.repositories.ProductRepository;
 import com.example.online_ethio_gebeya.models.responses.ProductResponse;
 
-public class SearchFragmentViewModel extends AndroidViewModel {
+public class FragmentSearchViewModel extends AndroidViewModel {
     private final ProductRepository repository;
     private final LiveData<ProductResponse> mProductResponse;
 
-    public SearchFragmentViewModel(@NonNull Application application) {
+    public FragmentSearchViewModel(@NonNull Application application) {
         super(application);
 
         repository = new ProductRepository(application);

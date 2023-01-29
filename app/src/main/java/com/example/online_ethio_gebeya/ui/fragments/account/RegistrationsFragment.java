@@ -23,7 +23,7 @@ import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentRegistrationsBinding;
 import com.example.online_ethio_gebeya.helpers.ApplicationHelper;
 import com.example.online_ethio_gebeya.models.FormErrors;
-import com.example.online_ethio_gebeya.viewmodels.account.RegistrationsViewModel;
+import com.example.online_ethio_gebeya.viewmodels.account.FragmentRegistrationsViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -36,7 +36,7 @@ public class RegistrationsFragment extends Fragment {
     private TextInputLayout passwordLayout;
     private Button signUp;
     private FragmentRegistrationsBinding binding;
-    private RegistrationsViewModel viewModel;
+    private FragmentRegistrationsViewModel viewModel;
     private ProgressBar loading;
 
     private MainActivityCallBackInterface callBackInterface;
@@ -52,7 +52,7 @@ public class RegistrationsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(RegistrationsViewModel.class);
+        viewModel = new ViewModelProvider(this).get(FragmentRegistrationsViewModel.class);
         navController = Navigation.findNavController(view);
 
         // observer

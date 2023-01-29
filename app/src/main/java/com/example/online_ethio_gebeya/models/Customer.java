@@ -12,7 +12,7 @@ import java.io.File;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Customer {
     @JsonProperty("id")
-    private Integer id;
+    private long id;
 
     @JsonProperty("first_name")
     private String firstName;
@@ -33,7 +33,7 @@ public class Customer {
     private String profileImageUrl;
 
     // update
-    @JsonProperty("profile")
+//    @JsonProperty("profile")
     private File profile;
 
     public String getLastName() {
@@ -103,15 +103,15 @@ public class Customer {
         return this;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
     public File getProfile() {
         return profile;
     }
 
     public void setProfile(File profile) {
         this.profile = profile;
+    }
+
+    public long getId() {
+        return id;
     }
 }

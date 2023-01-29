@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Online Gebeya</string>
-    <string name="base_url" translatable="false">https://gebeya-app.loca.lt</string>
+<!--    <string name="base_url" translatable="false">https://gebeya.up.railway.app/</string>-->
+    <string name="base_url" translatable="false">https://online-gebeya.loca.lt/</string>
 
     <string name="language">Language</string>
     <string name="price_in_ethio">%1$.2f ETB</string>
@@ -124,4 +125,8 @@
     <string name="lbl_new_password">New Password (Optional)</string>
     <string name="lbl_new_password_confirmation">Password Confirmation (Optional)</string>
     <string name="lbl_email_opt">Email (Optional)</string>
+    <string name="rate_this_product">Rate this product</string>
+    <string name="write_comment">Write comment ..</string>
+    <string name="submit">Submit</string>
+    <string name="rating_and_review">Rating and reviews</string>
 </resources>

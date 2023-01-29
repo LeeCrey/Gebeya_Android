@@ -20,7 +20,10 @@ public class CartsAdapter extends ListAdapter<Cart, CartViewHolder> {
     private static final DiffUtil.ItemCallback<Cart> CALL_BACK = new DiffUtil.ItemCallback<Cart>() {
         @Override
         public boolean areItemsTheSame(@NonNull Cart oldItem, @NonNull Cart newItem) {
-            return oldItem.getId().equals(newItem.getId());
+            long old = oldItem.getId();
+            long newCart = newItem.getId();
+
+            return old == newCart;
         }
 
         @Override

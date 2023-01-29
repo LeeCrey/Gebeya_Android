@@ -25,11 +25,11 @@ import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.adapters.CartsAdapter;
 import com.example.online_ethio_gebeya.callbacks.CartCallBackInterface;
 import com.example.online_ethio_gebeya.models.Cart;
-import com.example.online_ethio_gebeya.viewmodels.CartsViewModel;
+import com.example.online_ethio_gebeya.viewmodels.FragmentCartsViewModel;
 
 public class CartsFragment extends Fragment implements MenuProvider, CartCallBackInterface {
     private CartsAdapter cartsAdapter;
-    private CartsViewModel viewModel;
+    private FragmentCartsViewModel viewModel;
     private NavController navController;
     private RecyclerView recyclerView;
 
@@ -42,7 +42,7 @@ public class CartsFragment extends Fragment implements MenuProvider, CartCallBac
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(view);
-        viewModel = new ViewModelProvider(this).get(CartsViewModel.class);
+        viewModel = new ViewModelProvider(this).get(FragmentCartsViewModel.class);
         SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view;
 
         initRecyclerView(view);
@@ -87,7 +87,7 @@ public class CartsFragment extends Fragment implements MenuProvider, CartCallBac
     public void onCartClick(@NonNull Cart cart) {
         Bundle arg = new Bundle();
         arg.putString("cartName", cart.getName());
-        arg.putInt("cartId", cart.getId());
+        arg.putLong("cartId", cart.getId());
         arg.putString("merchantId", cart.getMerchantId());
         navController.navigate(R.id.open_cart_items, arg);
     }

@@ -23,11 +23,11 @@ import com.example.online_ethio_gebeya.callbacks.SearchCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentSearchBinding;
 import com.example.online_ethio_gebeya.helpers.ProductHelper;
 import com.example.online_ethio_gebeya.models.Product;
-import com.example.online_ethio_gebeya.viewmodels.SearchFragmentViewModel;
+import com.example.online_ethio_gebeya.viewmodels.FragmentSearchViewModel;
 
 public class SearchFragment extends Fragment implements MenuProvider, SearchCallBackInterface {
     private MainActivityCallBackInterface callBackInterface;
-    private SearchFragmentViewModel viewModel;
+    private FragmentSearchViewModel viewModel;
     private FragmentSearchBinding binding;
 
     @Override
@@ -42,7 +42,7 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         final FragmentActivity activity = requireActivity();
         callBackInterface = (MainActivityCallBackInterface) activity;
-        viewModel = new ViewModelProvider(this).get(SearchFragmentViewModel.class);
+        viewModel = new ViewModelProvider(this).get(FragmentSearchViewModel.class);
         activity.addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         ProductAdapter productAdapter = ProductHelper.initProducts(this, binding.productsRecyclerView, true, false);

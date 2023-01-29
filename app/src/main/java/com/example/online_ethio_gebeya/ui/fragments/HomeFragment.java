@@ -32,6 +32,7 @@ import com.example.online_ethio_gebeya.helpers.ProductHelper;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.models.responses.ProductResponse;
 import com.example.online_ethio_gebeya.viewmodels.FragmentHomeViewModel;
+import com.example.online_ethio_gebeya.viewmodels.ProductsViewModelFactory;
 
 public class HomeFragment extends Fragment implements MenuProvider, ProductCallBackInterface {
     private SwipeRefreshLayout refreshLayout;
@@ -57,8 +58,10 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(this).get(FragmentHomeViewModel.class);
         callBackInterface = (MainActivityCallBackInterface) requireActivity();
+
+        ProductsViewModelFactory factory = new ProductsViewModelFactory(requireActivity().getApplication(), callBackInterface.getAuthorizationToken());
+        viewModel = new ViewModelProvider(this, factory).get(FragmentHomeViewModel.class);
         navController = Navigation.findNavController(view);
 
         //
@@ -82,7 +85,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         viewModel.getCategoryList().observe(getViewLifecycleOwner(), categoryAdapter::setCategories);
 
         // event
-        refreshLayout.setOnRefreshListener(() -> refreshLayout.setRefreshing(false));
+        refreshLayout.setOnRefreshListener(() -> viewModel.makeApiRequest(categoryAdapter.getSelectedCategoryName()));
 
         // handlers
         handlerThread = new HandlerThread("customUiHandler");
@@ -154,17 +157,25 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
             return;
         }
 
-        trendingAdapter.setProducts(productResponse.getProducts());
+        if (trendingAdapter != null) {
+            trendingAdapter.setProducts(productResponse.getProducts());
+        }
 
         // product list
         productsRunnable = () -> requireActivity().runOnUiThread(() -> {
             refreshLayout.setRefreshing(false);
-            productAdapter.setProducts(productResponse.getProducts());
+            if (productAdapter != null) {
+                productAdapter.setProducts(productResponse.getProducts());
+            }
         });
-        customHandler.postDelayed(productsRunnable, 1_000);
+        customHandler.postDelayed(productsRunnable, 1_500);
 
         // recommended
-        recommendRunnable = () -> requireActivity().runOnUiThread(() -> recommendedAdapter.setProducts(productResponse.getProducts()));
-        customHandler.postDelayed(recommendRunnable, 2_000);
+        recommendRunnable = () -> requireActivity().runOnUiThread(() -> {
+            if (recommendedAdapter != null) {
+                recommendedAdapter.setProducts(productResponse.getProducts());
+            }
+        });
+        customHandler.postDelayed(recommendRunnable, 2_500);
     }
 }

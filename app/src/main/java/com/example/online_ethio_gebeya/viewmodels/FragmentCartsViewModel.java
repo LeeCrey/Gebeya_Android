@@ -11,11 +11,11 @@ import com.example.online_ethio_gebeya.models.Cart;
 
 import java.util.List;
 
-public class CartsViewModel extends AndroidViewModel {
+public class FragmentCartsViewModel extends AndroidViewModel {
     private final CartRepository repository;
     private final LiveData<List<Cart>> cartResponse;
 
-    public CartsViewModel(@NonNull Application application) {
+    public FragmentCartsViewModel(@NonNull Application application) {
         super(application);
 
         repository = new CartRepository(application);

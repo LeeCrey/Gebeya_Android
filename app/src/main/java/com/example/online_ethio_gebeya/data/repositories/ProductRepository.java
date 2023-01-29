@@ -20,11 +20,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductRepository {
+    private static final String TAG = "ProductRepository";
     private final MutableLiveData<ProductResponse> mProductIndex;
     private final MutableLiveData<List<Category>> mCategories;
     private final MutableLiveData<ProductShowResponse> mShowResponse;
-
     private final ProductApi api;
+    private Application application;
     private String authorizationToken = null;
     private Call<ProductResponse> productResponseCall;
     private Call<List<Category>> categoryCall;
@@ -32,6 +33,7 @@ public class ProductRepository {
 
     public ProductRepository(@NonNull Application application) {
         api = RetrofitConnectionUtil.getRetrofitInstance(application).create(ProductApi.class);
+
         mProductIndex = new MutableLiveData<>();
         mCategories = new MutableLiveData<>();
         mShowResponse = new MutableLiveData<>();
@@ -67,6 +69,10 @@ public class ProductRepository {
             @Override
             public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
                 // ignore
+                t.printStackTrace();
+                ProductResponse rep = new ProductResponse();
+                rep.setProducts(new ArrayList<>());
+                mProductIndex.postValue(rep);
             }
         });
     }
@@ -82,7 +88,7 @@ public class ProductRepository {
             @Override
             public void onResponse(@NonNull Call<List<Category>> call, @NonNull Response<List<Category>> response) {
                 Category all = new Category();
-                all.setCategoryId(-1);
+                all.setCategoryId(-1L);
                 all.setName("All");
                 all.setAmharic("ሁሉም");
                 all.setSelected(true);
@@ -103,7 +109,7 @@ public class ProductRepository {
     }
 
     // show
-    public void getProductDetail(int productId) {
+    public void getProductDetail(long productId) {
         if (showResponseCall != null) {
             showResponseCall.cancel();
         }
@@ -141,5 +147,9 @@ public class ProductRepository {
     //
     public void setAuthToken(String authToken) {
         authorizationToken = authToken;
+    }
+
+    public Application getApplication() {
+        return application;
     }
 }

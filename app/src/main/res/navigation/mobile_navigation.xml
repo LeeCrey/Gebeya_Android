@@ -50,15 +50,18 @@
         <argument
             android:name="productName"
             app:argType="string" />
-        <argument
-            android:name="productId"
-            android:defaultValue="-1"
-            app:argType="integer" />
         <action
             android:id="@+id/action_navigation_product_self"
             app:destination="@id/navigation_product"
             app:popUpTo="@id/navigation_product"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_product_to_rateFragment"
+            app:destination="@id/navigation_rate" />
+        <argument
+            android:name="productId"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
 
     <fragment
@@ -111,7 +114,7 @@
         <deepLink
             android:id="@+id/deepLink2"
             android:autoVerify="true"
-            app:uri="https://gebeya-app.loca.lt/customers/unlock?unlock_token={unlockToken}" />
+            app:uri="https://gebeya.loca.lt/customers/unlock?unlock_token={unlockToken}" />
         <argument
             android:name="confirmationToken"
             android:defaultValue="@null"
@@ -125,7 +128,7 @@
         <deepLink
             android:id="@+id/deepLink"
             android:autoVerify="true"
-            app:uri="https://gebeya-app.loca.lt/customers/confirmation?confirmation_token={confirmationToken}" />
+            app:uri="https://gebeya.loca.lt/customers/confirmation?confirmation_token={confirmationToken}" />
     </fragment>
 
     <fragment
@@ -138,17 +141,18 @@
             app:argType="string" />
     </fragment>
 
-
     <fragment
         android:id="@+id/navigation_feedback"
         android:name="com.example.online_ethio_gebeya.ui.fragments.FeedbackFragment"
         android:label="@string/lbl_feedback"
         tools:layout="@layout/fragment_feedback" />
+
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.example.online_ethio_gebeya.ui.fragments.SearchFragment"
         android:label="@string/lbl_search"
         tools:layout="@layout/fragment_search" />
+
     <fragment
         android:id="@+id/navigation_cart_items"
         android:name="com.example.online_ethio_gebeya.ui.fragments.CartFragment"
@@ -161,15 +165,31 @@
             app:nullable="true" />
         <argument
             android:name="cartId"
-            android:defaultValue="-1"
-            app:argType="integer" />
+            android:defaultValue="-1L"
+            app:argType="long" />
         <argument
             android:name="merchantId"
             android:defaultValue="-1"
             app:argType="string" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_profile_edit"
         android:name="com.example.online_ethio_gebeya.ui.fragments.ProfileFragment"
         android:label="@string/edit_profile" />
+
+    <fragment
+        android:id="@+id/navigation_rate"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.RateFragment"
+        android:label="{productName}"
+        tools:layout="@layout/fragment_rate">
+        <argument
+            android:name="productName"
+            app:argType="string" />
+
+        <argument
+            android:name="productId"
+            app:argType="long"
+            android:defaultValue="-1L" />
+    </fragment>
 </navigation>

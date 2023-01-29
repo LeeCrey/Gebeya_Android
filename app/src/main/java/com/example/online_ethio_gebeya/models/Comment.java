@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Comment {
     @JsonProperty("id")
-    private Integer id;
+    private long id;
 
     @JsonProperty("content")
     private String content;
@@ -16,13 +16,13 @@ public class Comment {
         return content;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
     // custom
     @JsonIgnore
     public boolean hasTheSameContent(@NonNull Comment newItem) {
         return content.equals(newItem.getContent());
+    }
+
+    public long getId() {
+        return id;
     }
 }

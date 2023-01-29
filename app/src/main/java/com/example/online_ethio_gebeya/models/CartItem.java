@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class CartItem {
     @JsonProperty("id")
-    private Integer id;
+    private long id;
 
     @JsonProperty("quantity")
     private Integer quantity;
@@ -31,9 +31,6 @@ public class CartItem {
         return product;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
     //    Custom method
     @JsonIgnore
@@ -54,5 +51,9 @@ public class CartItem {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    public long getId() {
+        return id;
     }
 }

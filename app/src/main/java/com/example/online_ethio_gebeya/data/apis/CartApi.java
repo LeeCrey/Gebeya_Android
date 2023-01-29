@@ -16,7 +16,7 @@ public interface CartApi {
 
     @Headers({"accept: application/json"})
     @DELETE("carts/{id}")
-    Call<CartResponse> delete(@Header("Authorization") String header, @Path("id") int cartId);
+    Call<CartResponse> delete(@Header("Authorization") String header, @Path("id") long cartId);
 
     @Headers({"accept: application/json"})
     @DELETE("carts")

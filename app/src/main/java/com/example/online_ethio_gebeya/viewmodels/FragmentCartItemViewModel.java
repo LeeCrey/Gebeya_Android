@@ -11,12 +11,12 @@ import com.example.online_ethio_gebeya.models.CartItem;
 
 import java.util.List;
 
-public class CartItemViewModel extends AndroidViewModel {
+public class FragmentCartItemViewModel extends AndroidViewModel {
     private final CartItemRepository repository;
     private final LiveData<List<CartItem>> oCartItemList;
     private String authToken = null;
 
-    public CartItemViewModel(@NonNull Application application) {
+    public FragmentCartItemViewModel(@NonNull Application application) {
         super(application);
 
         repository = new CartItemRepository(application);
@@ -32,7 +32,7 @@ public class CartItemViewModel extends AndroidViewModel {
     }
 
     // get list
-    public void getCartItems(int cartId) {
+    public void getCartItems(long cartId) {
         repository.getCartItems(cartId, authToken);
     }
 

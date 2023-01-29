@@ -14,7 +14,7 @@ import java.util.Objects;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Product {
     @JsonProperty("id")
-    private Integer id;
+    private Long id;
 
     @JsonProperty("quantity")
     private Integer quantity;
@@ -47,11 +47,6 @@ public class Product {
     private Integer numberOfRates;
 
     public Product() {
-    }
-
-    // id
-    public Integer getId() {
-        return id;
     }
 
     // name
@@ -119,5 +114,9 @@ public class Product {
 
     public String getThumbnail() {
         return images.get(0);
+    }
+
+    public Long getId() {
+        return id;
     }
 }

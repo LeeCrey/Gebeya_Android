@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModel;
 import com.example.online_ethio_gebeya.data.repositories.ProductRepository;
 import com.example.online_ethio_gebeya.models.responses.ProductShowResponse;
 
-public class ProductDetailFragmentViewModel extends ViewModel {
+public class FragmentProductDetailViewModel extends ViewModel {
     private final LiveData<ProductShowResponse> showResponse;
     private final ProductRepository productRepository;
-    private final int productId;
+    private final long productId;
 
-    public ProductDetailFragmentViewModel(@NonNull ProductRepository repository, int productId) {
+    public FragmentProductDetailViewModel(@NonNull ProductRepository repository, long productId) {
         productRepository = repository;
         showResponse = productRepository.getShowResponse();
         this.productId = productId;

@@ -18,4 +18,6 @@ public interface MainActivityCallBackInterface {
     int getFontSizeForDescription();
 
     void openEmailApp();
+
+    String getLocale();
 }
