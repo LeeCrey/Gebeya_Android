@@ -186,5 +186,10 @@
         <argument
             android:name="productName"
             app:argType="string" />
+
+        <argument
+            android:name="productId"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
 </navigation>
