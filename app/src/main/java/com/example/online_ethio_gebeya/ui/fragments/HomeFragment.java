@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.online_ethio_gebeya.R;
@@ -50,6 +52,9 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
     private FragmentHomeViewModel viewModel;
     private CategoryAdapter categoryAdapter;
 
+    private RecyclerView trendingRecycler;
+    private TextView trendingTxt;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,11 +73,13 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
 
         //
         refreshLayout = binding.refreshLayout;
+        trendingTxt = binding.trending;
 
+        trendingRecycler = binding.trendingProductList;
         // init
         requireActivity().addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
         refreshLayout.setRefreshing(true);
-        trendingAdapter = ProductHelper.initTrending(this, binding.trendingProductList);
+        trendingAdapter = ProductHelper.initTrending(this, trendingRecycler);
         trendingAdapter.setCallBack(this);
         categoryAdapter = ProductHelper.initCategory(view, requireActivity());
         categoryAdapter.setCallBack(this);
@@ -116,6 +123,8 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         callBackInterface = null;
         viewModel = null;
         categoryAdapter = null;
+        trendingRecycler = null;
+        trendingTxt = null;
     }
 
     @Override
@@ -161,9 +170,12 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
 
         if (trendingAdapter != null) {
             List<Product> tList = productResponse.getTrending();
+            int v = View.VISIBLE;
             if (tList.isEmpty()) {
-                // hide
+                v = View.GONE;
             }
+            trendingTxt.setVisibility(v);
+            trendingRecycler.setVisibility(v);
             trendingAdapter.setProducts(tList);
         }
 
@@ -177,11 +189,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         // recommended
         recommendRunnable = () -> requireActivity().runOnUiThread(() -> {
             if (recommendedAdapter != null) {
-                List<Product> recList = productResponse.getRecommended();
-                if (recList.isEmpty()) {
-                    // hide
-                }
-                recommendedAdapter.setProducts(recList);
+                recommendedAdapter.setProducts(productResponse.getRecommended());
             }
         });
         customHandler.postDelayed(recommendRunnable, 3_000);
