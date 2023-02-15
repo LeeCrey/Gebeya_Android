@@ -151,7 +151,11 @@
         android:id="@+id/navigation_search"
         android:name="com.example.online_ethio_gebeya.ui.fragments.SearchFragment"
         android:label="@string/lbl_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/to_product_detail"
+            app:destination="@id/navigation_product" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_cart_items"

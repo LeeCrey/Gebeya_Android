@@ -31,8 +31,7 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
     private FragmentSearchBinding binding;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(inflater);
 
         return binding.getRoot();
@@ -87,6 +86,6 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
 
     @Override
     public void onProductClick(Product product) {
-
+        ((MainActivityCallBackInterface) requireActivity()).onProductClick(product);
     }
 }
