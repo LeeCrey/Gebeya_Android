@@ -13,6 +13,11 @@
             android:id="@+id/navigation_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/settings" />
+
+        <item
+            android:id="@+id/navigation_orders"
+            android:icon="@drawable/ic_cart_filled"
+            android:title="@string/lbl_orders" />
     </group>
 
     <item android:title="@string/others">

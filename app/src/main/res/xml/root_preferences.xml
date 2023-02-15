@@ -7,6 +7,7 @@
             app:defaultValue="@string/auto"
             app:entries="@array/theme_entries"
             app:entryValues="@array/theme_values"
+            app:icon="@drawable/ic_nyt_mode"
             app:key="theme_mode"
             app:title="@string/night_mode"
             app:useSimpleSummaryProvider="true" />
@@ -15,6 +16,7 @@
             app:defaultValue="en"
             app:entries="@array/language_entries"
             app:entryValues="@array/language_values"
+            app:icon="@drawable/ic_language"
             app:key="language"
             app:title="@string/language"
             app:useSimpleSummaryProvider="true" />
@@ -22,6 +24,7 @@
         <SeekBarPreference
             android:max="20"
             app:defaultValue="16"
+            app:icon="@drawable/ic_font_size"
             app:key="font_size"
             app:min="14"
             app:showSeekBarValue="true"
@@ -30,26 +33,4 @@
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/shop_location">
-
-        <ListPreference
-            app:defaultValue="@string/normal"
-            app:entries="@array/map_entries"
-            app:entryValues="@array/map_value"
-            app:key="map_type"
-            app:title="@string/map_type_title"
-            app:useSimpleSummaryProvider="true" />
-
-        <SeekBarPreference
-            android:max="20"
-            app:defaultValue="16"
-            app:key="zoom_level"
-            app:min="6"
-            app:showSeekBarValue="true"
-            app:summary="@string/map_zoom_level"
-            app:title="@string/map_z_level"
-            app:useSimpleSummaryProvider="true" />
-    </PreferenceCategory>
-
 </PreferenceScreen>
