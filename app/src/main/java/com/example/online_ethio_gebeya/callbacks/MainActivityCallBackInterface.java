@@ -13,8 +13,6 @@ public interface MainActivityCallBackInterface {
 
     void onProductClick(@NonNull Product product);
 
-    String getMapType();
-
     int getFontSizeForDescription();
 
     void openEmailApp();

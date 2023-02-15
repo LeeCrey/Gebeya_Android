@@ -1,8 +1,10 @@
 package com.example.online_ethio_gebeya.ui;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     private SharedPreferences.OnSharedPreferenceChangeListener listener;
     private SharedPreferences.OnSharedPreferenceChangeListener customListener;
     private SharedPreferences preferences;
-    private MenuItem editProfile, feedback, signOut;
+    private MenuItem editProfile, feedback, signOut, order;
 
     private AppBarConfiguration appBarConfiguration;
     private String locale;
@@ -120,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         editProfile = menu.findItem(R.id.navigation_profile_edit);
         feedback = menu.findItem(R.id.navigation_feedback);
         signOut = menu.findItem(R.id.logout);
+        order = menu.findItem(R.id.navigation_orders);
 
         // event
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -199,11 +202,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     }
 
     @Override
-    public String getMapType() {
-        return null;
-    }
-
-    @Override
     public int getFontSizeForDescription() {
         return fontSize;
     }
@@ -222,13 +220,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     }
 
     private void rateApp() {
-        final String pkgName = "com.example.online_ethio_gebeya";
-        final String appStoreUrl = "https://play.google.com/store/apps/details?id=" + pkgName;
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, appStoreUrl);
-        sendIntent.setType("text/plain");
-        startActivity(Intent.createChooser(sendIntent, appStoreUrl));
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName())));
+        }
     }
 
     private void shareApp() {
@@ -273,5 +269,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         editProfile.setVisible(visibility);
         signOut.setVisible(visibility);
         feedback.setVisible(visibility);
+        order.setVisible(visibility);
     }
 }

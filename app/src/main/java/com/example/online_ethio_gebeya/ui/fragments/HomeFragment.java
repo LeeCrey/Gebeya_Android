@@ -34,6 +34,8 @@ import com.example.online_ethio_gebeya.models.responses.ProductResponse;
 import com.example.online_ethio_gebeya.viewmodels.FragmentHomeViewModel;
 import com.example.online_ethio_gebeya.viewmodels.ProductsViewModelFactory;
 
+import java.util.List;
+
 public class HomeFragment extends Fragment implements MenuProvider, ProductCallBackInterface {
     private SwipeRefreshLayout refreshLayout;
     private FragmentHomeBinding binding;
@@ -158,24 +160,30 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         }
 
         if (trendingAdapter != null) {
-            trendingAdapter.setProducts(productResponse.getProducts());
+            List<Product> tList = productResponse.getTrending();
+            if (tList.isEmpty()) {
+                // hide
+            }
+            trendingAdapter.setProducts(tList);
         }
 
         // product list
         productsRunnable = () -> requireActivity().runOnUiThread(() -> {
             refreshLayout.setRefreshing(false);
-            if (productAdapter != null) {
-                productAdapter.setProducts(productResponse.getProducts());
-            }
+            productAdapter.setProducts(productResponse.getProducts());
         });
-        customHandler.postDelayed(productsRunnable, 1_500);
+        customHandler.postDelayed(productsRunnable, 2_000);
 
         // recommended
         recommendRunnable = () -> requireActivity().runOnUiThread(() -> {
             if (recommendedAdapter != null) {
-                recommendedAdapter.setProducts(productResponse.getProducts());
+                List<Product> recList = productResponse.getRecommended();
+                if (recList.isEmpty()) {
+                    // hide
+                }
+                recommendedAdapter.setProducts(recList);
             }
         });
-        customHandler.postDelayed(recommendRunnable, 2_500);
+        customHandler.postDelayed(recommendRunnable, 3_000);
     }
 }
