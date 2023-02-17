@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     }
 
     @Override
-    public void openLocation(float latitude, float longitude) {
+    public void openLocation(double latitude, double longitude) {
         @SuppressLint("DefaultLocale") String ggl = String.format("google.navigation:q=%f,%f", latitude, longitude);
         Uri gmmIntentUri = Uri.parse(ggl);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);

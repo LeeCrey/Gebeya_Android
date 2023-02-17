@@ -26,7 +26,7 @@ public interface CartItemApi {
     // create
     @Headers("accept: application/json")
     @POST("cart_items")
-    Call<CartItemResponse> addItem(@Header("Authorization") String authorization, @Query("product_id") long id);
+    Call<CartItemResponse> addItem(@Header("Authorization") String authorization, @Query("product_id") long id, @Query("quantity") int gt);
 
     // delete
     @Headers("accept: application/json")

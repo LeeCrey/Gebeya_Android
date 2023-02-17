@@ -66,11 +66,11 @@ public class CartItemRepository {
     }
 
     // add item to cart
-    public void addItemToCart(long productId, Button addToCart) {
+    public void addItemToCart(long productId, Button addToCart, @NonNull Integer value) {
         cancelConnection();
 
         addToCart.setEnabled(false);
-        cartItemResponseCall = api.addItem(authorizationToken, productId);
+        cartItemResponseCall = api.addItem(authorizationToken, productId, value);
         cartItemResponseCall.enqueue(new Callback<CartItemResponse>() {
             @Override
             public void onResponse(@NonNull Call<CartItemResponse> call, @NonNull Response<CartItemResponse> response) {

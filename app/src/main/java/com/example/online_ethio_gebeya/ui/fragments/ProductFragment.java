@@ -9,15 +9,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -48,13 +51,13 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
     private CartItemRepository cartItemRepository;
     private NavController navController;
     private MainActivityCallBackInterface callBackInterface;
-
     private ProductImagesAdapter productImagesAdapter;
     private RatingBar rate;
     private Product product;
     private SpeedDialView btn;
-
     private CommentAdapter commentAdapter;
+    private Button addToCart;
+    private FragmentProductDetailViewModel viewModel;
 
     @Nullable
     @Override
@@ -87,12 +90,15 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         NavController navController = Navigation.findNavController(view);
 
         // p-holders
-        final Button addToCart = binding.addItemToCart;
+        addToCart = binding.addItemToCart;
         rate = binding.productRates;
         btn = binding.speedDial;
+        TextView quantity = binding.quantity;
+        Button incrementBtn = binding.incrementBtn;
+        Button decrementBtn = binding.decrementBtn;
 
         // view models
-        FragmentProductDetailViewModel viewModel = new ViewModelProvider(this, (
+        viewModel = new ViewModelProvider(this, (
                 new ProductDetailFragmentViewModelFactory(app, callBackInterface.getAuthorizationToken(), productId)))
                 .get(FragmentProductDetailViewModel.class);
 
@@ -101,26 +107,33 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
         // event ...
-        addToCart.setOnClickListener(v -> cartItemRepository.addItemToCart(productId, addToCart));
+        addToCart.setOnClickListener(v -> cartItemRepository.addItemToCart(productId, addToCart, viewModel.getQuantity().getValue()));
         btn.inflate(R.menu.floating_menu);
-        // remove if unauthorized
-        if (callBackInterface.getAuthorizationToken() == null) {
-            btn.removeActionItem(0);
-        } else {
-            addToCart.setVisibility(View.VISIBLE);
-        }
-
         btn.setOnActionSelectedListener(actionItem -> {
             if (actionItem.getId() == R.id.location) {
-                callBackInterface.openLocation(6.048946f, 37.554239f);
+                callBackInterface.openLocation(product.getShop().getLatitude(), product.getShop().getLongitude());
             } else {
                 openRateProduct(arg);
             }
             return false;
         });
+        incrementBtn.setOnClickListener(v -> viewModel.increment());
+        decrementBtn.setOnClickListener(v -> viewModel.decrement());
+        // remove if unauthorized
+        if (callBackInterface.getAuthorizationToken() == null) {
+            btn.removeActionItem(0);
+            incrementBtn.setVisibility(View.GONE);
+            quantity.setVisibility(View.GONE);
+            decrementBtn.setVisibility(View.GONE);
+        }
 
         // observers
         viewModel.getShowResponse().observe(getViewLifecycleOwner(), this::setUiData);
+        viewModel.getQuantity().observe(getViewLifecycleOwner(), integer -> {
+            quantity.setText(String.valueOf(integer));
+            incrementBtn.setEnabled(viewModel.isIncrement());
+            decrementBtn.setEnabled(viewModel.isDecrement());
+        });
 
         // request
         viewModel.getProductDetail();
@@ -135,10 +148,13 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         cartItemRepository = null;
         navController = null;
         callBackInterface = null;
+        productImagesAdapter = null;
         rate = null;
         product = null;
         btn = null;
         commentAdapter = null;
+        addToCart = null;
+        viewModel = null;
     }
 
     @Override
@@ -161,18 +177,23 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         adapter.setProducts(productShowResponse.getRelatedProducts());
         // comments
         List<Comment> commentList = productShowResponse.getComments();
+        int v = View.VISIBLE;
         if (commentList.isEmpty()) {
-            int v = View.GONE;
-            binding.ratingAndReview.setVisibility(v);
-            binding.seeAll.setVisibility(v);
+            v = View.GONE;
         } else {
             commentAdapter.setCommentList(commentList);
         }
+        binding.ratingAndReview.setVisibility(v);
+        binding.seeAll.setVisibility(v);
     }
 
     private void setData(Product product) {
         if (product == null) {
             return;
+        }
+
+        if (callBackInterface.getAuthorizationToken() != null) {
+            addToCart.setVisibility(View.VISIBLE);
         }
 
         this.product = product;
@@ -222,6 +243,9 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         rate.setRating(product.getRate());
         rate.setLongClickable(true);
 
+        binding.incrementBtn.setEnabled(true);
+        //
+        viewModel.setProductQuantity(product.getQuantity());
         productImagesAdapter.setImagesList(product.getImages());
     }
 
@@ -240,6 +264,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
     private void initComment() {
         RecyclerView comments = binding.comments;
         comments.setLayoutManager(new LinearLayoutManager(requireContext()));
+
         commentAdapter = new CommentAdapter(requireActivity());
         comments.setAdapter(commentAdapter);
     }

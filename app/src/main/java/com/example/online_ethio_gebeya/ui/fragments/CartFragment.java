@@ -104,17 +104,9 @@ public class CartFragment extends Fragment implements MenuProvider {
     public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
         final int id = menuItem.getItemId();
         if (id == R.id.check_out) {
-//            Bundle arg = new Bundle();
-//            arg.putInt("cartId", cartId);
-//            navController.navigate(R.id.action_navigation_cart_to_checkoutFragment, arg);
             String baseUrl = getString(R.string.base_url) + "/carts/" + cartId;
             String auth = PreferenceHelper.getAuthToken(requireContext());
-
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl));
-            Bundle bundle = new Bundle();
-            bundle.putString("Authorization", auth);
-            browserIntent.putExtra(Browser.EXTRA_HEADERS, bundle);
-            startActivity(browserIntent);
+            // open dialog to order
         }
 
         return false;

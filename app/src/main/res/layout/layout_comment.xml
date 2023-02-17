@@ -11,7 +11,10 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="2dp"
+        android:clickable="true"
+        android:focusable="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,8 +34,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/roboto_black"
+                android:fontFamily="@font/roboto_regular"
                 android:text="@{comment.customer.fullName}"
                 android:textAlignment="textStart"
                 android:textSize="16sp"
@@ -44,12 +46,13 @@
                 android:id="@+id/created_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
                 android:text="@{comment.createdDate}"
                 android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/customer_image" />
+                app:layout_constraintStart_toEndOf="@id/customer_image"
+                app:layout_constraintTop_toBottomOf="@id/full_name" />
 
             <TextView
                 android:id="@+id/comment_content"

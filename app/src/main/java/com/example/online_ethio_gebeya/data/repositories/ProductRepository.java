@@ -22,7 +22,7 @@ import retrofit2.Response;
 
 public class ProductRepository {
     private static final String TAG = "ProductRepository";
-    
+
     private final MutableLiveData<ProductResponse> mProductIndex;
     private final MutableLiveData<List<Category>> mCategories;
     private final MutableLiveData<ProductShowResponse> mShowResponse;
@@ -66,6 +66,8 @@ public class ProductRepository {
             public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
                 if (response.isSuccessful()) {
                     mProductIndex.postValue(response.body());
+                } else {
+                    setEmptyProductList();
                 }
             }
 
@@ -73,9 +75,7 @@ public class ProductRepository {
             public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
                 // ignore
                 t.printStackTrace();
-                ProductResponse rep = new ProductResponse();
-                rep.setProducts(new ArrayList<>());
-                mProductIndex.postValue(rep);
+                setEmptyProductList();
             }
         });
     }
@@ -172,5 +172,11 @@ public class ProductRepository {
 
     public Application getApplication() {
         return application;
+    }
+
+    private void setEmptyProductList() {
+        ProductResponse rep = new ProductResponse();
+        rep.setProducts(new ArrayList<>());
+        mProductIndex.postValue(rep);
     }
 }
