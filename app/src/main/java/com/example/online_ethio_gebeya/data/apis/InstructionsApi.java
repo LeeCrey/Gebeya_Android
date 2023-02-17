@@ -9,6 +9,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface InstructionsApi {
@@ -29,4 +31,9 @@ public interface InstructionsApi {
     @Headers("accept: application/json")
     @POST("feedbacks")
     Call<InstructionsResponse> sendFeedback(@Header("Authorization") String header, @Body String feedback);
+
+    @Headers("accept: application/json")
+    @POST("products/{id}/comments")
+    Call<InstructionsResponse> sendRatingAndComment(@Header("Authorization") String header, @Path("id") long id,
+                                                    @Query("message") String cmd, @Query("weight") float weight);
 }

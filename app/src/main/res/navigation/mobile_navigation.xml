@@ -18,16 +18,17 @@
             app:destination="@id/navigation_product" />
         <action
             android:id="@+id/open_sessions"
-            app:destination="@id/navigation_sessions" />
+            app:destination="@id/navigation_sessions"
+            app:enterAnim="@anim/to_left"
+            app:exitAnim="@anim/from_right"
+            app:popEnterAnim="@anim/to_right"
+            app:popExitAnim="@anim/from_left" />
         <action
             android:id="@+id/action_navigation_home_to_feedbackFragment"
             app:destination="@id/navigation_feedback" />
         <action
             android:id="@+id/open_profile_edit"
             app:destination="@id/navigation_profile_edit" />
-        <action
-            android:id="@+id/action_navigation_home_to_ordersFragment"
-            app:destination="@id/navigation_orders" />
     </fragment>
 
     <fragment

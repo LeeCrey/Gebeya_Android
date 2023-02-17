@@ -5,21 +5,28 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.BindingAdapter;
 
 import com.example.online_ethio_gebeya.R;
+import com.example.online_ethio_gebeya.models.Product;
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 
 public class ApplicationHelper {
     private static final int GRANTED = PackageManager.PERMISSION_GRANTED;
@@ -102,6 +109,30 @@ public class ApplicationHelper {
             Toast.makeText(context.getApplicationContext(), "go to settings and give permission.", Toast.LENGTH_SHORT).show();
         } else {
             ActivityCompat.requestPermissions(context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE);
+        }
+    }
+
+    // for view
+
+    @BindingAdapter("attachImageToView")
+    public static void attachImage(@NonNull ImageView view, @NonNull String url) {
+        Picasso.get().load(url)
+                .error(R.drawable.load_error)
+                .into(view);
+    }
+
+    @BindingAdapter("setStrikeThroughText")
+    public static void makeStrikeThrough(@NonNull TextView textView, Product product) {
+        if (product == null) {
+            return;
+        }
+
+        textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        if (product.getDiscount() != null) {
+            String oldP = String.valueOf(product.getPrice());
+            textView.setText(oldP);
+            textView.setVisibility(View.VISIBLE);
         }
     }
 }

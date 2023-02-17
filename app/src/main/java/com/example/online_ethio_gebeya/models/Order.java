@@ -9,7 +9,7 @@ public class Order {
     @JsonProperty("status")
     private String status;
 
-    @JsonProperty("shop_name")
+    @JsonProperty("name")
     private String shopName;
 
     public Long getId() {

@@ -1,4 +1,4 @@
-package com.example.online_ethio_gebeya.helpers;
+package com.example.online_ethio_gebeya.helpers.diff_calc;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;

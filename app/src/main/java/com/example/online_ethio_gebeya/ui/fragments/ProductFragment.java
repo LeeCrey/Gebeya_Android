@@ -18,9 +18,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.online_ethio_gebeya.R;
+import com.example.online_ethio_gebeya.adapters.CommentAdapter;
 import com.example.online_ethio_gebeya.adapters.ProductAdapter;
 import com.example.online_ethio_gebeya.adapters.ProductImagesAdapter;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
@@ -28,11 +31,15 @@ import com.example.online_ethio_gebeya.callbacks.SingleProductCallBack;
 import com.example.online_ethio_gebeya.data.repositories.CartItemRepository;
 import com.example.online_ethio_gebeya.databinding.FragmentProductBinding;
 import com.example.online_ethio_gebeya.helpers.ProductHelper;
+import com.example.online_ethio_gebeya.models.Comment;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.models.responses.ProductShowResponse;
 import com.example.online_ethio_gebeya.viewmodels.FragmentProductDetailViewModel;
 import com.example.online_ethio_gebeya.viewmodels.ProductDetailFragmentViewModelFactory;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.leinardi.android.speeddial.SpeedDialView;
+
+import java.util.List;
 
 // detail page for product
 public class ProductFragment extends Fragment implements SingleProductCallBack {
@@ -44,6 +51,10 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
 
     private ProductImagesAdapter productImagesAdapter;
     private RatingBar rate;
+    private Product product;
+    private SpeedDialView btn;
+
+    private CommentAdapter commentAdapter;
 
     @Nullable
     @Override
@@ -60,6 +71,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         callBackInterface = (MainActivityCallBackInterface) requireActivity();
         ProductFragmentArgs arg = ProductFragmentArgs.fromBundle(getArguments());
         final long productId = arg.getProductId();
+
         cartItemRepository = new CartItemRepository(app);
         cartItemRepository.setAuthorizationToken(callBackInterface.getAuthorizationToken());
 
@@ -71,14 +83,16 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         // we don't need view model here
         adapter = ProductHelper.initRecommendedProducts(this, binding.recommendedProducts);
         adapter.setCallBack(this);
+        initComment();
         NavController navController = Navigation.findNavController(view);
 
         // p-holders
         final Button addToCart = binding.addItemToCart;
         rate = binding.productRates;
+        btn = binding.speedDial;
 
         // view models
-        FragmentProductDetailViewModel thisViewModel = new ViewModelProvider(this, (
+        FragmentProductDetailViewModel viewModel = new ViewModelProvider(this, (
                 new ProductDetailFragmentViewModelFactory(app, callBackInterface.getAuthorizationToken(), productId)))
                 .get(FragmentProductDetailViewModel.class);
 
@@ -86,23 +100,30 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
-        if (callBackInterface.getAuthorizationToken() != null) {
+        // event ...
+        addToCart.setOnClickListener(v -> cartItemRepository.addItemToCart(productId, addToCart));
+        btn.inflate(R.menu.floating_menu);
+        // remove if unauthorized
+        if (callBackInterface.getAuthorizationToken() == null) {
+            btn.removeActionItem(0);
+        } else {
             addToCart.setVisibility(View.VISIBLE);
         }
 
-        // event ...
-        addToCart.setOnClickListener(v -> cartItemRepository.addItemToCart(productId, addToCart));
-        binding.rateProduct.setOnClickListener(v -> {
-            Bundle parg = new Bundle();
-            parg.putString("productName", arg.getProductName());
-            parg.putLong("productId", productId);
-            navController.navigate(R.id.action_navigation_product_to_rateFragment, parg);
+        btn.setOnActionSelectedListener(actionItem -> {
+            if (actionItem.getId() == R.id.location) {
+                callBackInterface.openLocation(6.048946f, 37.554239f);
+            } else {
+                openRateProduct(arg);
+            }
+            return false;
         });
+
         // observers
-        thisViewModel.getShowResponse().observe(getViewLifecycleOwner(), this::setUiData);
+        viewModel.getShowResponse().observe(getViewLifecycleOwner(), this::setUiData);
 
         // request
-        thisViewModel.getProductDetail();
+        viewModel.getProductDetail();
     }
 
     @Override
@@ -115,6 +136,9 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         navController = null;
         callBackInterface = null;
         rate = null;
+        product = null;
+        btn = null;
+        commentAdapter = null;
     }
 
     @Override
@@ -131,9 +155,19 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
             return;
         }
 
+        // current product
         setData(productShowResponse.getProduct());
-//        adapter.setFLAG(2); // does not matter
+        // related products
         adapter.setProducts(productShowResponse.getRelatedProducts());
+        // comments
+        List<Comment> commentList = productShowResponse.getComments();
+        if (commentList.isEmpty()) {
+            int v = View.GONE;
+            binding.ratingAndReview.setVisibility(v);
+            binding.seeAll.setVisibility(v);
+        } else {
+            commentAdapter.setCommentList(commentList);
+        }
     }
 
     private void setData(Product product) {
@@ -141,32 +175,49 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
             return;
         }
 
+        this.product = product;
+        btn.setVisibility(View.VISIBLE);
+
+        // shop
+        TextView shopName = binding.shopNameValue;
+        stopShimmer(binding.shopShimmer);
+        shopName.setBackground(null);
+        shopName.setText(product.getShop().getName());
+
         // origin
         ShimmerFrameLayout originShimmer = binding.productOriginShimmer;
         stopShimmer(originShimmer);
         TextView productOrigin = binding.productOrigin;
-        productOrigin.setBackground(null);
-        productOrigin.setText(product.getOrigin());
+        TextView origin = binding.origin;
+        if (product.getOrigin() == null) {
+            originShimmer.setVisibility(View.GONE);
+            origin.setVisibility(View.GONE);
+        } else {
+            if (product.getOrigin().trim().isEmpty()) {
+                originShimmer.setVisibility(View.GONE);
+                origin.setVisibility(View.GONE);
+            } else {
+                productOrigin.setBackground(null);
+                productOrigin.setText(product.getOrigin());
+            }
+        }
 
         // price
-        ShimmerFrameLayout priceShimmer = binding.priceShimmer;
-        stopShimmer(priceShimmer);
+        stopShimmer(binding.priceShimmer);
         String price = getString(R.string.price_in_ethio, product.getPrice());
         TextView priceView = binding.priceValue;
         priceView.setBackground(null);
         priceView.setText(price);
 
         // description
-        ShimmerFrameLayout detailShimmer = binding.detailShimmer;
-        stopShimmer(detailShimmer);
+        stopShimmer(binding.detailShimmer);
         TextView productDescription = binding.productDescription;
         productDescription.setBackground(null);
         productDescription.setText(product.getDescription());
         productDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, callBackInterface.getFontSizeForDescription());
 
         // rating
-        ShimmerFrameLayout ratingShimmer = binding.ratingShimmer;
-        stopShimmer(ratingShimmer);
+        stopShimmer(binding.ratingShimmer);
         rate.setBackground(null);
         rate.setRating(product.getRate());
         rate.setLongClickable(true);
@@ -177,5 +228,19 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
     private void stopShimmer(@NonNull ShimmerFrameLayout shimmerFrameLayout) {
         shimmerFrameLayout.stopShimmer();
         shimmerFrameLayout.setShimmer(null);
+    }
+
+    private void openRateProduct(ProductFragmentArgs arg) {
+        Bundle paraArg = new Bundle();
+        paraArg.putString("productName", arg.getProductName());
+        paraArg.putLong("productId", product.getId());
+        navController.navigate(R.id.action_navigation_product_to_rateFragment, paraArg);
+    }
+
+    private void initComment() {
+        RecyclerView comments = binding.comments;
+        comments.setLayoutManager(new LinearLayoutManager(requireContext()));
+        commentAdapter = new CommentAdapter(requireActivity());
+        comments.setAdapter(commentAdapter);
     }
 }

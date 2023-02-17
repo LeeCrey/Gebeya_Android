@@ -12,7 +12,7 @@ import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
 public class InstructionsViewModel extends AndroidViewModel {
     private final LiveData<InstructionsResponse> oInstructionResponse;
-    private final InstructionRepository repository;
+    protected final InstructionRepository repository;
 
     public InstructionsViewModel(@NonNull Application application) {
         super(application);

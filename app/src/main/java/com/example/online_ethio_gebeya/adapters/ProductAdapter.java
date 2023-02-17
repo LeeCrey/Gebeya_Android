@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.SingleProductCallBack;
 import com.example.online_ethio_gebeya.databinding.LayoutProductBinding;
-import com.example.online_ethio_gebeya.helpers.ProductItemCallBack;
+import com.example.online_ethio_gebeya.helpers.diff_calc.ProductItemCallBack;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.viewholders.ProductViewHolder;
 

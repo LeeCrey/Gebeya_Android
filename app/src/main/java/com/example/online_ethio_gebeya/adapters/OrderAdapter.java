@@ -2,6 +2,7 @@ package com.example.online_ethio_gebeya.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +14,18 @@ import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.models.Order;
 import com.example.online_ethio_gebeya.viewholders.OrderViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
     private List<Order> orderList;
     private LayoutInflater inflater;
 
+    private static final String TAG = "OrderAdapter";
+
     public OrderAdapter(@NonNull Context context) {
         inflater = LayoutInflater.from(context);
+        orderList = new ArrayList<>();
     }
 
     @NonNull
@@ -38,7 +43,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
 
     @Override
     public int getItemCount() {
-        return orderList == null ? 0 : orderList.size();
+        return orderList.size();
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -47,7 +52,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
             return;
         }
 
-        orderList = list;
+        Log.d(TAG, "setOrderList: received with count: " + list.size());
+        orderList.addAll(list);
         notifyDataSetChanged();
     }
 }

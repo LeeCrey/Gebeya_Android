@@ -4,16 +4,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.online_ethio_gebeya.data.repositories.CommentRepository;
 import com.example.online_ethio_gebeya.databinding.FragmentRateBinding;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
+import com.example.online_ethio_gebeya.viewmodels.FragmentRateViewModel;
 
 public class RateFragment extends Fragment {
     private FragmentRateBinding binding;
@@ -28,15 +32,38 @@ public class RateFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        CommentRepository repository = new CommentRepository(requireActivity().getApplication());
-        repository.setAuthorizationToken(PreferenceHelper.getAuthToken(requireContext()));
+        FragmentRateViewModel viewModel = new ViewModelProvider(this).get(FragmentRateViewModel.class);
 
-        TextView comment = binding.comment;
+        viewModel.setAuthorization(PreferenceHelper.getAuthToken(requireContext()));
+        viewModel.setProductId(RateFragmentArgs.fromBundle(getArguments()).getProductId());
+
+        //
+        ProgressBar loading = binding.progressCircular;
+        Button submit = binding.submitComment;
         RatingBar ratingBar = binding.ratingValue;
-        long pId = RateFragmentArgs.fromBundle(getArguments()).getProductId();
+        EditText comment = binding.comment;
+
+        // observer
+        viewModel.getInstructionResponse().observe(getViewLifecycleOwner(), instructionsResponse -> {
+            if (instructionsResponse == null) {
+                return;
+            }
+
+            if (instructionsResponse.getOkay()) {
+                comment.setText("");
+            }
+            Toast.makeText(requireContext(), "" + instructionsResponse.getMessage(), Toast.LENGTH_SHORT).show();
+
+            loading.setVisibility(View.GONE);
+            submit.setEnabled(true);
+        });
 
         // event
-        binding.submitComment.setOnClickListener(v -> repository.sendComment(pId, comment.getText().toString().trim(), ratingBar.getRating()));
+        submit.setOnClickListener(v -> {
+            loading.setVisibility(View.VISIBLE);
+            submit.setEnabled(false);
+            viewModel.submitRatingWithComment(comment.getText().toString().trim(), ratingBar.getRating());
+        });
     }
 
     @Override

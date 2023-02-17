@@ -50,7 +50,22 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/feedBack"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:autofillHints=""
+                android:background="@color/surface"
+                android:gravity="top|start"
+                android:hint="@string/write_comment"
+                android:inputType="textMultiLine"
+                android:lines="10"
+                android:overScrollMode="always"
+                android:padding="10dp"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

@@ -145,7 +145,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
 
     @Override
     public void productSearch(String query) {
-
+        viewModel.searchProduct(query);
     }
 
     @Override
@@ -158,8 +158,8 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
     public void onCategorySelected(int position) {
         categoryAdapter.setSelectedCategoryPosition(position);
 
-        String lst = categoryAdapter.getSelectedCategoryName();
-        viewModel.searchProductWithCategory(position);
+        refreshLayout.setRefreshing(true);
+        viewModel.searchProductWithCategory(categoryAdapter.getSelectedCategoryName());
     }
 
     // custom
@@ -171,9 +171,14 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         if (trendingAdapter != null) {
             List<Product> tList = productResponse.getTrending();
             int v = View.VISIBLE;
-            if (tList.isEmpty()) {
+            if (tList == null) {
                 v = View.GONE;
+            } else {
+                if (tList.isEmpty()) {
+                    v = View.GONE;
+                }
             }
+
             trendingTxt.setVisibility(v);
             trendingRecycler.setVisibility(v);
             trendingAdapter.setProducts(tList);

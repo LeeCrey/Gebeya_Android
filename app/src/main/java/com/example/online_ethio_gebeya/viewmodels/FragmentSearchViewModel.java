@@ -25,10 +25,10 @@ public class FragmentSearchViewModel extends AndroidViewModel {
     }
 
     public void searchProduct(String query) {
-        String dat = query.trim();
-        if (dat.isEmpty()) {
-            dat = "all";
-        }
-//        repository.searchProduct(dat);
+        repository.searchProduct(query);
+    }
+
+    public void setAuthToken(String authToken) {
+        repository.setAuthToken(authToken);
     }
 }

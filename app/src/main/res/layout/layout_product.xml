@@ -35,10 +35,10 @@
                 android:layout_height="150dp"
                 android:contentDescription="@string/content_description"
                 android:scaleType="centerCrop"
+                app:attachImageToView="@{product.getThumbnail()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:productImage="@{product.getThumbnail()}" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Title, secondary and supporting text -->
             <TextView

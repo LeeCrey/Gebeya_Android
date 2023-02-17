@@ -31,9 +31,9 @@
                 android:layout_height="100dp"
                 android:contentDescription="@string/content_description"
                 android:scaleType="centerCrop"
+                app:attachImageToView="@{cartItem.itemImage}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:productImage="@{cartItem.itemImage}" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/product_name"
@@ -60,38 +60,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/product_name" />
 
-            <ImageView
-                android:id="@+id/decrement_count"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="24dp"
-                android:contentDescription="@string/content_description"
-                android:src="@drawable/ic_minus"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/product_quantity"
-                app:layout_constraintTop_toBottomOf="@id/product_name" />
-
-            <TextView
-                android:id="@+id/product_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/increment_count"
-                app:layout_constraintTop_toBottomOf="@id/product_name" />
-
-            <ImageView
-                android:id="@+id/increment_count"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/app_margin"
-                android:contentDescription="@string/content_description"
-                android:src="@drawable/ic_add"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

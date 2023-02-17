@@ -40,14 +40,14 @@ public class Product {
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("shop")
+    @JsonProperty("admin_user")
     private Shop shop;
 
     @JsonProperty("numberOfRates")
     private Integer numberOfRates;
 
-    public Product() {
-    }
+    @JsonProperty("total_votes")
+    private Long votes;
 
     // name
     public String getName() {
@@ -118,5 +118,9 @@ public class Product {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getVotes() {
+        return votes;
     }
 }

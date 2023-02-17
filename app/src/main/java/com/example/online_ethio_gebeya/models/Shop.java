@@ -1,9 +1,22 @@
 package com.example.online_ethio_gebeya.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Shop {
+    @JsonProperty("id")
     private long id;
+
+    @JsonProperty("name")
     private String name;
-    private Double latitude, longitude;
+
+    @JsonProperty("latitude")
+    private Double latitude;
+
+    @JsonProperty("longitude")
+    private Double longitude;
+
+    @JsonProperty("difference")
+    private Double difference;
 
     public Shop setId(Integer id) {
         this.id = id;
@@ -42,5 +55,9 @@ public class Shop {
 
     public long getId() {
         return id;
+    }
+
+    public Double getDifference() {
+        return difference;
     }
 }

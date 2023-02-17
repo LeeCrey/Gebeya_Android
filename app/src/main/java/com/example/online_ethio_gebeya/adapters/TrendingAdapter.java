@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.ProductCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.LayoutTrendingBinding;
-import com.example.online_ethio_gebeya.helpers.ProductItemCallBack;
+import com.example.online_ethio_gebeya.helpers.diff_calc.ProductItemCallBack;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.viewholders.TrendingViewHolder;
 

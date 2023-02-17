@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.online_ethio_gebeya.adapters.OrderAdapter;
 import com.example.online_ethio_gebeya.databinding.FragmentOrdersBinding;
-import com.example.online_ethio_gebeya.models.Order;
+import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
+import com.example.online_ethio_gebeya.viewmodels.FragmentOrderViewModelFactory;
+import com.example.online_ethio_gebeya.viewmodels.FragmentOrdersViewModel;
 
 public class OrdersFragment extends Fragment {
     private FragmentOrdersBinding binding;
@@ -30,6 +33,13 @@ public class OrdersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initOrderView();
+
+        String auth = PreferenceHelper.getAuthToken(requireContext());
+        FragmentOrderViewModelFactory factory = new FragmentOrderViewModelFactory(requireActivity().getApplication(), auth);
+        FragmentOrdersViewModel viewModel = new ViewModelProvider(this, factory).get(FragmentOrdersViewModel.class);
+
+        //observer
+        viewModel.getOrders().observe(getViewLifecycleOwner(), adapter::setOrderList);
     }
 
     @Override

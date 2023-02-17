@@ -33,7 +33,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:productImage="@{product.getThumbnail()}" />
+                app:attachImageToView="@{product.getThumbnail()}" />
 
             <TextView
                 android:id="@+id/product_name"

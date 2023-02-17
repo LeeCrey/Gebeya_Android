@@ -5,19 +5,19 @@
     android:layout_height="wrap_content"
     android:layout_marginVertical="3dp"
     android:clickable="true"
-    android:focusable="true"
-    android:paddingHorizontal="@dimen/app_margin">
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:paddingHorizontal="@dimen/app_margin">
 
         <TextView
             android:id="@+id/shop_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/surface"
-            android:padding="10dp"
             app:layout_constraintEnd_toStartOf="@id/status"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

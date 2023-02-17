@@ -17,5 +17,7 @@ public interface MainActivityCallBackInterface {
 
     void openEmailApp();
 
+    void openLocation(float latitude, float longitude);
+
     String getLocale();
 }

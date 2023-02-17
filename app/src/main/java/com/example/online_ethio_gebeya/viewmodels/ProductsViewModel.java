@@ -23,6 +23,10 @@ public class ProductsViewModel extends AndroidViewModel {
         return oProductIndex;
     }
 
+    public void searchProduct(String query) {
+        repository.searchProduct(query);
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();

@@ -1,6 +1,7 @@
 package com.example.online_ethio_gebeya.data.repositories;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -21,6 +22,7 @@ import retrofit2.Response;
 
 public class ProductRepository {
     private static final String TAG = "ProductRepository";
+    
     private final MutableLiveData<ProductResponse> mProductIndex;
     private final MutableLiveData<List<Category>> mCategories;
     private final MutableLiveData<ProductShowResponse> mShowResponse;
@@ -33,6 +35,7 @@ public class ProductRepository {
 
     public ProductRepository(@NonNull Application application) {
         api = RetrofitConnectionUtil.getRetrofitInstance(application).create(ProductApi.class);
+        this.application = application;
 
         mProductIndex = new MutableLiveData<>();
         mCategories = new MutableLiveData<>();
@@ -108,6 +111,25 @@ public class ProductRepository {
         });
     }
 
+    public void searchProduct(String query) {
+        cancelConnection();
+
+        productResponseCall = api.searchProduct(authorizationToken, query);
+        productResponseCall.enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
+                if (response.isSuccessful()) {
+                    mProductIndex.postValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
+                mProductIndex.postValue(new ProductResponse());
+            }
+        });
+    }
+
     // show
     public void getProductDetail(long productId) {
         if (showResponseCall != null) {
@@ -118,14 +140,13 @@ public class ProductRepository {
         showResponseCall.enqueue(new Callback<ProductShowResponse>() {
             @Override
             public void onResponse(@NonNull Call<ProductShowResponse> call, @NonNull Response<ProductShowResponse> response) {
-                if (response.isSuccessful()) {
-                    mShowResponse.postValue(response.body());
-                }
+                mShowResponse.postValue(response.body());
             }
 
             @Override
             public void onFailure(@NonNull Call<ProductShowResponse> call, @NonNull Throwable t) {
                 // ignore
+                Log.d(TAG, "onFailure: " + t.getMessage());
             }
         });
     }

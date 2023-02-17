@@ -21,6 +21,7 @@ import com.example.online_ethio_gebeya.adapters.ProductAdapter;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.callbacks.SearchCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentSearchBinding;
+import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.helpers.ProductHelper;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.viewmodels.FragmentSearchViewModel;
@@ -42,10 +43,11 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
         final FragmentActivity activity = requireActivity();
         callBackInterface = (MainActivityCallBackInterface) activity;
         viewModel = new ViewModelProvider(this).get(FragmentSearchViewModel.class);
-        activity.addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+        viewModel.setAuthToken(PreferenceHelper.getAuthToken(requireContext()));
 
         ProductAdapter productAdapter = ProductHelper.initProducts(this, binding.productsRecyclerView, true, false);
         productAdapter.setCalculateProductWidth(false);
+        productAdapter.setCallBack(this);
 
         // observers
         viewModel.getProductResponse().observe(getViewLifecycleOwner(), productResponse -> {
@@ -55,6 +57,8 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
 
             productAdapter.setProducts(productResponse.getProducts());
         });
+
+        activity.addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
     }
 
     @Override
@@ -86,6 +90,6 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
 
     @Override
     public void onProductClick(Product product) {
-        ((MainActivityCallBackInterface) requireActivity()).onProductClick(product);
+        callBackInterface.onProductClick(product);
     }
 }

@@ -28,4 +28,8 @@ public interface ProductApi {
     @Headers({"accept: application/json"})
     @GET("categories")
     Call<List<Category>> categories();
+
+    @Headers({"accept: application/json"})
+    @GET("search")
+    Call<ProductResponse> searchProduct(@Header("Authorization") String token, @Query("q") String query);
 }

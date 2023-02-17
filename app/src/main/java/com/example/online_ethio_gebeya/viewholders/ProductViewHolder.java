@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.databinding.LayoutProductBinding;
 import com.example.online_ethio_gebeya.models.Product;
@@ -23,28 +22,6 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         super(binding.getRoot());
 
         productBinding = (LayoutProductBinding) binding;
-    }
-
-    @BindingAdapter("productImage")
-    public static void setProductImage(@NonNull ImageView view, @NonNull String url) {
-        Picasso.get().load(url)
-                .error(R.drawable.load_error)
-                .into(view);
-    }
-
-    @BindingAdapter("setStrikeThroughText")
-    public static void makeStrikeThrough(@NonNull TextView textView, Product product) {
-        if (product == null) {
-            return;
-        }
-
-        textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-        if (product.getDiscount() != null) {
-            String oldP = String.valueOf(product.getPrice());
-            textView.setText(oldP);
-            textView.setVisibility(View.VISIBLE);
-        }
     }
 
     // if it is search layout attach only image.

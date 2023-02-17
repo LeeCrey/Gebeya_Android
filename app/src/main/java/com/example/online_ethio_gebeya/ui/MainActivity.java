@@ -1,5 +1,6 @@
 package com.example.online_ethio_gebeya.ui;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -134,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
             } else if (id == R.id.logout) {
                 PreferenceHelper.clearPref(MainActivity.this);
                 recreate(); // for the sake of opt menu
+                navController.navigateUp();
             } else {
                 NavigationUI.onNavDestinationSelected(item, navController);
             }
@@ -210,8 +212,21 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     public void openEmailApp() {
         Intent gmail = new Intent();
         gmail.setClassName("com.google.android.gm", "com.google.android.gm.ConversationListActivityGmail");
-        startActivity(gmail);
-        finish();
+        if (gmail.resolveActivity(getPackageManager()) != null) {
+            startActivity(gmail);
+            finish();
+        }
+    }
+
+    @Override
+    public void openLocation(float latitude, float longitude) {
+        @SuppressLint("DefaultLocale") String ggl = String.format("google.navigation:q=%f,%f", latitude, longitude);
+        Uri gmmIntentUri = Uri.parse(ggl);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        }
     }
 
     @Override

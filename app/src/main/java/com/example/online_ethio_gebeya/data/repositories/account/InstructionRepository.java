@@ -1,6 +1,7 @@
 package com.example.online_ethio_gebeya.data.repositories.account;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -21,6 +22,9 @@ public class InstructionRepository {
     private final MutableLiveData<InstructionsResponse> mInstructionResponse;
     private final InstructionsApi api;
     private Call<InstructionsResponse> instructionsResponseCall;
+    private static final String TAG = "InstructionRepository";
+
+    private String authorizationToken;
 
     public InstructionRepository(@NonNull Application application) {
         api = RetrofitConnectionUtil.getRetrofitInstance(application).create(InstructionsApi.class);
@@ -55,7 +59,6 @@ public class InstructionRepository {
             }
         });
     }
-
 
     // confirm
     public void finishInstructionRequest(@NonNull String unlockPath) {
@@ -130,6 +133,25 @@ public class InstructionRepository {
         });
     }
 
+    public void makeRateRequest(String cmt, float rating, long id) {
+        cancelConnection();
+
+        instructionsResponseCall = api.sendRatingAndComment(authorizationToken, id, cmt, rating);
+        instructionsResponseCall.enqueue(new Callback<InstructionsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
+                if (response.isSuccessful()) {
+                    mInstructionResponse.postValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
     public void cancelConnection() {
         if (null != instructionsResponseCall) {
             if (!(instructionsResponseCall.isExecuted() || instructionsResponseCall.isCanceled())) {
@@ -139,5 +161,6 @@ public class InstructionRepository {
     }
 
     public void setAuthorizationToken(String authToken) {
+        authorizationToken = authToken;
     }
 }
