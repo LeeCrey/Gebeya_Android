@@ -1,23 +1,29 @@
 package com.example.online_ethio_gebeya.ui;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -25,13 +31,18 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
 
+import com.example.online_ethio_gebeya.BuildConfig;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.ActivityMainBinding;
-import com.example.online_ethio_gebeya.helpers.ApplicationHelper;
 import com.example.online_ethio_gebeya.helpers.LocaleHelper;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.models.Product;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -49,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     private AppBarConfiguration appBarConfiguration;
     private String locale;
     private int fontSize;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
+    private final int REQUEST_CODE = 835;
+    private Location lokation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,12 +73,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         setContentView(binding.getRoot());
 
         authorizationToken = PreferenceHelper.getAuthToken(this);
+        lokation = PreferenceHelper.getLocation(this);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences pref = PreferenceHelper.getSharePref(this);
 
         locale = preferences.getString("language", "en");
         fontSize = preferences.getInt("font_size", 16);
         LocaleHelper.setLocale(this, locale);
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fetchLastLocation();
 
         // listeners
         listener = (sharedPreferences, key) -> {
@@ -185,17 +204,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     }
 
     @Override
-    public void checkPermission() {
-        // permissions
-        if (!ApplicationHelper.isInternetAccessGranted(this)) {
-            ApplicationHelper.requestInternetAccessPermission(this);
-        }
-        if (!ApplicationHelper.isLocationAccessGranted(this)) {
-            ApplicationHelper.requestLocationAccessPermission(this);
-        }
-    }
-
-    @Override
     public void onProductClick(@NonNull Product product) {
         final Bundle args = new Bundle();
         args.putString("productName", product.getName());
@@ -232,6 +240,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     @Override
     public String getLocale() {
         return locale;
+    }
+
+    @Override
+    public Location getLocation() {
+        return lokation;
     }
 
     private void rateApp() {
@@ -285,5 +298,40 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         signOut.setVisible(visibility);
         feedback.setVisible(visibility);
         order.setVisible(visibility);
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                fetchLastLocation();
+            } else {
+                Toast.makeText(MainActivity.this, "Allow access to location. ", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void fetchLastLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions();
+        } else {
+            Task<Location> task = fusedLocationProviderClient.getLastLocation();
+            task.addOnSuccessListener(this, location -> {
+                if (location != null) {
+                    if (lokation.getLongitude() == PreferenceHelper.location_default_value) {
+                        Toast.makeText(this, "Please close and re-open the app.", Toast.LENGTH_SHORT).show();
+                    }
+                    PreferenceHelper.putLocation(MainActivity.this, location);
+                } else {
+                    Toast.makeText(this, "Go to settings and allow access to location.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

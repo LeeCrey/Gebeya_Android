@@ -17,7 +17,10 @@ public interface ProductApi {
     // controllers/products_controllers.rb#method => index
     @Headers({"accept: application/json"})
     @GET("products")
-    Call<ProductResponse> index(@Header("Authorization") String token, @Query("category") String category);
+    Call<ProductResponse> index(@Header("Authorization") String token,
+                                @Query("category") String category,
+                                @Query("latitude") double latitude,
+                                @Query("longitude") double longitude);
 
     // controllers/products_controllers.rb#method => show
     @Headers({"accept: application/json"})

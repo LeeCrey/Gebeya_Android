@@ -1,5 +1,7 @@
 package com.example.online_ethio_gebeya.callbacks;
 
+import android.location.Location;
+
 import androidx.annotation.NonNull;
 
 import com.example.online_ethio_gebeya.models.Product;
@@ -8,8 +10,6 @@ public interface MainActivityCallBackInterface {
     void closeKeyBoard();
 
     String getAuthorizationToken();
-
-    void checkPermission();
 
     void onProductClick(@NonNull Product product);
 
@@ -20,4 +20,6 @@ public interface MainActivityCallBackInterface {
     void openLocation(double latitude, double longitude);
 
     String getLocale();
+
+    Location getLocation();
 }

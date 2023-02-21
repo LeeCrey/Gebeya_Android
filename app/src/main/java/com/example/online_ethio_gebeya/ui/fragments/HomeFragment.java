@@ -1,5 +1,9 @@
 package com.example.online_ethio_gebeya.ui.fragments;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -10,9 +14,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
@@ -30,12 +36,17 @@ import com.example.online_ethio_gebeya.adapters.TrendingAdapter;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.callbacks.ProductCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentHomeBinding;
+import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.helpers.ProductHelper;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.models.responses.ProductResponse;
 import com.example.online_ethio_gebeya.viewmodels.FragmentHomeViewModel;
 import com.example.online_ethio_gebeya.viewmodels.ProductsViewModelFactory;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements MenuProvider, ProductCallBackInterface {
@@ -67,7 +78,9 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         callBackInterface = (MainActivityCallBackInterface) requireActivity();
 
-        ProductsViewModelFactory factory = new ProductsViewModelFactory(requireActivity().getApplication(), callBackInterface.getAuthorizationToken());
+        // location
+        ProductsViewModelFactory factory = new ProductsViewModelFactory(requireActivity().getApplication(),
+                callBackInterface.getAuthorizationToken(), callBackInterface.getLocation());
         viewModel = new ViewModelProvider(this, factory).get(FragmentHomeViewModel.class);
         navController = Navigation.findNavController(view);
 

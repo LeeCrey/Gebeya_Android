@@ -2,6 +2,7 @@ package com.example.online_ethio_gebeya.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 
 import androidx.annotation.NonNull;
 
@@ -15,6 +16,11 @@ public class PreferenceHelper {
     private static final String rememberMe = "remember_me";
     private static final String PREFS_FILE = "customer_credentials";
     private static final int PREFS_MODE = Context.MODE_PRIVATE;
+
+    public static final float location_default_value = -9_999.0f;
+
+    public static final String latitude = "latitude";
+    public static final String longitude = "longitude";
 
     public static void setRememberMe(Context context, Boolean remember) {
         SharedPreferences preferences = context.getSharedPreferences(PREFS_FILE, PREFS_MODE);
@@ -85,5 +91,23 @@ public class PreferenceHelper {
 
     public static SharedPreferences getSharePref(Context context) {
         return context.getSharedPreferences(PREFS_FILE, PREFS_MODE);
+    }
+
+    public static void putLocation(@NonNull Context context, @NonNull Location location) {
+        SharedPreferences pref = context.getSharedPreferences(PREFS_FILE, PREFS_MODE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putFloat(latitude, (float) location.getLatitude());
+        editor.putFloat(longitude, (float) location.getLongitude());
+        editor.apply();
+    }
+
+    public static Location getLocation(@NonNull Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PREFS_FILE, PREFS_MODE);
+
+        Location location = new Location("provider-name");
+        location.setLatitude((double) pref.getFloat(latitude, location_default_value));
+        location.setLongitude((double) pref.getFloat(longitude, location_default_value));
+
+        return location;
     }
 }

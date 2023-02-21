@@ -70,7 +70,6 @@ public class SessionsFragment extends Fragment {
         // event
         signIn.setOnClickListener(v -> {
             callBackInterface.closeKeyBoard();
-            callBackInterface.checkPermission();
             if (ApplicationHelper.checkConnection(requireActivity())) {
                 setUiPlace(false);
                 fragmentSessionsViewModel.login(callBackInterface.getLocale());

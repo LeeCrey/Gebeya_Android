@@ -1,6 +1,7 @@
 package com.example.online_ethio_gebeya.data.repositories;
 
 import android.app.Application;
+import android.location.Location;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.online_ethio_gebeya.data.RetrofitConnectionUtil;
 import com.example.online_ethio_gebeya.data.apis.ProductApi;
+import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.models.Category;
 import com.example.online_ethio_gebeya.models.responses.ProductResponse;
 import com.example.online_ethio_gebeya.models.responses.ProductShowResponse;
@@ -27,7 +29,8 @@ public class ProductRepository {
     private final MutableLiveData<List<Category>> mCategories;
     private final MutableLiveData<ProductShowResponse> mShowResponse;
     private final ProductApi api;
-    private Application application;
+    private Location location;
+    private final Application application;
     private String authorizationToken = null;
     private Call<ProductResponse> productResponseCall;
     private Call<List<Category>> categoryCall;
@@ -60,24 +63,28 @@ public class ProductRepository {
             productResponseCall.cancel();
         }
 
-        productResponseCall = api.index(authorizationToken, category);
-        productResponseCall.enqueue(new Callback<ProductResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
-                if (response.isSuccessful()) {
-                    mProductIndex.postValue(response.body());
-                } else {
+        if (location.getLongitude() == PreferenceHelper.location_default_value) {
+            setEmptyProductList();
+        } else {
+            productResponseCall = api.index(authorizationToken, category, location.getLatitude(), location.getLongitude());
+            productResponseCall.enqueue(new Callback<ProductResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
+                    if (response.isSuccessful()) {
+                        mProductIndex.postValue(response.body());
+                    } else {
+                        setEmptyProductList();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
+                    // ignore
+                    t.printStackTrace();
                     setEmptyProductList();
                 }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ProductResponse> call, @NonNull Throwable t) {
-                // ignore
-                t.printStackTrace();
-                setEmptyProductList();
-            }
-        });
+            });
+        }
     }
 
     public void makeApiRequestForCategory() {
@@ -178,5 +185,11 @@ public class ProductRepository {
         ProductResponse rep = new ProductResponse();
         rep.setProducts(new ArrayList<>());
         mProductIndex.postValue(rep);
+    }
+
+    public void setLocation(Location location) {
+        if (this.location == null) {
+            this.location = location;
+        }
     }
 }

@@ -89,7 +89,6 @@ public class RegistrationsFragment extends Fragment {
 
         // event list ...
         signUp.setOnClickListener(v -> {
-            callBackInterface.checkPermission();
             if (ApplicationHelper.checkConnection(requireActivity())) {
                 v.setEnabled(false);
                 viewModel.signUp(requireContext());

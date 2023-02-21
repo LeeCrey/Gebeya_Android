@@ -1,5 +1,7 @@
 package com.example.online_ethio_gebeya.viewmodels;
 
+import android.location.Location;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -12,6 +14,7 @@ import java.util.List;
 public class FragmentHomeViewModel extends ProductsViewModel {
     private final LiveData<List<Category>> categoryList;
     private Product currentProduct; // for show
+    private Location location;
 
     public FragmentHomeViewModel(@NonNull ProductRepository repository) {
         super(repository);
@@ -42,5 +45,9 @@ public class FragmentHomeViewModel extends ProductsViewModel {
 
     public void searchProduct(String query) {
         repository.searchProduct(query);
+    }
+
+    public void setLocation(Location location) {
+        repository.setLocation(location);
     }
 }
