@@ -28,7 +28,7 @@ public class ProductAdapter extends ListAdapter<Product, ProductViewHolder> {
     protected final Activity activity;
     private SingleProductCallBack callBack;
     private boolean calculateWidth;
-    private RequestManager glide;
+    private final RequestManager glide;
 
     public ProductAdapter(@NonNull Fragment activity) {
         super(new ProductItemCallBack());
