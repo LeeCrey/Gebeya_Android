@@ -6,5 +6,5 @@ import androidx.annotation.NonNull;
 import com.example.online_ethio_gebeya.models.Cart;
 
 public interface CartCallBackInterface {
-    void onCartClick(@NonNull Cart cart);
+    void onItemClicked(@NonNull Cart cart);
 }
