@@ -29,10 +29,12 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
     private EditCartItemFragmentViewModel viewModel;
     private FragmentCartItemViewModel fragmentCartItemViewModel;
     private Button update;
+    private final int clickedItemPosition;
 
-    public EditCartItemFragment(@NonNull CartItem cartItem, @NonNull FragmentCartItemViewModel _fragmentCartItemViewModel) {
+    public EditCartItemFragment(@NonNull CartItem cartItem, @NonNull FragmentCartItemViewModel _fragmentCartItemViewModel, int position) {
         this.cartItem = cartItem;
         fragmentCartItemViewModel = _fragmentCartItemViewModel;
+        clickedItemPosition = position;
     }
 
     @Nullable
@@ -77,7 +79,7 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
                 // bwt this does update internally the original value from list
                 // so we have to notify the adapter in adapter
                 cartItem.setQuantity(currentValueObserver.getValue());
-                fragmentCartItemViewModel.setUpdateCartItem(cartItem);
+                fragmentCartItemViewModel.setUpdateCartItem(clickedItemPosition);
                 dismiss();
             } else {
                 setButtonStatus(false);
