@@ -132,4 +132,6 @@
     <string name="lbl_orders">Orders</string>
     <string name="lbl_shop">Shop</string>
     <string name="lbl_update">Update</string>
+    <string name="lbl_total">Total : </string>
+    <string name="lbl_order">Order</string>
 </resources>

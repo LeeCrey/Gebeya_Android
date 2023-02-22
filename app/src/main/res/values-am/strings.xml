@@ -87,4 +87,21 @@
     <string name="lbl_confirmation">ማረጋገጫ</string>
     <string name="others">ሌሎች</string>
     <string name="instruction_sent">መመሪያ ተልኳል።</string>
+    <string name="lbl_update">አሻሽል</string>
+    <string name="lbl_total">ጠቅላላ</string>
+    <string name="lbl_orders">ትዕዝዞች</string>
+    <string name="submit">አስረክብ</string>
+    <string name="checkout">ጨርሰህ ውጣ</string>
+    <string name="save_changes">አስቀምጥ</string>
+    <string name="lbl_current_password">የአሁኑ የይለፍ ቃል</string>
+    <string name="click">ይጫኑ</string>
+    <string name="unlock_instruction">ከአካውንትዎ ጋር የተያያዘውን ኢሜል ያስገቡ እና አካውንት ክፈት መመሪያወደ ኢሜልዎ እንልካለን።</string>
+    <string name="write_comment">አስተያየት ጻፍ..</string>
+    <string name="rate_this_product">ይህን ምርት ገምግም</string>
+    <string name="lbl_new_password">አዲስ የይለፍ ቃል (አማራጭ)</string>
+    <string name="lbl_new_password_confirmation">የይለፍ ቃል ማረጋገጫ (አማራጭ)</string>
+    <string name="lbl_email_opt">ኢሜይል (አማራጭ)</string>
+    <string name="rating_and_review">ደረጃ እና ክለሳዎች</string>
+    <string name="lbl_shop">ሱቅ</string>
+    <string name="lbl_order">እዘዝ</string>
 </resources>

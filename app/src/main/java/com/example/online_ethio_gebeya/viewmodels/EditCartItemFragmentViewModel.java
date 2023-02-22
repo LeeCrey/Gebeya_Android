@@ -18,8 +18,8 @@ public class EditCartItemFragmentViewModel extends ViewModel {
     public EditCartItemFragmentViewModel(@NonNull EditCartItemRepository _repository, @NonNull CartItem _cartItem) {
         repository = _repository;
         currentQuantity = new MutableLiveData<>(_cartItem.getQuantity());
-        productQuantity = _cartItem.getProduct().getQuantity();
         enableUpdateButton = repository.getEnableUpdateButton();
+        productQuantity = _cartItem.getProduct().getQuantity();
         decrement = _cartItem.getQuantity() > 1;
         increment = _cartItem.getQuantity() < _cartItem.getProduct().getQuantity();
     }

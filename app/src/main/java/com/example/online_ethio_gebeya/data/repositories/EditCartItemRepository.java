@@ -26,7 +26,7 @@ public class EditCartItemRepository {
         authorization = _authorization;
         cart_item_id = _cart_item_id;
         api = RetrofitConnectionUtil.getRetrofitInstance(application).create(CartItemApi.class);
-        enableUpdateButton = new MutableLiveData<>(false);
+        enableUpdateButton = new MutableLiveData<>();
     }
 
     public LiveData<Boolean> getEnableUpdateButton() {

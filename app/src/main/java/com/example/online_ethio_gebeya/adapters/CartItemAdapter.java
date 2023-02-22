@@ -41,6 +41,7 @@ public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
     private final Context context;
     private final RequestManager glide;
     private CartItemCallBackInterface callBackInterface;
+    private static final String TAG = "CartItemAdapter";
 
     public CartItemAdapter(@NonNull CartFragment fragment) {
         super(CALL_BACK);
@@ -108,5 +109,15 @@ public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
 
     public void setCallBack(CartFragment cartFragment) {
         callBackInterface = cartFragment;
+    }
+
+    public void cartItemUpdate(@NonNull CartItem cartItem) {
+        // btw the data will silently update but the changed won't be reflected in the UI.
+        // If you don't like it, change the logic. Clone the cartItem and pass it.
+        // then come here and update the list.
+        // @lee_crey Telegram
+
+        List<CartItem> itemList = getCurrentList();
+        notifyItemChanged(itemList.indexOf(cartItem));
     }
 }

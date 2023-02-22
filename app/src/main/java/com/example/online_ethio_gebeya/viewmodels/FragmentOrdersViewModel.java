@@ -10,12 +10,13 @@ import com.example.online_ethio_gebeya.models.Order;
 import java.util.List;
 
 public class FragmentOrdersViewModel extends ViewModel {
-    private LiveData<List<Order>> mOrders;
-    private OrderRepository repository;
+    private final LiveData<List<Order>> mOrders;
+    private final OrderRepository repository;
 
     public FragmentOrdersViewModel(@NonNull OrderRepository repository) {
         this.repository = repository;
         mOrders = this.repository.getOrderList();
+        repository.orderIndex();
     }
 
     public LiveData<List<Order>> getOrders() {

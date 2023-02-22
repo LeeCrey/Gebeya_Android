@@ -20,9 +20,6 @@ public class CartItem {
     @JsonProperty("item_image")
     private String itemImage;
 
-    @JsonIgnore
-    private boolean isChecked;
-
     public Integer getQuantity() {
         return quantity;
     }
@@ -30,7 +27,6 @@ public class CartItem {
     public Product getProduct() {
         return product;
     }
-
 
     //    Custom method
     @JsonIgnore
@@ -45,15 +41,23 @@ public class CartItem {
         return itemImage;
     }
 
-    public boolean isChecked() {
-        return isChecked;
-    }
-
-    public void setChecked(boolean checked) {
-        isChecked = checked;
-    }
-
     public long getId() {
         return id;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setItemImage(String itemImage) {
+        this.itemImage = itemImage;
     }
 }

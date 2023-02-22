@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.online_ethio_gebeya.data.RetrofitConnectionUtil;
 import com.example.online_ethio_gebeya.data.apis.OrderApi;
 import com.example.online_ethio_gebeya.models.Order;
+import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
 import java.util.List;
 
@@ -19,23 +20,34 @@ import retrofit2.Response;
 
 public class OrderRepository {
     private MutableLiveData<List<Order>> mOrderList;
-    private String authorization;
-    private OrderApi api;
-    private Call<List<Order>> orderIndexCall;
+    private MutableLiveData<InstructionsResponse> mInstructionResponse;
 
-    public OrderRepository(@NonNull Application application, String _authorization) {
+    private final String authorization;
+    private final OrderApi api;
+    private Call<List<Order>> orderIndexCall;
+    private Call<InstructionsResponse> createCall;
+
+    public OrderRepository(@NonNull Application application, String _authorization, boolean _for_index) {
         authorization = _authorization;
         api = RetrofitConnectionUtil.getRetrofitInstance(application).create(OrderApi.class);
-        mOrderList = new MutableLiveData<>();
-        orderIndex(); // #OrderController#index
+        if (_for_index) {
+            mOrderList = new MutableLiveData<>();
+        } else {
+            mInstructionResponse = new MutableLiveData<>();
+        }
     }
 
     public LiveData<List<Order>> getOrderList() {
         return mOrderList;
     }
 
+    public LiveData<InstructionsResponse> getInstructionResponse() {
+        return mInstructionResponse;
+    }
+
     //    APIs
-    private void orderIndex() {
+    // index
+    public void orderIndex() {
         cancelConnection();
 
         orderIndexCall = api.index(authorization);
@@ -55,9 +67,35 @@ public class OrderRepository {
         });
     }
 
+    //    create
+    public void createOrder(String auth, long cartId) {
+        cancelCreateCall();
+
+        createCall = api.createOrder(auth, cartId);
+        createCall.enqueue(new Callback<InstructionsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
+                if (response.isSuccessful()) {
+                    mInstructionResponse.postValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
+                //
+            }
+        });
+    }
+
     public void cancelConnection() {
         if (orderIndexCall != null) {
             orderIndexCall.cancel();
+        }
+    }
+
+    private void cancelCreateCall() {
+        if (createCall != null) {
+            createCall.cancel();
         }
     }
 }
