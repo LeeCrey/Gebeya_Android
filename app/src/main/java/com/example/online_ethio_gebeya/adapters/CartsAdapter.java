@@ -14,8 +14,6 @@ import com.example.online_ethio_gebeya.callbacks.CartCallBackInterface;
 import com.example.online_ethio_gebeya.models.Cart;
 import com.example.online_ethio_gebeya.viewholders.CartViewHolder;
 
-import java.util.List;
-
 public class CartsAdapter extends ListAdapter<Cart, CartViewHolder> {
     private static final DiffUtil.ItemCallback<Cart> CALL_BACK = new DiffUtil.ItemCallback<Cart>() {
         @Override
