@@ -125,14 +125,14 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         callBackInterface = null;
         viewModel = null;
         categoryAdapter = null;
+        trendingAdapter = null;
         trendingRecycler = null;
         trendingTxt = null;
     }
 
     @Override
     public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
-        String token = callBackInterface.getAuthorizationToken();
-        if (token != null) {
+        if (callBackInterface.getAuthorizationToken() != null) {
             return;
         }
 
