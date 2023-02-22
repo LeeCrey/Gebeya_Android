@@ -80,4 +80,5 @@ dependencies {
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation "com.leinardi.android:speed-dial:3.2.0"
+//    implementation 'com.github.YenePay:yenepay.sdk.android:0.0.10'
 }
