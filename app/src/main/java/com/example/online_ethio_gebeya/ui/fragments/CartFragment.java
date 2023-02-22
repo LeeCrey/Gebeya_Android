@@ -1,9 +1,6 @@
 package com.example.online_ethio_gebeya.ui.fragments;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Browser;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,12 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.adapters.CartItemAdapter;
+import com.example.online_ethio_gebeya.callbacks.CartItemCallBackInterface;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
+import com.example.online_ethio_gebeya.models.CartItem;
 import com.example.online_ethio_gebeya.viewmodels.FragmentCartItemViewModel;
 
 // show cart items
-public class CartFragment extends Fragment implements MenuProvider {
+public class CartFragment extends Fragment implements MenuProvider, CartItemCallBackInterface {
     long cartId = -1L;
     private CartItemAdapter cartItemAdapter;
     private FragmentCartItemViewModel fragmentCartItemViewModel;
@@ -79,6 +78,7 @@ public class CartFragment extends Fragment implements MenuProvider {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
         cartItemAdapter = new CartItemAdapter(this);
+        cartItemAdapter.setCallBack(this);
         recyclerView.setAdapter(cartItemAdapter);
 
         ItemTouchHelper touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -104,11 +104,23 @@ public class CartFragment extends Fragment implements MenuProvider {
     public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
         final int id = menuItem.getItemId();
         if (id == R.id.check_out) {
-            String baseUrl = getString(R.string.base_url) + "/carts/" + cartId;
-            String auth = PreferenceHelper.getAuthToken(requireContext());
-            // open dialog to order
+            createDialog();
         }
 
         return false;
+    }
+
+    private void createDialog() {
+        String baseUrl = getString(R.string.base_url) + "/carts/" + cartId;
+        String auth = PreferenceHelper.getAuthToken(requireContext());
+
+        CheckoutFragment bottomSheet = new CheckoutFragment(cartItemAdapter.getCalculatedValue(), baseUrl, auth, cartItemAdapter);
+        bottomSheet.show(getParentFragmentManager(), "ModalBottomSheet");
+    }
+
+    @Override
+    public void onCartItemClick(@NonNull CartItem cartItem) {
+        EditCartItemFragment bottomSheet = new EditCartItemFragment(cartItem);
+        bottomSheet.show(getParentFragmentManager(), "CartItemEditBottomSheet");
     }
 }
