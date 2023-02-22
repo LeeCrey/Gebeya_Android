@@ -50,8 +50,10 @@ public class CartsAdapter extends ListAdapter<Cart, CartViewHolder> {
 
         final CartViewHolder viewHolder = new CartViewHolder(view);
 
-//        // on click listener...
-        view.setOnClickListener(v -> callBackInterface.onItemClicked(getItem(viewHolder.getAdapterPosition())));
+        // on click listener...
+        if (callBackInterface != null) {
+            view.setOnClickListener(v -> callBackInterface.onItemClicked(getItem(viewHolder.getAdapterPosition())));
+        }
 
         return viewHolder;
     }
@@ -59,13 +61,5 @@ public class CartsAdapter extends ListAdapter<Cart, CartViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         holder.bindView(getItem(position));
-    }
-
-    public void setCarts(final List<Cart> list) {
-        if (list == null) {
-            return;
-        }
-
-        submitList(list);
     }
 }
