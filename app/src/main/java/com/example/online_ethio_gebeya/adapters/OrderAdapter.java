@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderViewHolder> {
-    private List<Order> orderList;
-    private LayoutInflater inflater;
+    private final List<Order> orderList;
+    private final LayoutInflater inflater;
 
     private static final String TAG = "OrderAdapter";
 
