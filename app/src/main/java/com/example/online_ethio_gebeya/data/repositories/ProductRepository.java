@@ -118,10 +118,10 @@ public class ProductRepository {
         });
     }
 
-    public void searchProduct(String query) {
+    public void searchProduct(String query, int offSet) {
         cancelConnection();
 
-        productResponseCall = api.searchProduct(authorizationToken, query);
+        productResponseCall = api.searchProduct(authorizationToken, query, offSet);
         productResponseCall.enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(@NonNull Call<ProductResponse> call, @NonNull Response<ProductResponse> response) {
