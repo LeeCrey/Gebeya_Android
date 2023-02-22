@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.ProductCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.LayoutTrendingBinding;
@@ -21,11 +23,13 @@ import java.util.List;
 public class TrendingAdapter extends ListAdapter<Product, TrendingViewHolder> {
     private final LayoutInflater inflater;
     private ProductCallBackInterface callBack;
+    private RequestManager glide;
 
     public TrendingAdapter(@NonNull Activity activity) {
         super(new ProductItemCallBack());
 
         inflater = LayoutInflater.from(activity);
+        glide = Glide.with(activity);
     }
 
     @NonNull
@@ -47,7 +51,7 @@ public class TrendingAdapter extends ListAdapter<Product, TrendingViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TrendingViewHolder holder, int position) {
-        holder.bindView(getItem(position));
+        holder.bindView(getItem(position), glide);
     }
 
     public void setProducts(List<Product> list) {
