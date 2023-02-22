@@ -23,13 +23,13 @@ import java.util.List;
 public class TrendingAdapter extends ListAdapter<Product, TrendingViewHolder> {
     private final LayoutInflater inflater;
     private ProductCallBackInterface callBack;
-    private RequestManager glide;
+    private final RequestManager glide;
 
     public TrendingAdapter(@NonNull Activity activity) {
         super(new ProductItemCallBack());
 
         inflater = LayoutInflater.from(activity);
-        glide = Glide.with(activity);
+        glide = Glide.with(activity.getBaseContext());
     }
 
     @NonNull
