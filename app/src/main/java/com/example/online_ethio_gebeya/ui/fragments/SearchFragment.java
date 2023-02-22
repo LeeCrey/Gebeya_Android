@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.adapters.ProductAdapter;
@@ -26,10 +27,15 @@ import com.example.online_ethio_gebeya.helpers.ProductHelper;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.viewmodels.FragmentSearchViewModel;
 
+import java.util.List;
+
 public class SearchFragment extends Fragment implements MenuProvider, SearchCallBackInterface {
     private MainActivityCallBackInterface callBackInterface;
     private FragmentSearchViewModel viewModel;
     private FragmentSearchBinding binding;
+
+    private int offset = 0;
+    private String query;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,14 +57,31 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
 
         // observers
         viewModel.getProductResponse().observe(getViewLifecycleOwner(), productResponse -> {
-            if (productResponse == null) {
-                return;
-            }
-
-            productAdapter.setProducts(productResponse.getProducts());
+            List<Product> productList = productResponse.getProducts();
+            productAdapter.appendList(productList);
         });
 
+        // init
         activity.addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+
+        // event
+        RecyclerView recView = binding.productsRecyclerView;
+        recView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if (!recyclerView.canScrollVertically(1)) {
+                    int count = productAdapter.getProductsCount();
+                    // if event
+                    if (count % 2 == 0) {
+                        int offSet = count / 10;
+                        if (offSet != offset) {
+                            offset += 1;
+                            viewModel.searchProduct(query, offSet);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -68,6 +91,7 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
         viewModel = null;
         callBackInterface = null;
         binding = null;
+        query = null;
     }
 
     @Override
@@ -84,8 +108,9 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
 
     @Override
     public void productSearch(String query) {
-        viewModel.searchProduct(query);
+        viewModel.searchProduct(query, offset);
         callBackInterface.closeKeyBoard();
+        this.query = query;
     }
 
     @Override
