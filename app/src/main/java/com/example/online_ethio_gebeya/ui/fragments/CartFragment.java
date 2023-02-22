@@ -19,6 +19,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.adapters.CartItemAdapter;
@@ -47,13 +48,20 @@ public class CartFragment extends Fragment implements MenuProvider, CartItemCall
         viewModel = new ViewModelProvider(this).get(FragmentCartItemViewModel.class);
         callBackInterface = (MainActivityCallBackInterface) requireActivity();
 
+        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view;
+        refreshLayout.setRefreshing(true);
+
         // init
         initView(view);
         viewModel.init(callBackInterface.getAuthorizationToken());
         requireActivity().addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
         // observer
-        viewModel.getCartItemResponse().observe(getViewLifecycleOwner(), cartItemAdapter::updateList);
+        viewModel.getCartItemResponse().observe(getViewLifecycleOwner(), response -> {
+            cartItemAdapter.updateList(response);
+            refreshLayout.setRefreshing(false);
+            refreshLayout.setEnabled(false);
+        });
         viewModel.getOrderCreated().observe(getViewLifecycleOwner(), aBoolean -> {
             if (aBoolean == null) {
                 return;
