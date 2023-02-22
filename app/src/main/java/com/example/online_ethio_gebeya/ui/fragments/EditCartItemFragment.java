@@ -46,7 +46,8 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         MainActivityCallBackInterface callBackInterface = (MainActivityCallBackInterface) requireActivity();
-        EditCartItemFragmentViewModelFactory factory = new EditCartItemFragmentViewModelFactory(requireActivity().getApplication(), callBackInterface.getAuthorizationToken(), cartItem);
+        EditCartItemFragmentViewModelFactory factory = new EditCartItemFragmentViewModelFactory(requireActivity().getApplication(),
+                callBackInterface.getAuthorizationToken(), cartItem);
         viewModel = new ViewModelProvider(this, factory).get(EditCartItemFragmentViewModel.class);
 
         // load
