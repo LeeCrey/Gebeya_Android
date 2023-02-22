@@ -23,8 +23,8 @@ public class ProductsViewModel extends AndroidViewModel {
         return oProductIndex;
     }
 
-    public void searchProduct(String query) {
-        repository.searchProduct(query);
+    public void searchProduct(String query, int offSet) {
+        repository.searchProduct(query, offSet);
     }
 
     @Override
