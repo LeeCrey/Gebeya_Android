@@ -1,13 +1,12 @@
 package com.example.online_ethio_gebeya.data.apis;
 
-import com.example.online_ethio_gebeya.models.Cart;
 import com.example.online_ethio_gebeya.models.CartItem;
 import com.example.online_ethio_gebeya.models.responses.CartItemResponse;
+import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -36,5 +35,5 @@ public interface CartItemApi {
     // update
     @Headers("accept: application/json")
     @PATCH("cart_items/{id}")
-    Call<CartItemResponse> updateItem(@Header("Authorization") String authorization, @Body Cart cart);
+    Call<InstructionsResponse> updateItem(@Header("Authorization") String authorization, @Path("id") long carItemId, @Query("quantity") int quantity);
 }
