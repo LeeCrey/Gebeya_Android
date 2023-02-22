@@ -19,7 +19,7 @@ import java.util.List;
 public class ProductImagesAdapter extends RecyclerView.Adapter<ProductImageHolder> {
     private final LayoutInflater inflater;
     private List<String> imagesList;
-    private RequestManager glide;
+    private final RequestManager glide;
 
     public ProductImagesAdapter(List<String> imagesList, @NonNull Context context) {
         this.imagesList = imagesList;
