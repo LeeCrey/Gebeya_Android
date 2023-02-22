@@ -59,7 +59,10 @@ public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
         CartItemViewHolder vh = new CartItemViewHolder(binding);
 
         if (callBackInterface != null) {
-            root.setOnClickListener(v -> callBackInterface.onCartItemClick(getCartItem(vh.getAdapterPosition())));
+            root.setOnClickListener(v -> {
+                int pos = vh.getAdapterPosition();
+                callBackInterface.onCartItemClick(getCartItem(pos), pos);
+            });
         }
 
         return vh;
@@ -111,13 +114,16 @@ public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
         callBackInterface = cartFragment;
     }
 
-    public void cartItemUpdate(@NonNull CartItem cartItem) {
+    public void cartItemUpdate(Integer updateItemPosition) {
         // btw the data will silently update but the changed won't be reflected in the UI.
         // If you don't like it, change the logic. Clone the cartItem and pass it.
         // then come here and update the list.
         // @lee_crey Telegram
 
-        List<CartItem> itemList = getCurrentList();
-        notifyItemChanged(itemList.indexOf(cartItem));
+        if (updateItemPosition == null) {
+            return;
+        }
+
+        notifyItemChanged(updateItemPosition);
     }
 }
