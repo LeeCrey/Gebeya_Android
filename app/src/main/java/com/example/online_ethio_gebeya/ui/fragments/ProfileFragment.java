@@ -17,13 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentProfileBinding;
 import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.viewmodels.FragmentProfileViewModelFragment;
 import com.google.android.material.textfield.TextInputEditText;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.HashMap;
@@ -54,7 +54,6 @@ public class ProfileFragment extends Fragment {
 
         //
         final File[] profilePath = {null};
-        Picasso picasso = Picasso.get();
         profile = binding.userProfileImage;
         firstName = binding.firstName;
         lastName = binding.lastName;
@@ -93,8 +92,7 @@ public class ProfileFragment extends Fragment {
         ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
                     profilePath[0] = new File(uri.toString());
-
-                    picasso.load(uri).into(profile);
+                    Glide.with(requireContext()).load(uri).into(profile);
                 });
         profile.setBorderColor(Color.BLUE);
 
@@ -160,6 +158,6 @@ public class ProfileFragment extends Fragment {
         lastName.setText(customer.getLastName());
         currentPassword.setError(null);
 
-        Picasso.get().load(customer.getProfileImageUrl()).into(profile);
+        Glide.with(requireContext()).load(customer.getProfileImageUrl()).into(profile);
     }
 }
