@@ -6,8 +6,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.RequestManager;
 import com.example.online_ethio_gebeya.R;
-import com.squareup.picasso.Picasso;
 
 public class ProductImageHolder extends RecyclerView.ViewHolder {
     private final ImageView imageView;
@@ -18,7 +18,7 @@ public class ProductImageHolder extends RecyclerView.ViewHolder {
         imageView = itemView.findViewById(R.id.product_image);
     }
 
-    public void bindView(String url, @NonNull Picasso picasso) {
-        picasso.load(url).error(R.drawable.load_error).into(imageView);
+    public void bindView(String url, @NonNull RequestManager glide) {
+        glide.load(url).centerCrop().placeholder(R.drawable.load_error).into(imageView);
     }
 }

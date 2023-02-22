@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.SingleProductCallBack;
 import com.example.online_ethio_gebeya.databinding.LayoutProductBinding;
@@ -18,6 +20,7 @@ import com.example.online_ethio_gebeya.helpers.diff_calc.ProductItemCallBack;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.viewholders.ProductViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends ListAdapter<Product, ProductViewHolder> {
@@ -25,13 +28,15 @@ public class ProductAdapter extends ListAdapter<Product, ProductViewHolder> {
     protected final Activity activity;
     private SingleProductCallBack callBack;
     private boolean calculateWidth;
+    private RequestManager glide;
 
-    public ProductAdapter(Fragment activity) {
+    public ProductAdapter(@NonNull Fragment activity) {
         super(new ProductItemCallBack());
 
         this.activity = activity.getActivity();
         inflater = LayoutInflater.from(this.activity);
         calculateWidth = false;
+        glide = Glide.with(activity);
     }
 
     @NonNull
@@ -62,7 +67,7 @@ public class ProductAdapter extends ListAdapter<Product, ProductViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        holder.bindView(activity, getItem(position));
+        holder.bindView(activity, getItem(position), glide);
     }
 
     public void setCalculateProductWidth(boolean b) {
@@ -83,5 +88,19 @@ public class ProductAdapter extends ListAdapter<Product, ProductViewHolder> {
 
     public Product getClickedItem(int position) {
         return getItem(position);
+    }
+
+    public int getProductsCount() {
+        return getItemCount();
+    }
+
+    public void appendList(List<Product> list) {
+        if (list == null) {
+            return;
+        }
+
+        List<Product> current = new ArrayList<>(getCurrentList());
+        current.addAll(list);
+        submitList(current);
     }
 }
