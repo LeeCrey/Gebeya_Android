@@ -24,8 +24,8 @@ public class FragmentSearchViewModel extends AndroidViewModel {
         return mProductResponse;
     }
 
-    public void searchProduct(String query) {
-        repository.searchProduct(query);
+    public void searchProduct(String query, int offSet) {
+        repository.searchProduct(query, offSet);
     }
 
     public void setAuthToken(String authToken) {

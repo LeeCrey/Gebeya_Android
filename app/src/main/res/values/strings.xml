@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Online Gebeya</string>
-    <!--        <string name="base_url" translatable="false">https://gebeya.up.railway.app/</string>-->
-    <string name="base_url" translatable="false">https://gebeya.loca.lt/</string>
+    <!--            <string name="base_url" translatable="false">https://gebeya.up.railway.app/</string>-->
+        <string name="base_url" translatable="false">https://gebeya.loca.lt/</string>
 
     <string name="language">Language</string>
     <string name="price_in_ethio">%1$.2f ETB</string>
@@ -131,4 +131,5 @@
     <string name="rating_and_review">Rating and reviews</string>
     <string name="lbl_orders">Orders</string>
     <string name="lbl_shop">Shop</string>
+    <string name="lbl_update">Update</string>
 </resources>

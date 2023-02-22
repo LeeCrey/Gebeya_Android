@@ -13,7 +13,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,9 +23,9 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 
 import com.example.online_ethio_gebeya.R;
+import com.example.online_ethio_gebeya.models.CartItem;
 import com.example.online_ethio_gebeya.models.Product;
 import com.google.android.material.textfield.TextInputEditText;
-import com.squareup.picasso.Picasso;
 
 public class ApplicationHelper {
     private static final int GRANTED = PackageManager.PERMISSION_GRANTED;
@@ -113,12 +112,10 @@ public class ApplicationHelper {
     }
 
     // for view
-
-    @BindingAdapter("attachImageToView")
-    public static void attachImage(@NonNull ImageView view, @NonNull String url) {
-        Picasso.get().load(url)
-                .error(R.drawable.load_error)
-                .into(view);
+    @BindingAdapter("attachTotalPrice")
+    public static void attachTotalPrice(@NonNull TextView view, @NonNull CartItem item) {
+        double total = item.getQuantity() * item.getProduct().getPrice();
+        view.setText(String.valueOf(total));
     }
 
     @BindingAdapter("setStrikeThroughText")

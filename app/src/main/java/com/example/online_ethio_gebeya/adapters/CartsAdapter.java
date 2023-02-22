@@ -51,7 +51,7 @@ public class CartsAdapter extends ListAdapter<Cart, CartViewHolder> {
         final CartViewHolder viewHolder = new CartViewHolder(view);
 
 //        // on click listener...
-        view.setOnClickListener(v -> callBackInterface.onCartClick(getItem(viewHolder.getAdapterPosition())));
+        view.setOnClickListener(v -> callBackInterface.onItemClicked(getItem(viewHolder.getAdapterPosition())));
 
         return viewHolder;
     }

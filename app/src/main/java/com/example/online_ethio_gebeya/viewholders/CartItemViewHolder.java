@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.RequestManager;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.databinding.LayoutCartItemBinding;
 import com.example.online_ethio_gebeya.models.CartItem;
@@ -15,6 +16,8 @@ public class CartItemViewHolder extends RecyclerView.ViewHolder {
     private final LayoutCartItemBinding binding;
     private final MaterialCardView materialCardView;
 
+    private static final String TAG = "CartItemViewHolder";
+
     public CartItemViewHolder(@NonNull LayoutCartItemBinding _binding) {
         super(_binding.getRoot());
         binding = _binding;
@@ -22,7 +25,7 @@ public class CartItemViewHolder extends RecyclerView.ViewHolder {
         materialCardView = (MaterialCardView) binding.getRoot();
     }
 
-    public void bind(@NonNull Context context, @NonNull CartItem item) {
+    public void bind(@NonNull Context context, @NonNull CartItem item, RequestManager glide) {
         binding.setCartItem(item);
 
         Product p = item.getProduct();
@@ -34,7 +37,7 @@ public class CartItemViewHolder extends RecyclerView.ViewHolder {
         String price = context.getString(R.string.price_in_ethio, finalPrice);
         binding.setPrice(price);
 
-        materialCardView.setChecked(item.isChecked());
+        glide.load(item.getItemImage()).centerCrop().placeholder(R.drawable.load_error).into(binding.productImage);
     }
 
     public MaterialCardView getMaterialCardView() {

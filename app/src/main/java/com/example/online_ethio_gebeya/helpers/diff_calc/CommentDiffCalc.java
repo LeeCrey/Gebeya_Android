@@ -4,9 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.example.online_ethio_gebeya.models.Comment;
-import com.example.online_ethio_gebeya.models.Product;
 
-import java.util.List;
 import java.util.Objects;
 
 public class CommentDiffCalc extends DiffUtil.ItemCallback<Comment> {

@@ -43,8 +43,8 @@ public class FragmentHomeViewModel extends ProductsViewModel {
         repository.getListFromApi(cat);
     }
 
-    public void searchProduct(String query) {
-        repository.searchProduct(query);
+    public void searchProduct(String query, int offSet) {
+        repository.searchProduct(query, offSet);
     }
 
     public void setLocation(Location location) {

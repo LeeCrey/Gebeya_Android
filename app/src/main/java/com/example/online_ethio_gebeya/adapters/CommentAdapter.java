@@ -17,7 +17,7 @@ import com.example.online_ethio_gebeya.viewholders.CommentViewHolder;
 import java.util.List;
 
 public class CommentAdapter extends ListAdapter<Comment, CommentViewHolder> {
-    private LayoutInflater inflater;
+    private final LayoutInflater inflater;
 
     public CommentAdapter(@NonNull Context context) {
         super(new CommentDiffCalc());

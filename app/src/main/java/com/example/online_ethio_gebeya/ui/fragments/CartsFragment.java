@@ -84,7 +84,7 @@ public class CartsFragment extends Fragment implements MenuProvider, CartCallBac
     }
 
     @Override
-    public void onCartClick(@NonNull Cart cart) {
+    public void onItemClicked(@NonNull Cart cart) {
         Bundle arg = new Bundle();
         arg.putString("cartName", cart.getName());
         arg.putLong("cartId", cart.getId());

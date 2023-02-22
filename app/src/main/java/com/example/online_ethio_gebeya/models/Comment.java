@@ -1,8 +1,5 @@
 package com.example.online_ethio_gebeya.models;
 
-import androidx.annotation.NonNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Comment {
