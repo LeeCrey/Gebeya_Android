@@ -71,13 +71,7 @@ public class CartFragment extends Fragment implements MenuProvider, CartItemCall
                 navController.navigateUp();
             }
         });
-        viewModel.getUpdatedCartItem().observe(getViewLifecycleOwner(), cartItem -> {
-            if (cartItem == null) {
-                return;
-            }
-
-            cartItemAdapter.cartItemUpdate(cartItem);
-        });
+        viewModel.getUpdatedCartItemPosition().observe(getViewLifecycleOwner(), cartItemAdapter::cartItemUpdate);
 
         // api
         CartFragmentArgs args = CartFragmentArgs.fromBundle(getArguments());
@@ -140,8 +134,8 @@ public class CartFragment extends Fragment implements MenuProvider, CartItemCall
     }
 
     @Override
-    public void onCartItemClick(@NonNull CartItem cartItem) {
-        EditCartItemFragment bottomSheet = new EditCartItemFragment(cartItem, viewModel);
+    public void onCartItemClick(@NonNull CartItem cartItem, int position) {
+        EditCartItemFragment bottomSheet = new EditCartItemFragment(cartItem, viewModel, position);
         bottomSheet.show(getParentFragmentManager(), "CartItemEditBottomSheet");
     }
 }
