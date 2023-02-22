@@ -32,6 +32,7 @@ public class CartsFragment extends Fragment implements MenuProvider, CartCallBac
     private FragmentCartsViewModel viewModel;
     private NavController navController;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout refreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,17 +44,21 @@ public class CartsFragment extends Fragment implements MenuProvider, CartCallBac
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         navController = Navigation.findNavController(view);
         viewModel = new ViewModelProvider(this).get(FragmentCartsViewModel.class);
-        SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view;
+        refreshLayout = (SwipeRefreshLayout) view;
+        refreshLayout.setRefreshing(true);
 
         initRecyclerView(view);
 
-        refreshLayout.setOnRefreshListener(() -> {
-            viewModel.getCarts();
-            refreshLayout.setRefreshing(false);
-        });
+        refreshLayout.setOnRefreshListener(() -> viewModel.getCarts());
 
         // observers
-        viewModel.getCartResponse().observe(getViewLifecycleOwner(), cartsAdapter::setCarts);
+        viewModel.getCartResponse().observe(getViewLifecycleOwner(), carts -> {
+            if (carts == null) {
+                return;
+            }
+            refreshLayout.setRefreshing(false);
+            cartsAdapter.submitList(carts);
+        });
 
         // add menu host
         requireActivity().addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
@@ -67,6 +72,7 @@ public class CartsFragment extends Fragment implements MenuProvider, CartCallBac
         viewModel = null;
         navController = null;
         recyclerView = null;
+        refreshLayout = null;
     }
 
     @Override
