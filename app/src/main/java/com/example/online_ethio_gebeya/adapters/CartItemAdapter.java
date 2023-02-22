@@ -2,6 +2,7 @@ package com.example.online_ethio_gebeya.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -9,13 +10,17 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.online_ethio_gebeya.R;
+import com.example.online_ethio_gebeya.callbacks.CartItemCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.LayoutCartItemBinding;
 import com.example.online_ethio_gebeya.models.CartItem;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.ui.fragments.CartFragment;
 import com.example.online_ethio_gebeya.viewholders.CartItemViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
@@ -34,25 +39,34 @@ public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
     };
     private final LayoutInflater inflater;
     private final Context context;
+    private final RequestManager glide;
+    private CartItemCallBackInterface callBackInterface;
 
     public CartItemAdapter(@NonNull CartFragment fragment) {
         super(CALL_BACK);
 
         context = fragment.getContext();
         inflater = LayoutInflater.from(fragment.getContext());
+        glide = Glide.with(fragment);
     }
 
     @NonNull
     @Override
     public CartItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutCartItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_cart_item, parent, false);
+        View root = binding.getRoot();
+        CartItemViewHolder vh = new CartItemViewHolder(binding);
 
-        return new CartItemViewHolder(binding);
+        if (callBackInterface != null) {
+            root.setOnClickListener(v -> callBackInterface.onCartItemClick(getCartItem(vh.getAdapterPosition())));
+        }
+
+        return vh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull CartItemViewHolder holder, int position) {
-        holder.bind(context, getItem(position));
+        holder.bind(context, getItem(position), glide);
     }
 
     public CartItem getCartItem(int position) {
@@ -86,5 +100,13 @@ public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
         }
 
         return sum;
+    }
+
+    public List<CartItem> getItemList() {
+        return new ArrayList<>(getCurrentList());
+    }
+
+    public void setCallBack(CartFragment cartFragment) {
+        callBackInterface = cartFragment;
     }
 }
