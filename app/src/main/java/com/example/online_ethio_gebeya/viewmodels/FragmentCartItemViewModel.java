@@ -16,7 +16,7 @@ public class FragmentCartItemViewModel extends AndroidViewModel {
     private final CartItemRepository repository;
     private final LiveData<List<CartItem>> oCartItemList;
     private final MutableLiveData<Boolean> mOrderCreated;
-    private final MutableLiveData<CartItem> mUpdatedCartItem;
+    private final MutableLiveData<Integer> mUpdatedCartItemPosition;
     private String authToken = null;
 
     public FragmentCartItemViewModel(@NonNull Application application) {
@@ -25,7 +25,7 @@ public class FragmentCartItemViewModel extends AndroidViewModel {
         repository = new CartItemRepository(application);
         oCartItemList = repository.getCartItemList();
         mOrderCreated = new MutableLiveData<>();
-        mUpdatedCartItem = new MutableLiveData<>();
+        mUpdatedCartItemPosition = new MutableLiveData<>();
     }
 
     public void init(String authorizationToken) {
@@ -36,8 +36,8 @@ public class FragmentCartItemViewModel extends AndroidViewModel {
         return mOrderCreated;
     }
 
-    public LiveData<CartItem> getUpdatedCartItem() {
-        return mUpdatedCartItem;
+    public LiveData<Integer> getUpdatedCartItemPosition() {
+        return mUpdatedCartItemPosition;
     }
 
     public LiveData<List<CartItem>> getCartItemResponse() {
@@ -57,7 +57,7 @@ public class FragmentCartItemViewModel extends AndroidViewModel {
         mOrderCreated.postValue(true);
     }
 
-    public void setUpdateCartItem(@NonNull CartItem cartItem) {
-        mUpdatedCartItem.postValue(cartItem);
+    public void setUpdateCartItem(int position) {
+        mUpdatedCartItemPosition.postValue(position);
     }
 }
