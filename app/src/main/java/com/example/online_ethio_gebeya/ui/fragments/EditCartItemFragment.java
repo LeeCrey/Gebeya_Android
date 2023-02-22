@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,7 +29,6 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
     private FragmentEditCartItemBinding binding;
     private EditCartItemFragmentViewModel viewModel;
     private FragmentCartItemViewModel fragmentCartItemViewModel;
-    private Button update;
     private final int clickedItemPosition;
 
     public EditCartItemFragment(@NonNull CartItem cartItem, @NonNull FragmentCartItemViewModel _fragmentCartItemViewModel, int position) {
@@ -58,14 +58,19 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
 
         Button increment = binding.incrementBtn;
         Button decrement = binding.decrementBtn;
-        update = binding.updateBtn;
+        Button update = binding.updateBtn;
         TextView quantity = binding.quantity;
+        ProgressBar loading = binding.progressCircular;
 
         // observer
         LiveData<Integer> currentValueObserver = viewModel.getCurrentQuantity();
         currentValueObserver.observe(getViewLifecycleOwner(), integer -> {
             quantity.setText(String.valueOf(integer));
-            setButtonStatus(Objects.equals(integer, cartItem.getQuantity()));
+            if (Objects.equals(integer, cartItem.getQuantity())) {
+                update.setVisibility(View.INVISIBLE);
+            } else {
+                update.setVisibility(View.VISIBLE);
+            }
 
             increment.setEnabled(viewModel.isIncrement());
             decrement.setEnabled(viewModel.isDecrement());
@@ -82,29 +87,28 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
                 fragmentCartItemViewModel.setUpdateCartItem(clickedItemPosition);
                 dismiss();
             } else {
-                setButtonStatus(false);
+                loading.setVisibility(View.GONE);
+                update.setEnabled(true);
             }
         });
 
         // event
         increment.setOnClickListener(v -> viewModel.increment());
         decrement.setOnClickListener(v -> viewModel.decrement());
-        update.setOnClickListener(v -> viewModel.updateCartItem());
+        update.setOnClickListener(v -> {
+            loading.setVisibility(View.VISIBLE);
+            update.setEnabled(false);
+            viewModel.updateCartItem();
+        });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-        update = null;
         cartItem = null;
         binding = null;
         viewModel = null;
         fragmentCartItemViewModel = null;
-    }
-
-    private void setButtonStatus(boolean status) {
-        int visibility = status ? View.INVISIBLE : View.VISIBLE;
-        update.setVisibility(visibility);
     }
 }
