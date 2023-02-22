@@ -9,21 +9,22 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.viewholders.ProductImageHolder;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ProductImagesAdapter extends RecyclerView.Adapter<ProductImageHolder> {
     private final LayoutInflater inflater;
-    private final Picasso picasso;
     private List<String> imagesList;
+    private RequestManager glide;
 
     public ProductImagesAdapter(List<String> imagesList, @NonNull Context context) {
         this.imagesList = imagesList;
         inflater = LayoutInflater.from(context);
-        picasso = Picasso.get();
+        glide = Glide.with(context);
     }
 
     @NonNull
@@ -37,7 +38,7 @@ public class ProductImagesAdapter extends RecyclerView.Adapter<ProductImageHolde
     @Override
     public void onBindViewHolder(@NonNull ProductImageHolder holder, int position) {
         String url = imagesList.get(position);
-        holder.bindView(url, picasso);
+        holder.bindView(url, glide);
     }
 
     @Override
