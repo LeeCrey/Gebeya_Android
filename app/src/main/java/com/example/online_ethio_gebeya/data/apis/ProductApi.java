@@ -34,5 +34,5 @@ public interface ProductApi {
 
     @Headers({"accept: application/json"})
     @GET("search")
-    Call<ProductResponse> searchProduct(@Header("Authorization") String token, @Query("q") String query);
+    Call<ProductResponse> searchProduct(@Header("Authorization") String token, @Query("q") String query, @Query("offset") int offSet);
 }
