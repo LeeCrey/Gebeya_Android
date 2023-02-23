@@ -56,6 +56,8 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
     private Button addToCart;
     private FragmentProductDetailViewModel viewModel;
 
+    private TextView seeAllComments;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,6 +95,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         TextView quantity = binding.quantity;
         Button incrementBtn = binding.incrementBtn;
         Button decrementBtn = binding.decrementBtn;
+        seeAllComments = binding.seeAll;
 
         // view models
         viewModel = new ViewModelProvider(this, (
@@ -116,6 +119,12 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         });
         incrementBtn.setOnClickListener(v -> viewModel.increment());
         decrementBtn.setOnClickListener(v -> viewModel.decrement());
+        seeAllComments.setOnClickListener(v -> {
+            Bundle cArg = new Bundle();
+            cArg.putString("productName", product.getName());
+            cArg.putLong("productId", product.getId());
+            navController.navigate(R.id.open_comments, cArg);
+        });
         // remove if unauthorized
         if (callBackInterface.getAuthorizationToken() == null) {
             btn.removeActionItem(0);
@@ -152,6 +161,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         commentAdapter = null;
         addToCart = null;
         viewModel = null;
+        seeAllComments = null;
     }
 
     @Override
@@ -175,13 +185,17 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         // comments
         List<Comment> commentList = productShowResponse.getComments();
         int v = View.VISIBLE;
+        int sv = View.GONE;
         if (commentList.isEmpty()) {
             v = View.GONE;
         } else {
-            commentAdapter.setCommentList(commentList);
+            if (commentList.size() == 3) {
+                sv = View.VISIBLE;
+            }
         }
+        commentAdapter.setCommentList(commentList);
+        seeAllComments.setVisibility(sv);
         binding.ratingAndReview.setVisibility(v);
-        binding.seeAll.setVisibility(v);
     }
 
     private void setData(Product product) {
