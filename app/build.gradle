@@ -61,24 +61,23 @@ dependencies {
     // image lib
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
-//    implementation group: 'com.squareup.picasso', name: 'picasso', version: '2.8'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // http lib
 //    implementation 'com.android.volley:volley:1.2.1'
     implementation group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.9.0'
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.10.0'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.0.0-alpha.11'
     implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.9.0'
-    implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '4.10.0'
+    implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '5.0.0-alpha.11'
 
     // json lib
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.3'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.13.3'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.13.3'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.2'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.14.2'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.14.2'
 
 //    implementation 'com.google.android.gms:play-services-maps:18.1.0'
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
-    implementation "com.leinardi.android:speed-dial:3.2.0"
-//    implementation 'com.github.YenePay:yenepay.sdk.android:0.0.10'
+    implementation 'com.leinardi.android:speed-dial:3.3.0'
+//    implementation 'com.paypal.sdk:paypal-android-sdk:2.14.2'
 }

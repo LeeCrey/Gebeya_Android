@@ -22,14 +22,4 @@
     </string-array>
 
     <!--  MAP   -->
-    <string-array name="map_entries">
-        <item>Normal</item>
-        <item>Satellite</item>
-        <item>Hybrid</item>
-    </string-array>
-    <string-array name="map_value" translatable="false">
-        <item>normal</item>
-        <item>satellite</item>
-        <item>hybrid</item>
-    </string-array>
 </resources>

@@ -3,7 +3,6 @@
     <string name="language">ቋንቋ</string>
 
     <string name="price_in_ethio">%1$.2f ብር</string>
-    <string name="added_to_cart">ታክሏል።</string>
 
     <!--  MESSAGES  -->
     <string name="invalid">ኢሜይል አይመስልም</string>
@@ -38,7 +37,6 @@
     <string name="msg_welcome">እንኳን በደህና መጡ</string>
     <string name="btn_send">ላክ</string>
     <string name="trending">ወቅታዊ</string>
-    <string name="detail">ዝርዝር</string>
     <string name="location">አድራሻ</string>
     <string name="query_text">የእቃዉን ወይም የብራንድ ስም ያስገብ</string>
     <string name="lbl_price">ዋጋ</string>
@@ -56,19 +54,10 @@
     <string name="lbl_unlock">መለያ ክፈት</string>
     <string name="msg_account_locked">መለያ ተቆልፏል?</string>
     <string name="msg_sign_in_to_continue">ለመቀጠል ይግቡ</string>
-    <string name="remember_me">አስታውስ</string>
     <string name="lbl_related_products">ተዛማጅ ምርቶች</string>
     <string name="feedback_msg">እባክዎን አስተያየትዎን እዚህ ያቅርቡ</string>
     <string name="lbl_confirm">መለያ ያረጋግጡ</string>
-    <string name="not_confirmed_yet">እስካሁን አልተረጋገጠም?</string>
     <string name="lbl_origin">መነሻ</string>
-    <string name="shop_location">አካባቢ</string>
-    <string name="map_type">የካርታ አይነት</string>
-    <string name="normal">መደበኛ</string>
-    <string name="map_zoom_level">የካርታ ማጉላት ደረጃ</string>
-    <string name="map_z_level">የማጉላት ደረጃ</string>
-    <string name="map_type_title">የካርታ አይነት</string>
-    <string name="feedbacks">አስተያየቶች</string>
     <string name="nav_header_subtitle">ለመቀጠል በመለያ ይግቡ</string>
     <string name="nav_header_title">እንግዳ-ተጠቃሚ</string>
     <string name="font_size">የቅርጸ ቁምፊ መጠን</string>
@@ -77,14 +66,11 @@
     <string name="lbl_carts">ጋሪዎች</string>
     <string name="lbl_search">ፈልግ</string>
     <string name="night_mode">የምሽት ሁነታ</string>
-    <string name="delete">ሰርዝ</string>
     <string name="msg_account_confirmed">መለያ አልተረጋገጠም?</string>
     <string name="msg_check_ur_email">ኢሜልዎን ያረጋግጡ</string>
     <string name="confirm_later">ዝለል፣ በኋላ አረጋግጣለሁ።</string>
     <string name="ope_email">ኢሜይል ክፈት</string>
-    <string name="deepLink">ጠብቅ</string>
     <string name="lbl_settings">ቅንብሮች</string>
-    <string name="lbl_confirmation">ማረጋገጫ</string>
     <string name="others">ሌሎች</string>
     <string name="instruction_sent">መመሪያ ተልኳል።</string>
     <string name="lbl_update">አሻሽል</string>
@@ -94,7 +80,6 @@
     <string name="checkout">ጨርሰህ ውጣ</string>
     <string name="save_changes">አስቀምጥ</string>
     <string name="lbl_current_password">የአሁኑ የይለፍ ቃል</string>
-    <string name="click">ይጫኑ</string>
     <string name="unlock_instruction">ከአካውንትዎ ጋር የተያያዘውን ኢሜል ያስገቡ እና አካውንት ክፈት መመሪያወደ ኢሜልዎ እንልካለን።</string>
     <string name="write_comment">አስተያየት ጻፍ..</string>
     <string name="rate_this_product">ይህን ምርት ገምግም</string>

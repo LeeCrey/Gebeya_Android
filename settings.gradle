@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Online Gebeya"
 include ':app'
+include ':yeneSDK'
+include ':yenesdk'
