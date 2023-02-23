@@ -81,9 +81,7 @@ public class CartItemRepository {
         cartItemResponseCall.enqueue(new Callback<CartItemResponse>() {
             @Override
             public void onResponse(@NonNull Call<CartItemResponse> call, @NonNull Response<CartItemResponse> response) {
-                if (response.isSuccessful()) {
-                    addToCart.setText("Done");
-                } else {
+                if (!response.isSuccessful()) {
                     // if it's bad request(item may be exist in cart. No need to enable button)
                     // no need to create duplicate item in cart(we should add quantity)
                     if (response.code() != 400) {
