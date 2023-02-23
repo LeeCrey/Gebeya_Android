@@ -40,6 +40,7 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.leinardi.android.speeddial.SpeedDialView;
 
 import java.util.List;
+import java.util.Objects;
 
 // detail page for product
 public class ProductFragment extends Fragment implements SingleProductCallBack {
@@ -107,7 +108,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
         // event ...
-        addToCart.setOnClickListener(v -> cartItemRepository.addItemToCart(productId, addToCart, viewModel.getQuantity().getValue()));
+        addToCart.setOnClickListener(v -> cartItemRepository.addItemToCart(productId, addToCart, Objects.requireNonNull(viewModel.getQuantity().getValue())));
         btn.inflate(R.menu.floating_menu);
         btn.setOnActionSelectedListener(actionItem -> {
             if (actionItem.getId() == R.id.location) {
