@@ -212,7 +212,7 @@
     <fragment
         android:id="@+id/navigation_comments"
         android:name="com.example.online_ethio_gebeya.ui.fragments.CommentsFragment"
-        android:label="fragment_comments"
+        android:label="{productName}"
         tools:layout="@layout/fragment_comments">
         <argument
             android:name="productName"
