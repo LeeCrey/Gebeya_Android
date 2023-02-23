@@ -55,14 +55,21 @@ public class CartItemRepository {
             public void onResponse(@NonNull Call<List<CartItem>> call, @NonNull Response<List<CartItem>> response) {
                 if (response.isSuccessful()) {
                     mCartItemList.postValue(response.body());
+                } else {
+                    setEmptyToList();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<CartItem>> call, @NonNull Throwable t) {
                 // ignore
+                setEmptyToList();
             }
         });
+    }
+
+    private void setEmptyToList() {
+        mCartItemList.postValue(new ArrayList<>());
     }
 
     // add item to cart
