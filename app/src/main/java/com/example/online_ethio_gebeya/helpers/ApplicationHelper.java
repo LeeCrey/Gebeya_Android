@@ -23,7 +23,7 @@ import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 
 import com.example.online_ethio_gebeya.R;
-import com.example.online_ethio_gebeya.models.CartItem;
+import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.models.Product;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -113,7 +113,7 @@ public class ApplicationHelper {
 
     // for view
     @BindingAdapter("attachTotalPrice")
-    public static void attachTotalPrice(@NonNull TextView view, @NonNull CartItem item) {
+    public static void attachTotalPrice(@NonNull TextView view, @NonNull Item item) {
         double total = item.getQuantity() * item.getProduct().getPrice();
         view.setText(String.valueOf(total));
     }

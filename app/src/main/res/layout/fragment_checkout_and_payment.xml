@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/app_margin"
+    tools:context=".ui.fragments.CheckoutFragment">
+
+    <TextView
+        android:id="@+id/lbl_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_bold"
+        android:paddingVertical="10dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="10dp"
+        android:text="@string/lbl_total"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:layout_constraintStart_toEndOf="@id/lbl_total"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/items_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@id/finish_operation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_total" />
+
+    <Button
+        android:id="@+id/finish_operation"
+        style="@style/custom_un_elevated_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lbl_pay"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circular"
+        android:padding="5dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/finish_operation"
+        app:layout_constraintEnd_toEndOf="@+id/finish_operation"
+        app:layout_constraintStart_toStartOf="@id/finish_operation"
+        app:layout_constraintTop_toTopOf="@id/finish_operation" />
+</androidx.constraintlayout.widget.ConstraintLayout>

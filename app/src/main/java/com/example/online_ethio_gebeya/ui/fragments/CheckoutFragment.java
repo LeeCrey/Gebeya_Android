@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.online_ethio_gebeya.R;
-import com.example.online_ethio_gebeya.adapters.CartItemAdapter;
 import com.example.online_ethio_gebeya.adapters.CheckOutAdapter;
+import com.example.online_ethio_gebeya.adapters.ItemAdapter;
 import com.example.online_ethio_gebeya.databinding.FragmentCheckoutBinding;
 import com.example.online_ethio_gebeya.viewmodels.CheckoutFragmentViewModel;
 import com.example.online_ethio_gebeya.viewmodels.FragmentCartItemViewModel;
@@ -24,13 +24,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class CheckoutFragment extends BottomSheetDialogFragment {
     private final double totalMoney;
-    private CartItemAdapter adapter;
+    private ItemAdapter adapter;
     private FragmentCheckoutBinding binding;
     private final long cartId;
     private String authorizationToken;
     private FragmentCartItemViewModel cartItemViewModel;
 
-    public CheckoutFragment(double total, @NonNull CartItemAdapter adapter, long _cartId, @NonNull String _authorizationToken, @NonNull FragmentCartItemViewModel fragmentCartItemViewModel) {
+    public CheckoutFragment(double total, @NonNull ItemAdapter adapter, long _cartId, @NonNull String _authorizationToken, @NonNull FragmentCartItemViewModel fragmentCartItemViewModel) {
         totalMoney = total;
         this.adapter = adapter;
         cartId = _cartId;

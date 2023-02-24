@@ -24,8 +24,7 @@ public class CommentAdapter extends ListAdapter<Comment, CommentViewHolder> {
 
         inflater = LayoutInflater.from(context);
     }
-
-
+    
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

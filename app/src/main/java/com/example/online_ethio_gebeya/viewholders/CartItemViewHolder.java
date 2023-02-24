@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.RequestManager;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.databinding.LayoutCartItemBinding;
-import com.example.online_ethio_gebeya.models.CartItem;
+import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.models.Product;
 import com.google.android.material.card.MaterialCardView;
 
@@ -25,8 +25,8 @@ public class CartItemViewHolder extends RecyclerView.ViewHolder {
         materialCardView = (MaterialCardView) binding.getRoot();
     }
 
-    public void bind(@NonNull Context context, @NonNull CartItem item, RequestManager glide) {
-        binding.setCartItem(item);
+    public void bind(@NonNull Context context, @NonNull Item item, RequestManager glide) {
+        binding.setItem(item);
 
         Product p = item.getProduct();
         double finalPrice = p.getPrice();

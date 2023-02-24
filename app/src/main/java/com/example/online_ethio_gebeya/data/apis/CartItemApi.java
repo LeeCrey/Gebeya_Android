@@ -1,8 +1,8 @@
 package com.example.online_ethio_gebeya.data.apis;
 
-import com.example.online_ethio_gebeya.models.CartItem;
-import com.example.online_ethio_gebeya.models.responses.CartItemResponse;
+import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
+import com.example.online_ethio_gebeya.models.responses.ItemResponse;
 
 import java.util.List;
 
@@ -20,17 +20,17 @@ public interface CartItemApi {
     // index
     @Headers("accept: application/json")
     @GET("carts/{cart_id}/cart_items")
-    Call<List<CartItem>> getCartList(@Header("Authorization") String authorization, @Path("cart_id") long cartId);
+    Call<List<Item>> getCartList(@Header("Authorization") String authorization, @Path("cart_id") long cartId);
 
     // create
     @Headers("accept: application/json")
     @POST("cart_items")
-    Call<CartItemResponse> addItem(@Header("Authorization") String authorization, @Query("product_id") long id, @Query("quantity") int gt);
+    Call<ItemResponse> addItem(@Header("Authorization") String authorization, @Query("product_id") long id, @Query("quantity") int gt);
 
     // delete
     @Headers("accept: application/json")
     @DELETE("cart_items/{id}")
-    Call<CartItemResponse> deleteItem(@Header("Authorization") String authorization, @Path("id") long cartItemId);
+    Call<ItemResponse> deleteItem(@Header("Authorization") String authorization, @Path("id") long cartItemId);
 
     // update
     @Headers("accept: application/json")

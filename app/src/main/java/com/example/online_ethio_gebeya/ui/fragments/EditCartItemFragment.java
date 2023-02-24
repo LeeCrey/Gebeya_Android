@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentEditCartItemBinding;
-import com.example.online_ethio_gebeya.models.CartItem;
+import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.viewmodels.EditCartItemFragmentViewModel;
 import com.example.online_ethio_gebeya.viewmodels.EditCartItemFragmentViewModelFactory;
 import com.example.online_ethio_gebeya.viewmodels.FragmentCartItemViewModel;
@@ -25,14 +25,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.util.Objects;
 
 public class EditCartItemFragment extends BottomSheetDialogFragment {
-    private CartItem cartItem;
+    private Item item;
     private FragmentEditCartItemBinding binding;
     private EditCartItemFragmentViewModel viewModel;
     private FragmentCartItemViewModel fragmentCartItemViewModel;
     private final int clickedItemPosition;
 
-    public EditCartItemFragment(@NonNull CartItem cartItem, @NonNull FragmentCartItemViewModel _fragmentCartItemViewModel, int position) {
-        this.cartItem = cartItem;
+    public EditCartItemFragment(@NonNull Item item, @NonNull FragmentCartItemViewModel _fragmentCartItemViewModel, int position) {
+        this.item = item;
         fragmentCartItemViewModel = _fragmentCartItemViewModel;
         clickedItemPosition = position;
     }
@@ -49,12 +49,12 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         MainActivityCallBackInterface callBackInterface = (MainActivityCallBackInterface) requireActivity();
         EditCartItemFragmentViewModelFactory factory = new EditCartItemFragmentViewModelFactory(requireActivity().getApplication(),
-                callBackInterface.getAuthorizationToken(), cartItem);
+                callBackInterface.getAuthorizationToken(), item);
         viewModel = new ViewModelProvider(this, factory).get(EditCartItemFragmentViewModel.class);
 
         // load
-        binding.productName.setText(cartItem.getProduct().getName());
-        Glide.with(this).load(cartItem.getItemImage()).centerCrop().into(binding.productImage);
+        binding.productName.setText(item.getProduct().getName());
+        Glide.with(this).load(item.getItemImage()).centerCrop().into(binding.productImage);
 
         Button increment = binding.incrementBtn;
         Button decrement = binding.decrementBtn;
@@ -66,7 +66,7 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
         LiveData<Integer> currentValueObserver = viewModel.getCurrentQuantity();
         currentValueObserver.observe(getViewLifecycleOwner(), integer -> {
             quantity.setText(String.valueOf(integer));
-            if (Objects.equals(integer, cartItem.getQuantity())) {
+            if (Objects.equals(integer, item.getQuantity())) {
                 update.setVisibility(View.INVISIBLE);
             } else {
                 update.setVisibility(View.VISIBLE);
@@ -83,12 +83,13 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
             if (!value) {
                 // bwt this does update internally the original value from list
                 // so we have to notify the adapter in adapter
-                cartItem.setQuantity(currentValueObserver.getValue());
+                item.setQuantity(currentValueObserver.getValue());
                 fragmentCartItemViewModel.setUpdateCartItem(clickedItemPosition);
                 dismiss();
             } else {
                 loading.setVisibility(View.GONE);
                 update.setEnabled(true);
+                setCancelable(true);
             }
         });
 
@@ -99,6 +100,8 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
             loading.setVisibility(View.VISIBLE);
             update.setEnabled(false);
             viewModel.updateCartItem();
+
+            setCancelable(false);
         });
     }
 
@@ -106,7 +109,7 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        cartItem = null;
+        item = null;
         binding = null;
         viewModel = null;
         fragmentCartItemViewModel = null;

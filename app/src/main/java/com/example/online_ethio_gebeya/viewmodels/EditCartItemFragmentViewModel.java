@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.online_ethio_gebeya.data.repositories.EditCartItemRepository;
-import com.example.online_ethio_gebeya.models.CartItem;
+import com.example.online_ethio_gebeya.models.Item;
 
 public class EditCartItemFragmentViewModel extends ViewModel {
     private final int productQuantity;
@@ -15,13 +15,13 @@ public class EditCartItemFragmentViewModel extends ViewModel {
     private boolean increment, decrement;
     private final LiveData<Boolean> enableUpdateButton;
 
-    public EditCartItemFragmentViewModel(@NonNull EditCartItemRepository _repository, @NonNull CartItem _cartItem) {
+    public EditCartItemFragmentViewModel(@NonNull EditCartItemRepository _repository, @NonNull Item _Item) {
         repository = _repository;
-        currentQuantity = new MutableLiveData<>(_cartItem.getQuantity());
+        currentQuantity = new MutableLiveData<>(_Item.getQuantity());
         enableUpdateButton = repository.getEnableUpdateButton();
-        productQuantity = _cartItem.getProduct().getQuantity();
-        decrement = _cartItem.getQuantity() > 1;
-        increment = _cartItem.getQuantity() < _cartItem.getProduct().getQuantity();
+        productQuantity = _Item.getProduct().getQuantity();
+        decrement = _Item.getQuantity() > 1;
+        increment = _Item.getQuantity() < _Item.getProduct().getQuantity();
     }
 
     public LiveData<Integer> getCurrentQuantity() {

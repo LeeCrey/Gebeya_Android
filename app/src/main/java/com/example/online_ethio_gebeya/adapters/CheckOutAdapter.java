@@ -1,5 +1,6 @@
 package com.example.online_ethio_gebeya.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,17 +13,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.databinding.LayoutModalItemBinding;
-import com.example.online_ethio_gebeya.models.CartItem;
+import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.viewholders.CheckoutItemViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CheckOutAdapter extends RecyclerView.Adapter<CheckoutItemViewHolder> {
-    private final List<CartItem> itemList;
+    private List<Item> itemList;
     private final LayoutInflater inflater;
     private final RequestManager glide;
 
-    public CheckOutAdapter(@NonNull Context context, List<CartItem> itemList) {
+    public CheckOutAdapter(@NonNull Context context, List<Item> itemList) {
         inflater = LayoutInflater.from(context);
         this.itemList = itemList;
         glide = Glide.with(context);
@@ -44,5 +46,15 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckoutItemViewHolder
     @Override
     public int getItemCount() {
         return itemList == null ? 0 : itemList.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setList(List<Item> _itemList) {
+        if (_itemList == null) {
+            return;
+        }
+
+        itemList = new ArrayList<>(_itemList);
+        notifyDataSetChanged();
     }
 }

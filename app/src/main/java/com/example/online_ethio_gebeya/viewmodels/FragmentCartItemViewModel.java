@@ -8,13 +8,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.online_ethio_gebeya.data.repositories.CartItemRepository;
-import com.example.online_ethio_gebeya.models.CartItem;
+import com.example.online_ethio_gebeya.models.Item;
 
 import java.util.List;
 
 public class FragmentCartItemViewModel extends AndroidViewModel {
     private final CartItemRepository repository;
-    private final LiveData<List<CartItem>> oCartItemList;
+    private final LiveData<List<Item>> oCartItemList;
     private final MutableLiveData<Boolean> mOrderCreated;
     private final MutableLiveData<Integer> mUpdatedCartItemPosition;
     private String authToken = null;
@@ -40,7 +40,7 @@ public class FragmentCartItemViewModel extends AndroidViewModel {
         return mUpdatedCartItemPosition;
     }
 
-    public LiveData<List<CartItem>> getCartItemResponse() {
+    public LiveData<List<Item>> getCartItemResponse() {
         return oCartItemList;
     }
 
