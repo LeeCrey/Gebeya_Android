@@ -6,7 +6,7 @@ public class Order {
     @JsonProperty("id")
     private Long id;
 
-    @JsonProperty("status")
+    @JsonProperty("payment_status")
     private String status;
 
     @JsonProperty("name")
@@ -22,5 +22,9 @@ public class Order {
 
     public String getShopName() {
         return shopName;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
