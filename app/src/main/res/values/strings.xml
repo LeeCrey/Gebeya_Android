@@ -113,4 +113,6 @@
     <string name="lbl_total">Total : </string>
     <string name="lbl_order">Order</string>
     <string name="lbl_pay">Pay</string>
+    <string name="lbl_eql" translatable="false">=</string>
+    <string name="lbl_times" translatable="false">*</string>
 </resources>
