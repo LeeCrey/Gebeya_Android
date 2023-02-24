@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class CartItem {
+public class Item {
     @JsonProperty("id")
     private long id;
 
@@ -30,7 +30,7 @@ public class CartItem {
 
     //    Custom method
     @JsonIgnore
-    public boolean areContentsTheSame(@NonNull CartItem newItem) {
+    public boolean areContentsTheSame(@NonNull Item newItem) {
         boolean qSame = Objects.equals(quantity, newItem.getQuantity());
         boolean pSame = product.isContentTheSame(newItem.getProduct());
 
