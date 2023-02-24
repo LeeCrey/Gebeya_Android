@@ -47,7 +47,7 @@
     <string name="sign_in">ግባ</string>
     <string name="share">አጋራ</string>
     <string name="lbl_feedback">ግብረ መልስ</string>
-    <string name="clear_carts">ሁሉንም ያፅዱ</string>
+    <string name="clear_carts">ያፅዱ</string>
     <string name="password_instruction">ከመለያዎ ጋር የተያያዘውን ኢሜይል አስገባ እና የመለያ ዳግም ማስጀመሪያ መመሪያን ወደ ኢሜልህ እንልካለን።</string>
     <string name="confirm_instruction">ከመለያዎ ጋር የተያያዘውን ኢሜል ያስገቡ እና የመለያ ማረጋገጫ አገናኝን ወደ ኢሜልዎ እንልካለን።</string>
     <string name="lbl_rate">ደረጃ ይስጡ</string>
@@ -75,7 +75,7 @@
     <string name="instruction_sent">መመሪያ ተልኳል።</string>
     <string name="lbl_update">አሻሽል</string>
     <string name="lbl_total">ጠቅላላ</string>
-    <string name="lbl_orders">ትዕዝዞች</string>
+    <string name="lbl_orders">ትዕዛዞች</string>
     <string name="submit">አስረክብ</string>
     <string name="checkout">ጨርሰህ ውጣ</string>
     <string name="save_changes">አስቀምጥ</string>
@@ -89,4 +89,5 @@
     <string name="rating_and_review">ደረጃ እና ክለሳዎች</string>
     <string name="lbl_shop">ሱቅ</string>
     <string name="lbl_order">እዘዝ</string>
+    <string name="lbl_pay">ክፈል</string>
 </resources>
