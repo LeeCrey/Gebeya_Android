@@ -17,6 +17,10 @@ import com.example.online_ethio_gebeya.adapters.CategoryAdapter;
 import com.example.online_ethio_gebeya.adapters.ProductAdapter;
 import com.example.online_ethio_gebeya.adapters.TrendingAdapter;
 import com.example.online_ethio_gebeya.callbacks.SearchCallBackInterface;
+import com.example.online_ethio_gebeya.models.Item;
+import com.example.online_ethio_gebeya.models.Product;
+
+import java.util.List;
 
 public class ProductHelper {
     public static CategoryAdapter initCategory(View view, FragmentActivity context) {
@@ -91,5 +95,24 @@ public class ProductHelper {
 
     public static ProductAdapter initRecommendedProducts(Fragment activity, RecyclerView recyclerView) {
         return initProducts(activity, recyclerView, false, true);
+    }
+
+    public static double getTotalMoney(List<Item> list) {
+        if (list.isEmpty()) {
+            return 0.0;
+        }
+
+        double sum = 0.0;
+        for (Item item : list) {
+            int quantity = item.getQuantity();
+            Product p = item.getProduct();
+            double finalValue = p.getPrice();
+            if (p.getDiscount() != null) {
+                finalValue = p.getPrice() - p.getDiscount();
+            }
+            sum += (finalValue * quantity);
+        }
+
+        return sum;
     }
 }
