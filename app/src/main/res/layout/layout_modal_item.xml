@@ -9,8 +9,8 @@
             type="String" />
 
         <variable
-            name="cartItem"
-            type="com.example.online_ethio_gebeya.models.CartItem" />
+            name="item"
+            type="com.example.online_ethio_gebeya.models.Item" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -41,7 +41,7 @@
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/roboto_black"
                 android:scaleType="centerCrop"
-                android:text="@{cartItem.product.name}"
+                android:text="@{item.product.name}"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/product_image"
@@ -54,7 +54,7 @@
                 android:layout_marginStart="110dp"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
-                android:text="@{String.valueOf(cartItem.quantity)}"
+                android:text="@{String.valueOf(item.quantity)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/product_name" />
 
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
-                android:text=" * "
+                android:text="@string/lbl_times"
                 app:layout_constraintStart_toEndOf="@id/quantity"
                 app:layout_constraintTop_toBottomOf="@id/product_name" />
 
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
-                android:text="@{String.valueOf(cartItem.product.price)}"
+                android:text="@{String.valueOf(item.product.price)}"
                 app:layout_constraintStart_toEndOf="@id/times_icon"
                 app:layout_constraintTop_toBottomOf="@id/product_name" />
 
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
-                android:text="="
+                android:text="@string/lbl_eql"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toStartOf="@id/total"
                 app:layout_constraintStart_toEndOf="@id/eachPrice"
@@ -97,7 +97,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/app_margin"
                 android:padding="10dp"
-                app:attachTotalPrice="@{cartItem}"
+                app:attachTotalPrice="@{item}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/product_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
