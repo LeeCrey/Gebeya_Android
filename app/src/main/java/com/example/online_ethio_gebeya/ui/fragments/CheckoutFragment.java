@@ -11,37 +11,36 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.adapters.CheckOutAdapter;
 import com.example.online_ethio_gebeya.adapters.ItemAdapter;
-import com.example.online_ethio_gebeya.databinding.FragmentCheckoutBinding;
+import com.example.online_ethio_gebeya.databinding.FragmentCheckoutAndPaymentBinding;
+import com.example.online_ethio_gebeya.helpers.ApplicationHelper;
 import com.example.online_ethio_gebeya.viewmodels.CheckoutFragmentViewModel;
 import com.example.online_ethio_gebeya.viewmodels.FragmentCartItemViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class CheckoutFragment extends BottomSheetDialogFragment {
     private final double totalMoney;
-    private ItemAdapter adapter;
-    private FragmentCheckoutBinding binding;
+    private FragmentCheckoutAndPaymentBinding binding;
     private final long cartId;
     private String authorizationToken;
     private FragmentCartItemViewModel cartItemViewModel;
+    private ItemAdapter itemAdapter;
 
     public CheckoutFragment(double total, @NonNull ItemAdapter adapter, long _cartId, @NonNull String _authorizationToken, @NonNull FragmentCartItemViewModel fragmentCartItemViewModel) {
         totalMoney = total;
-        this.adapter = adapter;
         cartId = _cartId;
         authorizationToken = _authorizationToken;
         cartItemViewModel = fragmentCartItemViewModel;
+        itemAdapter = adapter;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentCheckoutBinding.inflate(inflater, container, false);
+        binding = FragmentCheckoutAndPaymentBinding.inflate(inflater, container, false);
 
         return binding.getRoot();
     }
@@ -50,10 +49,11 @@ public class CheckoutFragment extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         CheckoutFragmentViewModel viewModel = new ViewModelProvider(this).get(CheckoutFragmentViewModel.class);
 
-        // plc h
-        Button btn = binding.orderBtn;
+        CheckOutAdapter checkOutAdapter = ApplicationHelper.initItems(requireContext(), binding);
+        checkOutAdapter.submitList(itemAdapter.getItemList());
 
-        initRecycler();
+        // plc h
+        Button btn = binding.finishOperation;
         String value = getString(R.string.price_in_ethio, totalMoney);
         binding.totalPrice.setText(value);
 
@@ -78,6 +78,7 @@ public class CheckoutFragment extends BottomSheetDialogFragment {
             } else {
                 loading.setVisibility(View.GONE);
                 btn.setEnabled(true);
+                setCancelable(true);
                 Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
@@ -87,16 +88,9 @@ public class CheckoutFragment extends BottomSheetDialogFragment {
     public void onDestroyView() {
         super.onDestroyView();
 
-        adapter = null;
         binding = null;
         authorizationToken = null;
         cartItemViewModel = null;
-    }
-
-    private void initRecycler() {
-        RecyclerView recyclerView = binding.itemsRecyclerView;
-        CheckOutAdapter checkOutAdapter = new CheckOutAdapter(requireContext(), adapter.getItemList());
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(checkOutAdapter);
+        itemAdapter = null;
     }
 }
