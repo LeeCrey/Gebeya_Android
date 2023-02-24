@@ -15,7 +15,7 @@ import com.bumptech.glide.RequestManager;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.CartItemCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.LayoutCartItemBinding;
-import com.example.online_ethio_gebeya.models.CartItem;
+import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.ui.fragments.CartFragment;
 import com.example.online_ethio_gebeya.viewholders.CartItemViewHolder;
@@ -23,17 +23,17 @@ import com.example.online_ethio_gebeya.viewholders.CartItemViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
-    private static final DiffUtil.ItemCallback<CartItem> CALL_BACK = new DiffUtil.ItemCallback<CartItem>() {
+public class ItemAdapter extends ListAdapter<Item, CartItemViewHolder> {
+    private static final DiffUtil.ItemCallback<Item> CALL_BACK = new DiffUtil.ItemCallback<Item>() {
         @Override
-        public boolean areItemsTheSame(@NonNull CartItem oldItem, @NonNull CartItem newItem) {
+        public boolean areItemsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
             final long oldItemId = oldItem.getId();
             final long newItemId = newItem.getId();
             return oldItemId == newItemId;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull CartItem oldItem, @NonNull CartItem newItem) {
+        public boolean areContentsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
             return oldItem.areContentsTheSame(newItem);
         }
     };
@@ -43,7 +43,7 @@ public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
     private CartItemCallBackInterface callBackInterface;
     private static final String TAG = "CartItemAdapter";
 
-    public CartItemAdapter(@NonNull CartFragment fragment) {
+    public ItemAdapter(@NonNull CartFragment fragment) {
         super(CALL_BACK);
 
         context = fragment.getContext();
@@ -73,27 +73,27 @@ public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
         holder.bind(context, getItem(position), glide);
     }
 
-    public CartItem getCartItem(int position) {
+    public Item getCartItem(int position) {
         return getItem(position);
     }
 
     // custom
-    public void updateList(List<CartItem> cartItems) {
-        if (cartItems == null) {
+    public void updateList(List<Item> items) {
+        if (items == null) {
             return;
         }
 
-        submitList(cartItems);
+        submitList(items);
     }
 
     public double getCalculatedValue() {
-        List<CartItem> list = getCurrentList();
+        List<Item> list = getCurrentList();
         if (list.isEmpty()) {
             return 0.0;
         }
 
         double sum = 0.0;
-        for (CartItem item : list) {
+        for (Item item : list) {
             int quantity = item.getQuantity();
             Product p = item.getProduct();
             double finalValue = p.getPrice();
@@ -106,7 +106,7 @@ public class CartItemAdapter extends ListAdapter<CartItem, CartItemViewHolder> {
         return sum;
     }
 
-    public List<CartItem> getItemList() {
+    public List<Item> getItemList() {
         return new ArrayList<>(getCurrentList());
     }
 
