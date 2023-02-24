@@ -15,6 +15,7 @@ import com.bumptech.glide.RequestManager;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.CartItemCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.LayoutCartItemBinding;
+import com.example.online_ethio_gebeya.helpers.diff_calc.ItemCallBack;
 import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.ui.fragments.CartFragment;
@@ -24,27 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemAdapter extends ListAdapter<Item, CartItemViewHolder> {
-    private static final DiffUtil.ItemCallback<Item> CALL_BACK = new DiffUtil.ItemCallback<Item>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
-            final long oldItemId = oldItem.getId();
-            final long newItemId = newItem.getId();
-            return oldItemId == newItemId;
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
-            return oldItem.areContentsTheSame(newItem);
-        }
-    };
     private final LayoutInflater inflater;
     private final Context context;
     private final RequestManager glide;
     private CartItemCallBackInterface callBackInterface;
-    private static final String TAG = "CartItemAdapter";
 
     public ItemAdapter(@NonNull CartFragment fragment) {
-        super(CALL_BACK);
+        super(new ItemCallBack());
 
         context = fragment.getContext();
         inflater = LayoutInflater.from(fragment.getContext());
