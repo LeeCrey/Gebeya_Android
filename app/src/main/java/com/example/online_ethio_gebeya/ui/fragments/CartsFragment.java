@@ -94,7 +94,6 @@ public class CartsFragment extends Fragment implements MenuProvider, CartCallBac
         Bundle arg = new Bundle();
         arg.putString("cartName", cart.getName());
         arg.putLong("cartId", cart.getId());
-        arg.putString("merchantId", cart.getMerchantId());
         navController.navigate(R.id.open_cart_items, arg);
     }
 

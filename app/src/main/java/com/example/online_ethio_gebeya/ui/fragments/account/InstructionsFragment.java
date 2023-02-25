@@ -38,7 +38,6 @@ import java.util.Objects;
 public class InstructionsFragment extends Fragment {
     public static final Integer PASSWORD_INSTRUCTION = -1;
     public static final Integer UNLOCK_INSTRUCTION = 0;
-    public static final Integer CONFIRMATION_INSTRUCTION = 1;
 
     private FragmentInstructionsBinding binding;
     private NavController navController;

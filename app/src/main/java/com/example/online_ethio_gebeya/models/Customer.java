@@ -32,6 +32,10 @@ public class Customer {
     @JsonProperty("profile_image_url")
     private String profileImageUrl;
 
+    //  required for password change
+    @JsonProperty("reset_password_token")
+    private String resetPasswordToken;
+
     // update
 //    @JsonProperty("profile")
     private File profile;
@@ -113,5 +117,9 @@ public class Customer {
 
     public long getId() {
         return id;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
     }
 }

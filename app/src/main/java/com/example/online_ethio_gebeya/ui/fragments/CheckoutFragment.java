@@ -51,6 +51,7 @@ public class CheckoutFragment extends BottomSheetDialogFragment {
 
         CheckOutAdapter checkOutAdapter = ApplicationHelper.initItems(requireContext(), binding);
         checkOutAdapter.submitList(itemAdapter.getItemList());
+        binding.itemsLoading.setVisibility(View.GONE);
 
         // plc h
         Button btn = binding.finishOperation;
@@ -59,6 +60,7 @@ public class CheckoutFragment extends BottomSheetDialogFragment {
 
         ProgressBar loading = binding.progressCircular;
         /// event list
+        btn.setText(getString(R.string.lbl_order));
         btn.setOnClickListener(v -> {
             loading.setVisibility(View.VISIBLE);
             btn.setEnabled(false);
@@ -73,8 +75,8 @@ public class CheckoutFragment extends BottomSheetDialogFragment {
             }
 
             if (instructionsResponse.getOkay()) {
-                dismiss();
                 cartItemViewModel.setOrderCreated();
+                dismiss();
             } else {
                 loading.setVisibility(View.GONE);
                 btn.setEnabled(true);

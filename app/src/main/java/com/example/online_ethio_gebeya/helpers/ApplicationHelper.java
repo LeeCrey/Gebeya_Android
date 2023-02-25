@@ -21,8 +21,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.online_ethio_gebeya.R;
+import com.example.online_ethio_gebeya.adapters.CheckOutAdapter;
+import com.example.online_ethio_gebeya.databinding.FragmentCheckoutAndPaymentBinding;
 import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.models.Product;
 import com.google.android.material.textfield.TextInputEditText;
@@ -131,5 +135,14 @@ public class ApplicationHelper {
             textView.setText(oldP);
             textView.setVisibility(View.VISIBLE);
         }
+    }
+
+    public static CheckOutAdapter initItems(@NonNull Context context, @NonNull FragmentCheckoutAndPaymentBinding binding) {
+        RecyclerView recyclerView = binding.itemsRecyclerView;
+        CheckOutAdapter adapter = new CheckOutAdapter(context);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(adapter);
+
+        return adapter;
     }
 }

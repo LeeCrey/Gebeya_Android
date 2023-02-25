@@ -31,6 +31,10 @@ public class FormErrors {
     public boolean isLoginValid() {
         return getEmailError() == null && getPasswordError() == null;
     }
+
+    public boolean isChangePasswordFormValid() {
+        return getPasswordError() == null && getPasswordConfirmationError() == null;
+    }
     // END
 
     public String getFirstNameError() {

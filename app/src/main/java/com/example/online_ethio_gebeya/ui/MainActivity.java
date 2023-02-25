@@ -214,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         return fontSize;
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     @Override
     public void openEmailApp() {
         Intent gmail = new Intent();
@@ -245,6 +246,19 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         return lokation;
     }
 
+    private void onThemeChange(SharedPreferences preferences) {
+        String themeValue = preferences.getString("theme_mode", "auto");
+
+        if (themeValue.equals("auto")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        } else if (themeValue.equals("on")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+    // custom methods
     private void rateApp() {
         try {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
@@ -262,19 +276,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.send_to)));
     }
 
-    private void onThemeChange(SharedPreferences preferences) {
-        String themeValue = preferences.getString("theme_mode", "auto");
-
-        if (themeValue.equals("auto")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if (themeValue.equals("on")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-    }
-
-    // custom methods
     private void setCurrentUser() {
         String fullName = PreferenceHelper.getFullName(this);
         String msg = "Welcome back!";

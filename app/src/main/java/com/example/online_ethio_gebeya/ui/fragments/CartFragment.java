@@ -30,7 +30,7 @@ import com.example.online_ethio_gebeya.viewmodels.FragmentCartItemViewModel;
 
 // show cart items
 public class CartFragment extends Fragment implements MenuProvider, CartItemCallBackInterface {
-    long cartId = -1L;
+    private long cartId = -1L;
     private ItemAdapter itemAdapter;
     private FragmentCartItemViewModel viewModel;
     private NavController navController;

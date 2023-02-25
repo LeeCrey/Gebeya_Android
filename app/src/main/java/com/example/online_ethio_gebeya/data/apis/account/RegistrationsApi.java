@@ -44,4 +44,8 @@ public interface RegistrationsApi {
     @Headers("accept: application/json")
     @DELETE("customers")
     Call<InstructionsResponse> destroyAccount(@Header("Authorization") String authorizationToken);
+
+    @Headers("accept: application/json")
+    @POST("customers/password")
+    Call<InstructionsResponse> changePassword(@Body Customer customer);
 }

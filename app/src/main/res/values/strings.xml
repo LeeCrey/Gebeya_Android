@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Online Gebeya</string>
-    <string name="base_url" translatable="false">https://gebeya.up.railway.app/</string>
-<!--        <string name="base_url" translatable="false">https://gebeya.loca.lt/</string>-->
+    <!--    <string name="base_url" translatable="false">https://gebeya.up.railway.app/</string>-->
+    <string name="base_url" translatable="false">https://gebeya.loca.lt/</string>
+    <!--    <string name="base_url" translatable="false">https://gebeya.loca.lt/</string>-->
 
     <string name="language">Language</string>
     <string name="price_in_ethio">%1$.2f ETB</string>
@@ -115,4 +116,8 @@
     <string name="lbl_pay">Pay</string>
     <string name="lbl_eql" translatable="false">=</string>
     <string name="lbl_times" translatable="false">*</string>
+    <string name="lbl_change">Change</string>
+    <string name="lbl_new_password_req">New password</string>
+    <string name="lbl_confirm_new_password">Confirm new password</string>
+    <string name="lbl_password_change">Password change</string>
 </resources>

@@ -58,16 +58,18 @@ public class FragmentRegistrationsViewModel extends AndroidViewModel {
         mFormState.postValue(errors);
     }
 
+    public void changePasswordDataChanged(@NonNull String pwd, @NonNull String pwdConfirmation, Context context) {
+        FormErrors errors = new FormErrors();
+        errors.setPasswordError(InputHelper.checkPassword(pwd, context));
+        errors.setPasswordConfirmationError(InputHelper.checkPasswordConfirmation(pwd, pwdConfirmation, context));
+
+        mFormState.postValue(errors);
+    }
+
     // APIs
     public void signUp(Context context) {
         if (null != repository) {
-            Customer customer = new Customer()
-                    .setCredentials(
-                            map.get(context.getString(R.string.email)),
-                            map.get(context.getString(R.string.password)))
-                    .setFullName(
-                            map.get(context.getString(R.string.firstName)),
-                            map.get(context.getString(R.string.lastName)));
+            Customer customer = new Customer().setCredentials(map.get(context.getString(R.string.email)), map.get(context.getString(R.string.password))).setFullName(map.get(context.getString(R.string.firstName)), map.get(context.getString(R.string.lastName)));
             customer.setPasswordConfirmation(map.get(context.getString(R.string.passwordConfirmation)));
             repository.signUp(customer);
         }
@@ -77,7 +79,6 @@ public class FragmentRegistrationsViewModel extends AndroidViewModel {
         repository.confirmAccount(confirmUrl);
     }
 
-
     @Override
     protected void onCleared() {
         super.onCleared();
@@ -85,5 +86,14 @@ public class FragmentRegistrationsViewModel extends AndroidViewModel {
         if (null != repository) {
             repository.cancelConnection();
         }
+    }
+
+    public void makeChangePasswordRequest(String pwd, String pwdConfirmation, String passwordsToken) {
+        Customer customer = new Customer();
+        customer.setPassword(pwd);
+        customer.setPasswordConfirmation(pwdConfirmation);
+        customer.setResetPasswordToken(passwordsToken);
+
+        repository.changePassword(customer);
     }
 }

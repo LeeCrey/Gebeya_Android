@@ -39,7 +39,6 @@ public class RegistrationsFragment extends Fragment {
     private FragmentRegistrationsViewModel viewModel;
     private ProgressBar loading;
 
-    private MainActivityCallBackInterface callBackInterface;
     private NavController navController;
 
     @Nullable
@@ -76,7 +75,7 @@ public class RegistrationsFragment extends Fragment {
         });
 
         // else
-        callBackInterface = (MainActivityCallBackInterface) requireActivity();
+        MainActivityCallBackInterface callBackInterface = (MainActivityCallBackInterface) requireActivity();
         signUp = binding.signUp;
         firstName = binding.firstName;
         lastName = binding.lastName;

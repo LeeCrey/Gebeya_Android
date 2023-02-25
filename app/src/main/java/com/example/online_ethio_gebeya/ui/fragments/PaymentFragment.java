@@ -11,12 +11,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.adapters.CheckOutAdapter;
 import com.example.online_ethio_gebeya.databinding.FragmentCheckoutAndPaymentBinding;
+import com.example.online_ethio_gebeya.helpers.ApplicationHelper;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.helpers.ProductHelper;
 import com.example.online_ethio_gebeya.models.Order;
@@ -49,8 +48,7 @@ public class PaymentFragment extends BottomSheetDialogFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // logic
-        initRecycler();
+        adapter = ApplicationHelper.initItems(requireActivity(), binding);
         pay = binding.finishOperation;
         loading = binding.progressCircular;
         FragmentPaymentViewModel viewModel = new ViewModelProvider(this).get(FragmentPaymentViewModel.class);
@@ -71,7 +69,6 @@ public class PaymentFragment extends BottomSheetDialogFragment {
             }
 
             Toast.makeText(requireActivity(), instructionsResponse.getMessage(), Toast.LENGTH_SHORT).show();
-//            sendNotification(view, instructionsResponse.getMessage());
         });
         viewModel.getItems().observe(getViewLifecycleOwner(), items -> {
             if (items == null) {
@@ -79,6 +76,7 @@ public class PaymentFragment extends BottomSheetDialogFragment {
             }
 
             adapter.setList(items);
+            binding.itemsLoading.setVisibility(View.GONE);
             binding.totalPrice.setText(getString(R.string.price_in_ethio, ProductHelper.getTotalMoney(items)));
         });
 
@@ -105,18 +103,12 @@ public class PaymentFragment extends BottomSheetDialogFragment {
         order = null;
         binding = null;
         ordersViewModel = null;
+        adapter = null;
     }
 
     private void setStatus(boolean status) {
         pay.setEnabled(status);
         setCancelable(status);
         loading.setVisibility(status ? View.GONE : View.VISIBLE);
-    }
-
-    private void initRecycler() {
-        RecyclerView recyclerView = binding.itemsRecyclerView;
-        adapter = new CheckOutAdapter(requireContext(), null);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapter);
     }
 }

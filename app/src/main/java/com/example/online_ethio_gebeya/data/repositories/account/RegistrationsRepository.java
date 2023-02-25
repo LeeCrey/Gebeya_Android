@@ -84,7 +84,7 @@ public class RegistrationsRepository {
             public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
                 InstructionsResponse response = new InstructionsResponse();
                 response.setOkay(false);
-                response.setMessage("Something went wrong.");
+                response.setMessage(t.getMessage());
                 mRegResponse.postValue(response);
             }
         });
@@ -147,6 +147,27 @@ public class RegistrationsRepository {
         cancelConnection(); // cancel connection if there was request made before
 
         apiCall = api.destroyAccount(authorizationToken);
+    }
+
+    //    change password
+    public void changePassword(@NonNull Customer customer) {
+        cancelConnection();
+
+        apiCall = api.changePassword(customer);
+        apiCall.enqueue(new Callback<InstructionsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
+                InstructionsResponse response = new InstructionsResponse();
+                response.setOkay(false);
+                response.setMessage(t.getMessage());
+                mRegResponse.postValue(response);
+            }
+        });
     }
 
     // cancel all requests

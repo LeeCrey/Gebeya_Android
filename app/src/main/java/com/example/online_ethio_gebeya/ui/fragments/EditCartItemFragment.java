@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
-import com.example.online_ethio_gebeya.databinding.FragmentEditCartItemBinding;
+import com.example.online_ethio_gebeya.databinding.FragmentEditItemBinding;
 import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.viewmodels.EditCartItemFragmentViewModel;
 import com.example.online_ethio_gebeya.viewmodels.EditCartItemFragmentViewModelFactory;
@@ -26,7 +26,7 @@ import java.util.Objects;
 
 public class EditCartItemFragment extends BottomSheetDialogFragment {
     private Item item;
-    private FragmentEditCartItemBinding binding;
+    private FragmentEditItemBinding binding;
     private EditCartItemFragmentViewModel viewModel;
     private FragmentCartItemViewModel fragmentCartItemViewModel;
     private final int clickedItemPosition;
@@ -40,7 +40,7 @@ public class EditCartItemFragment extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentEditCartItemBinding.inflate(inflater, container, false);
+        binding = FragmentEditItemBinding.inflate(inflater, container, false);
 
         return binding.getRoot();
     }
