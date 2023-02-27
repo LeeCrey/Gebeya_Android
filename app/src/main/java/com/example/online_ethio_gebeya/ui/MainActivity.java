@@ -15,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,6 +37,7 @@ import com.example.online_ethio_gebeya.databinding.ActivityMainBinding;
 import com.example.online_ethio_gebeya.helpers.LocaleHelper;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.models.Product;
+import com.example.online_ethio_gebeya.ui.fragments.account.AccountDeleteFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
@@ -48,12 +48,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     private final String authTokenKey = "auth_token";
     private NavController navController;
     private String authorizationToken;
-    private View headerView;
 
     private SharedPreferences.OnSharedPreferenceChangeListener listener;
     private SharedPreferences.OnSharedPreferenceChangeListener customListener;
     private SharedPreferences preferences;
-    private MenuItem editProfile, feedback, signOut, order;
+    private MenuItem editProfile, feedback, signOut, order, deleteAccount;
 
     private AppBarConfiguration appBarConfiguration;
     private String locale;
@@ -82,6 +81,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
 
+        final DrawerLayout drawerLayout = binding.drawerLayout;
+        final Toolbar toolbar = binding.toolBar;
+        final BottomNavigationView bottomNavigationView = binding.bottomNavView;
+        final NavigationView navigationView = binding.navView;
+
         // listeners
         listener = (sharedPreferences, key) -> {
             switch (key) {
@@ -106,6 +110,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
                     authorizationToken = sharedPreferences.getString(key, null);
                 }
             }
+            if (authorizationToken == null) {
+                bottomNavigationView.setVisibility(View.GONE);
+            }
             setCurrentUser();
         };
         preferences.registerOnSharedPreferenceChangeListener(listener);
@@ -117,12 +124,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         final int product = R.id.navigation_product;
         final int rate = R.id.navigation_rate;
 
-        final DrawerLayout drawerLayout = binding.drawerLayout;
-        final Toolbar toolbar = binding.toolBar;
-        final BottomNavigationView bottomNavigationView = binding.bottomNavView;
-        final NavigationView navigationView = binding.navView;
-
-        //
         setSupportActionBar(toolbar);
 
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
@@ -135,12 +136,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
             NavigationUI.setupWithNavController(navigationView, navController);
         }
 
-        headerView = navigationView.getHeaderView(0);
         Menu menu = navigationView.getMenu();
         editProfile = menu.findItem(R.id.navigation_profile_edit);
         feedback = menu.findItem(R.id.navigation_feedback);
         signOut = menu.findItem(R.id.logout);
         order = menu.findItem(R.id.navigation_orders);
+        deleteAccount = menu.findItem(R.id.delete_account);
 
         // event
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -149,10 +150,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
                 rateApp();
             } else if (id == R.id.menu_item_share) {
                 shareApp();
-            } else if (id == R.id.logout) {
+            } else if (id == signOut.getItemId()) {
                 PreferenceHelper.clearPref(MainActivity.this);
                 recreate(); // for the sake of opt menu
                 navController.navigateUp();
+            } else if (id == deleteAccount.getItemId()) {
+                openConfirmModal();
             } else {
                 NavigationUI.onNavDestinationSelected(item, navController);
             }
@@ -225,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         }
     }
 
+    @SuppressLint("QueryPermissionsNeeded")
     @Override
     public void openLocation(double latitude, double longitude) {
         @SuppressLint("DefaultLocale") String ggl = String.format("google.navigation:q=%f,%f", latitude, longitude);
@@ -277,26 +281,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     }
 
     private void setCurrentUser() {
-        String fullName = PreferenceHelper.getFullName(this);
-        String msg = "Welcome back!";
-
-        TextView name = headerView.findViewById(R.id.userFullName);
-        TextView msgView = headerView.findViewById(R.id.message);
-
-        if (fullName == null) {
-            fullName = "Guest";
-            msg = "Sign in to continue";
-        }
-
-        name.setText(fullName);
-        msgView.setText(msg);
-
         boolean visibility = authorizationToken != null;
 
         editProfile.setVisible(visibility);
         signOut.setVisible(visibility);
         feedback.setVisible(visibility);
         order.setVisible(visibility);
+        deleteAccount.setVisible(visibility);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -334,5 +325,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
                 }
             });
         }
+    }
+
+    private void openConfirmModal() {
+        AccountDeleteFragment delete_account = new AccountDeleteFragment();
+        delete_account.show(getSupportFragmentManager(), "ModalBottomSheet");
     }
 }

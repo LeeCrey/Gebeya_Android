@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
-import java.io.File;
-
 // for session and registration
 @JsonRootName(value = "customer")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -29,6 +27,9 @@ public class Customer {
     @JsonProperty("password_confirmation")
     private String passwordConfirmation;
 
+    @JsonProperty("current_password")
+    private String currentPassword;
+
     @JsonProperty("profile_image_url")
     private String profileImageUrl;
 
@@ -36,24 +37,13 @@ public class Customer {
     @JsonProperty("reset_password_token")
     private String resetPasswordToken;
 
-    // update
-//    @JsonProperty("profile")
-    private File profile;
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getEmail() {
@@ -72,16 +62,8 @@ public class Customer {
         this.password = password;
     }
 
-    public String getPasswordConfirmation() {
-        return passwordConfirmation;
-    }
-
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
-    }
-
-    public String getProfileImageUrl() {
-        return profileImageUrl;
     }
 
     public void setProfileImageUrl(String profileImageUrl) {
@@ -107,19 +89,15 @@ public class Customer {
         return this;
     }
 
-    public File getProfile() {
-        return profile;
-    }
-
-    public void setProfile(File profile) {
-        this.profile = profile;
-    }
-
     public long getId() {
         return id;
     }
 
     public void setResetPasswordToken(String resetPasswordToken) {
         this.resetPasswordToken = resetPasswordToken;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
     }
 }

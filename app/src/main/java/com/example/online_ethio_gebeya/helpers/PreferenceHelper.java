@@ -76,7 +76,6 @@ public class PreferenceHelper {
         editor.apply();
     }
 
-
     public static void setFullName(Context context, String fName) {
         SharedPreferences pref = context.getSharedPreferences(PREFS_FILE, PREFS_MODE);
         SharedPreferences.Editor editor = pref.edit();

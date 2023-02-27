@@ -231,12 +231,17 @@
             android:name="pwdToken"
             app:argType="string" />
 
-<!--        <deepLink-->
-<!--            android:id="@+id/forget_deep_link"-->
-<!--            app:uri="https://gebeya.up.railway.app/customers/password/edit?reset_password_token={pwdToken}" />-->
+        <!--        <deepLink-->
+        <!--            android:id="@+id/forget_deep_link"-->
+        <!--            app:uri="https://gebeya.up.railway.app/customers/password/edit?reset_password_token={pwdToken}" />-->
 
         <deepLink
             android:id="@+id/forget_deep_link"
             app:uri="https://gebeya.loca.lt/customers/password/edit?reset_password_token={pwdToken}" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_profile_edit_with_web_view"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.account.EditAccountFragment"
+        android:label="@string/lbl_profile"
+        tools:layout="@layout/fragment_edit_account" />
 </navigation>

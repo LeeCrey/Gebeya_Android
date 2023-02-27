@@ -15,47 +15,24 @@
         android:background="@color/surface"
         android:padding="10dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/currentUserProfilePicture"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@color/shimmer_color"
-            app:layout_constraintEnd_toStartOf="@id/currentUserName"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/currentUserName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/input_margin"
-            android:paddingTop="4dp"
-            android:text="@string/app_name"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/currentUserProfilePicture"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/feedBackLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/input_margin"
-            android:hint="@string/feedback_msg"
+            android:hint="@string/write_comment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/currentUserProfilePicture">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/feedBack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:autofillHints=""
                 android:background="@color/surface"
                 android:gravity="top|start"
-                android:hint="@string/write_comment"
                 android:inputType="textMultiLine"
                 android:lines="10"
                 android:overScrollMode="always"

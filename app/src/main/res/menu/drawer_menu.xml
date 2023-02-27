@@ -40,6 +40,11 @@
     </item>
 
     <item
+        android:id="@+id/delete_account"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/lb_delete_account" />
+
+    <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_logout"
         android:title="@string/sign_out" />

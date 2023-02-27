@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
     private CategoryAdapter categoryAdapter;
 
     private RecyclerView trendingRecycler;
-    private TextView trendingTxt;
+    private TextView trendingTxt, recommendedTxt;
 
     @Nullable
     @Override
@@ -76,6 +76,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         //
         refreshLayout = binding.refreshLayout;
         trendingTxt = binding.trending;
+        recommendedTxt = binding.titleRecommended;
 
         trendingRecycler = binding.trendingProductList;
         // init
@@ -128,6 +129,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         trendingAdapter = null;
         trendingRecycler = null;
         trendingTxt = null;
+        recommendedTxt = null;
     }
 
     @Override
@@ -196,7 +198,17 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         // recommended
         recommendRunnable = () -> requireActivity().runOnUiThread(() -> {
             if (recommendedAdapter != null) {
-                recommendedAdapter.setProducts(productResponse.getRecommended());
+                if (recommendedTxt != null) {
+                    List<Product> recProducts = productResponse.getRecommended();
+                    int v;
+                    if (recProducts != null) {
+                        v = recProducts.isEmpty() ? View.GONE : View.VISIBLE;
+                        recommendedAdapter.setProducts(recProducts);
+                    } else {
+                        v = View.GONE;
+                    }
+                    recommendedTxt.setVisibility(v);
+                }
             }
         });
         customHandler.postDelayed(recommendRunnable, 3_000);

@@ -79,5 +79,6 @@ dependencies {
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     implementation 'com.leinardi.android:speed-dial:3.3.0'
-//    implementation 'com.paypal.sdk:paypal-android-sdk:2.14.2'
+//    implementation 'com.github.braver-tool:Android11FilePicker:1.0.0'
+//    implementation 'com.github.HBiSoft:PickiT:2.0.5'
 }

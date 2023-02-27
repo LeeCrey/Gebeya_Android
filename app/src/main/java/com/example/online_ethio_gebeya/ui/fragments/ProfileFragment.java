@@ -1,6 +1,5 @@
 package com.example.online_ethio_gebeya.ui.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,32 +9,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.bumptech.glide.Glide;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentProfileBinding;
+import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.viewmodels.FragmentProfileViewModelFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class ProfileFragment extends Fragment {
     private TextInputEditText firstName, lastName, currentPassword, password, passwordConfirmation;
     private FragmentProfileBinding binding;
-    private CircleImageView profile;
     private FragmentProfileViewModelFragment viewModel;
 
     @Nullable
@@ -51,10 +44,8 @@ public class ProfileFragment extends Fragment {
         MainActivityCallBackInterface callBackInterface = (MainActivityCallBackInterface) requireActivity();
 
         viewModel = new ViewModelProvider(this).get(FragmentProfileViewModelFragment.class);
+        viewModel.setAuthorizationToken(PreferenceHelper.getAuthToken(requireContext()));
 
-        //
-        final File[] profilePath = {null};
-        profile = binding.userProfileImage;
         firstName = binding.firstName;
         lastName = binding.lastName;
         currentPassword = binding.currentPassword;
@@ -82,23 +73,15 @@ public class ProfileFragment extends Fragment {
 
             firstName.setError(formErrors.getFirstNameError());
             lastName.setError(formErrors.getLastNameError());
+            password.setError(formErrors.getPasswordError());
+            passwordConfirmation.setError(formErrors.getPasswordConfirmationError());
             currentPassword.setError(formErrors.getPasswordError());
 
             boolean status = formErrors.getFirstNameError() == null && formErrors.getLastNameError() == null && formErrors.getPasswordError() == null;
             save.setEnabled(status);
         });
 
-        // image picker
-        ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-                uri -> {
-                    profilePath[0] = new File(uri.toString());
-                    Glide.with(requireContext()).load(uri).into(profile);
-                });
-        profile.setBorderColor(Color.BLUE);
-
-        // event
-        profile.setOnClickListener(v -> mGetContent.launch("image/*"));
-        save.setOnClickListener(v -> viewModel.updateAccount(requireContext(), callBackInterface.getAuthorizationToken(), profilePath[0]));
+        save.setOnClickListener(v -> viewModel.updateAccount(requireContext()));
         makeTextWatcher();
 
         // make api
@@ -116,7 +99,6 @@ public class ProfileFragment extends Fragment {
         passwordConfirmation = null;
         password = null;
         viewModel = null;
-        profile = null;
     }
 
     private void makeTextWatcher() {
@@ -136,9 +118,9 @@ public class ProfileFragment extends Fragment {
                 Map<String, String> data = new HashMap<>();
                 data.put(getString(R.string.firstName), Objects.requireNonNull(firstName.getText()).toString());
                 data.put(getString(R.string.lastName), Objects.requireNonNull(lastName.getText()).toString());
-                data.put(getString(R.string.password), Objects.requireNonNull(currentPassword.getText()).toString());
+                data.put(getString(R.string.password), Objects.requireNonNull(password.getText()).toString());
                 data.put(getString(R.string.passwordConfirmation), Objects.requireNonNull(passwordConfirmation.getText()).toString());
-                data.put("new_password", Objects.requireNonNull(password.getText()).toString());
+                data.put(getString(R.string.currentPassword), Objects.requireNonNull(currentPassword.getText()).toString());
                 viewModel.accountUpdateDataChanged(data, requireContext());
             }
         };
@@ -157,7 +139,5 @@ public class ProfileFragment extends Fragment {
         firstName.setText(customer.getFirstName());
         lastName.setText(customer.getLastName());
         currentPassword.setError(null);
-
-        Glide.with(requireContext()).load(customer.getProfileImageUrl()).into(profile);
     }
 }

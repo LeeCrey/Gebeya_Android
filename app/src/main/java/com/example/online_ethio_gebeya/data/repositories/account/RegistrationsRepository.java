@@ -12,8 +12,6 @@ import com.example.online_ethio_gebeya.data.apis.account.RegistrationsApi;
 import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +24,7 @@ public class RegistrationsRepository {
     private Call<InstructionsResponse> apiCall;
     private Call<Customer> customerCall;
     private Application application;
+    private String authorizationToken;
 
     public RegistrationsRepository(@NonNull Application application) {
         if (null != mRegResponse) {
@@ -109,44 +108,23 @@ public class RegistrationsRepository {
     }
 
     // update profile
-    public void updateProfile(@NonNull Customer customer, String authorizationToken) {
+    public void updateProfile(@NonNull Customer customer) {
         cancelConnection();
 
-        RequestBody firstName = RequestBody.create(customer.getFirstName(), MediaType.parse("text/plain"));
-        RequestBody lastName = RequestBody.create(customer.getLastName(), MediaType.parse("text/plain"));
-        RequestBody currentPassword = RequestBody.create(customer.getPassword(), MediaType.parse("text/plain"));
-        RequestBody profilePic = null;
-        if (customer.getProfile() != null) {
-            profilePic = RequestBody.create(customer.getProfile(), MediaType.parse("multipart/form-data"));
-        }
-
-        Log.d(TAG, "updateProfile: " + (customer.getProfile() == null));
-        apiCall = api.updateAccount(authorizationToken, firstName, lastName, currentPassword, profilePic);
+        apiCall = api.updateAccount(authorizationToken, customer);
         apiCall.enqueue(new Callback<InstructionsResponse>() {
             @Override
             public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
                 if (response.isSuccessful()) {
-                    mRegResponse.postValue(response.body());
-                } else {
-                    if (response.code() == 401) {
-                        // clear pref
-//                        PreferenceHelper.clearPref(application);
-                    }
+                    Log.d(TAG, "onResponse: success");
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
+                t.printStackTrace();
             }
         });
-    }
-
-    // delete account
-    public void deleteAccount(String authorizationToken) {
-        cancelConnection(); // cancel connection if there was request made before
-
-        apiCall = api.destroyAccount(authorizationToken);
     }
 
     //    change password
@@ -179,5 +157,9 @@ public class RegistrationsRepository {
 
     public Application getApplication() {
         return application;
+    }
+
+    public void setAuthorization(String _authToken) {
+        authorizationToken = _authToken;
     }
 }

@@ -25,6 +25,7 @@ public class InstructionsViewModel extends AndroidViewModel {
         return oInstructionResponse;
     }
 
+    //    APi's
     public void sendFeedback(String header, String msg) {
         repository.sendFeedback(header, msg);
     }
@@ -39,7 +40,24 @@ public class InstructionsViewModel extends AndroidViewModel {
         repository.finishInstructionRequest(url);
     }
 
+    public void deleteAccount(String pwd) {
+        repository.deleteAccount(pwd);
+    }
+
+    // END OF API
+    
     public void nullifyLiveData() {
         repository.nullifyObserverData();
+    }
+
+    public void setAuthorizationToken(String authToken) {
+        repository.setAuthorizationToken(authToken);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+
+        repository.cancelConnection();
     }
 }

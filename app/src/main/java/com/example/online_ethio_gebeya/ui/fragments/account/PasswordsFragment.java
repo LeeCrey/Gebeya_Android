@@ -16,14 +16,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.databinding.FragmentPasswordsBinding;
 import com.example.online_ethio_gebeya.viewmodels.account.FragmentRegistrationsViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class PasswordsFragment extends Fragment {

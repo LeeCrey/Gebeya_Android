@@ -13,6 +13,8 @@ import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.io.IOException;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,7 +24,6 @@ public class InstructionRepository {
     private final MutableLiveData<InstructionsResponse> mInstructionResponse;
     private final InstructionsApi api;
     private Call<InstructionsResponse> instructionsResponseCall;
-    private static final String TAG = "InstructionRepository";
 
     private String authorizationToken;
 
@@ -147,7 +148,47 @@ public class InstructionRepository {
 
             @Override
             public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
+                setErrorResponse(t.getMessage());
+            }
+        });
+    }
+
+    public void deleteAccount(@NonNull String pwd) {
+        cancelConnection();
+
+        instructionsResponseCall = api.deleteAccount(authorizationToken, pwd);
+        instructionsResponseCall.enqueue(new Callback<InstructionsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
+                if (response.isSuccessful()) {
+                    mInstructionResponse.postValue(response.body());
+                } else {
+                    // un-authorized
+                    if (response.code() == 401) {
+                        InstructionsResponse rp = new InstructionsResponse();
+                        rp.setOkay(true);
+                        rp.setMessage("Unauthorized request.");
+                        mInstructionResponse.postValue(rp);
+                    } else {
+                        try {
+                            ResponseBody responseBody = response.errorBody();
+                            if (responseBody != null) {
+                                InstructionsResponse rp = JsonHelper.parseOperationError(responseBody.string());
+                                mInstructionResponse.postValue(rp);
+                                Log.e("instructionRepository", "onResponse: done");
+                            } else {
+                                setErrorResponse("Something went wrong");
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
+                setErrorResponse(t.getMessage());
             }
         });
     }
@@ -158,6 +199,13 @@ public class InstructionRepository {
                 instructionsResponseCall.cancel();
             }
         }
+    }
+
+    private void setErrorResponse(String msg) {
+        InstructionsResponse response = new InstructionsResponse();
+        response.setOkay(false);
+        response.setMessage(msg);
+        mInstructionResponse.postValue(response);
     }
 
     public void setAuthorizationToken(String authToken) {

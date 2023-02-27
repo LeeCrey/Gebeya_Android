@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Online Gebeya</string>
-    <!--    <string name="base_url" translatable="false">https://gebeya.up.railway.app/</string>-->
+    <!--        <string name="base_url" translatable="false">https://gebeya.up.railway.app/</string>-->
     <string name="base_url" translatable="false">https://gebeya.loca.lt/</string>
-    <!--    <string name="base_url" translatable="false">https://gebeya.loca.lt/</string>-->
 
     <string name="language">Language</string>
     <string name="price_in_ethio">%1$.2f ETB</string>
@@ -16,7 +15,12 @@
     <string name="email" translatable="false">email</string>
     <string name="password" translatable="false">password</string>
     <string name="passwordConfirmation" translatable="false">passwordConfirmation</string>
+    <string name="currentPassword" translatable="false">currentPassword</string>
 
+    <string name="lbl_eql" translatable="false">=</string>
+    <string name="lbl_times" translatable="false">*</string>
+
+    <!--  lbl  /-->
     <string name="password_instruction">Enter the email associated with your account and we\'ll send account reset instruction to your email.</string>
     <string name="unlock_instruction">Enter the email associated with your account and we\'ll send account unlock instruction to your email.</string>
     <string name="confirm_instruction">Enter the email associated with your account and we\'ll send account confirmation link to your email.</string>
@@ -99,7 +103,7 @@
     <string name="msg_check_ur_email">Check your email</string>
 
     <string name="msg_account_confirmed">Account not confirmed?</string>
-    <string name="save_changes">Save</string>
+    <string name="save_changes">Update</string>
     <string name="lbl_current_password">Current Password</string>
     <string name="lbl_new_password">New Password (Optional)</string>
     <string name="lbl_new_password_confirmation">Password Confirmation (Optional)</string>
@@ -114,10 +118,18 @@
     <string name="lbl_total">Total : </string>
     <string name="lbl_order">Order</string>
     <string name="lbl_pay">Pay</string>
-    <string name="lbl_eql" translatable="false">=</string>
-    <string name="lbl_times" translatable="false">*</string>
+
     <string name="lbl_change">Change</string>
     <string name="lbl_new_password_req">New password</string>
     <string name="lbl_confirm_new_password">Confirm new password</string>
     <string name="lbl_password_change">Password change</string>
+    <string name="lbl_profile">Profile</string>
+    <string name="lb_delete_account">Delete account</string>
+    <string name="are_u_sure">Please enter your password.</string>
+    <string name="lbl_delete">Delete</string>
+    <string name="lbl_cancel">Cancel</string>
+    <string name="lbl_attention">Attention!!</string>
+    <string name="lbl_attention_msg">This is not reversible process. Once you delete, your account will be deleted forever.</string>
+    <string name="current_pwd_helper">We need your current password to confirm your changes.</string>
+    <string name="lbl_leave_blank_if_you_dont_want_it">Leave blank if you don\'t want to change it</string>
 </resources>

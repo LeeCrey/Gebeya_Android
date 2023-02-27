@@ -5,6 +5,7 @@ import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -36,4 +37,9 @@ public interface InstructionsApi {
     @POST("products/{id}/comments")
     Call<InstructionsResponse> sendRatingAndComment(@Header("Authorization") String header, @Path("id") long id,
                                                     @Query("message") String cmd, @Query("weight") float weight);
+
+    // delete account
+    @Headers("accept: application/json")
+    @DELETE("customers")
+    Call<InstructionsResponse> deleteAccount(@Header("Authorization") String authorizationToken, @Query("password") String pawd);
 }

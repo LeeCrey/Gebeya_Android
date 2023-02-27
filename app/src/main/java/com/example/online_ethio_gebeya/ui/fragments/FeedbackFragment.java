@@ -20,8 +20,6 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class FeedbackFragment extends Fragment {
     private FragmentFeedbackBinding binding;
 
@@ -36,7 +34,6 @@ public class FeedbackFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         TextInputEditText feedback = binding.feedBack;
-        CircleImageView imageView = binding.currentUserProfilePicture;
         Button send = binding.sendFeedback;
         ProgressBar loading = binding.loading;
 

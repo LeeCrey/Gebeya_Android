@@ -45,7 +45,7 @@ public class OrderRepository {
         return mInstructionResponse;
     }
 
-    //    APIs
+    //  APIs
     // index
     public void orderIndex() {
         cancelConnection();
@@ -77,12 +77,16 @@ public class OrderRepository {
             public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
                 if (response.isSuccessful()) {
                     mInstructionResponse.postValue(response.body());
+                } else {
+                    if (response.code() == 404) {
+                        postErrorResponse("Cart not found");
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
-                //
+                postErrorResponse(t.getMessage());
             }
         });
     }
@@ -97,5 +101,12 @@ public class OrderRepository {
         if (createCall != null) {
             createCall.cancel();
         }
+    }
+
+    private void postErrorResponse(String msg) {
+        InstructionsResponse resp = new InstructionsResponse();
+        resp.setMessage(msg);
+        resp.setOkay(false);
+        mInstructionResponse.postValue(resp);
     }
 }

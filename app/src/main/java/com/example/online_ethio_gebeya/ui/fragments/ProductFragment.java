@@ -99,8 +99,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         seeAllComments = binding.seeAll;
 
         // view models
-        viewModel = new ViewModelProvider(this, (
-                new ProductDetailFragmentViewModelFactory(app, callBackInterface.getAuthorizationToken(), productId)))
+        viewModel = new ViewModelProvider(this, new ProductDetailFragmentViewModelFactory(app, callBackInterface.getAuthorizationToken(), productId))
                 .get(FragmentProductDetailViewModel.class);
 
         // config
