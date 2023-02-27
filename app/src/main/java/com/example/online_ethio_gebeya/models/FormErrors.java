@@ -18,6 +18,9 @@ public class FormErrors {
     @JsonProperty("password_confirmation")
     private List<String> passwordConfirmationErrors;
 
+    @JsonProperty("current_password")
+    private String currentPasswordError;
+
     // BEGIN
     //   for client side
     public boolean isRegistrationValid() {
@@ -26,10 +29,6 @@ public class FormErrors {
                 getEmailError() == null &&
                 getPasswordError() == null &&
                 getPasswordConfirmationError() == null;
-    }
-
-    public boolean isLoginValid() {
-        return getEmailError() == null && getPasswordError() == null;
     }
 
     public boolean isChangePasswordFormValid() {
@@ -80,5 +79,13 @@ public class FormErrors {
     public void setPasswordConfirmationError(String passwordConfirmationError) {
         passwordConfirmationErrors = new ArrayList<>();
         passwordConfirmationErrors.add(passwordConfirmationError);
+    }
+
+    public String getCurrentPasswordError() {
+        return currentPasswordError;
+    }
+
+    public void setCurrentPasswordError(String currentPasswordError) {
+        this.currentPasswordError = currentPasswordError;
     }
 }

@@ -1,7 +1,6 @@
 package com.example.online_ethio_gebeya.data.repositories.account;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -9,9 +8,13 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.online_ethio_gebeya.data.RetrofitConnectionUtil;
 import com.example.online_ethio_gebeya.data.apis.account.RegistrationsApi;
+import com.example.online_ethio_gebeya.helpers.JsonHelper;
 import com.example.online_ethio_gebeya.models.Customer;
 import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,7 +66,6 @@ public class RegistrationsRepository {
 
             @Override
             public void onFailure(@NonNull Call<Customer> call, @NonNull Throwable t) {
-
             }
         });
     }
@@ -89,24 +91,6 @@ public class RegistrationsRepository {
         });
     }
 
-    // confirm account
-    public void confirmAccount(@NonNull String confirmUrl) {
-        cancelConnection();
-
-        apiCall = api.confirmAccount(confirmUrl);
-        apiCall.enqueue(new Callback<InstructionsResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
-
-            }
-        });
-    }
-
     // update profile
     public void updateProfile(@NonNull Customer customer) {
         cancelConnection();
@@ -116,7 +100,16 @@ public class RegistrationsRepository {
             @Override
             public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: success");
+                    mRegResponse.postValue(response.body());
+                } else {
+                    ResponseBody responseBody = response.errorBody();
+                    if (responseBody != null) {
+                        try {
+                            mRegResponse.postValue(JsonHelper.parseOperationError(responseBody.string()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 

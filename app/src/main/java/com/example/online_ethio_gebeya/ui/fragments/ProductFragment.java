@@ -2,6 +2,7 @@ package com.example.online_ethio_gebeya.ui.fragments;
 
 import android.app.Application;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -235,8 +236,13 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         }
 
         // price
+        String price;
         stopShimmer(binding.priceShimmer);
-        String price = getString(R.string.price_in_ethio, product.getPrice());
+        double realPrice = product.getPrice();
+        if (product.getDiscount() != null) {
+            realPrice -= product.getDiscount();
+        }
+        price = getString(R.string.price_in_ethio, realPrice);
         TextView priceView = binding.priceValue;
         priceView.setBackground(null);
         priceView.setText(price);

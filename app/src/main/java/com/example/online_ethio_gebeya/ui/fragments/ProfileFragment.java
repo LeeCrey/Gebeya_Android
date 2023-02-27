@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.online_ethio_gebeya.R;
-import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentProfileBinding;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.models.Customer;
@@ -41,8 +41,6 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        MainActivityCallBackInterface callBackInterface = (MainActivityCallBackInterface) requireActivity();
-
         viewModel = new ViewModelProvider(this).get(FragmentProfileViewModelFragment.class);
         viewModel.setAuthorizationToken(PreferenceHelper.getAuthToken(requireContext()));
 
@@ -53,6 +51,7 @@ public class ProfileFragment extends Fragment {
         password = binding.password; // new password
 
         Button save = binding.saveChanges;
+        ProgressBar loading = binding.progressCircular;
 
         // observers
         viewModel.getCustomer().observe(getViewLifecycleOwner(), this::setCurrentCustomer);
@@ -61,10 +60,10 @@ public class ProfileFragment extends Fragment {
                 return;
             }
 
-            if (instructionsResponse.getOkay()) {
-                Toast.makeText(requireContext(), instructionsResponse.getMessage(), Toast.LENGTH_SHORT).show();
-                save.setEnabled(false);
-            }
+            save.setEnabled(true);
+            loading.setVisibility(View.GONE);
+
+            Toast.makeText(requireContext(), instructionsResponse.getMessage(), Toast.LENGTH_SHORT).show();
         });
         viewModel.getFormState().observe(getViewLifecycleOwner(), formErrors -> {
             if (formErrors == null) {
@@ -75,17 +74,20 @@ public class ProfileFragment extends Fragment {
             lastName.setError(formErrors.getLastNameError());
             password.setError(formErrors.getPasswordError());
             passwordConfirmation.setError(formErrors.getPasswordConfirmationError());
-            currentPassword.setError(formErrors.getPasswordError());
+            currentPassword.setError(formErrors.getCurrentPasswordError());
 
-            boolean status = formErrors.getFirstNameError() == null && formErrors.getLastNameError() == null && formErrors.getPasswordError() == null;
+            boolean status = formErrors.isRegistrationValid() && formErrors.getCurrentPasswordError() == null;
             save.setEnabled(status);
         });
 
-        save.setOnClickListener(v -> viewModel.updateAccount(requireContext()));
-        makeTextWatcher();
+        save.setOnClickListener(v -> {
+            loading.setVisibility(View.VISIBLE);
+            save.setEnabled(false);
+            viewModel.updateAccount(requireContext());
+        });
 
         // make api
-        viewModel.getCurrentCustomer(callBackInterface.getAuthorizationToken());
+        viewModel.getCurrentCustomer(PreferenceHelper.getAuthToken(requireContext()));
     }
 
     @Override
@@ -138,6 +140,7 @@ public class ProfileFragment extends Fragment {
 
         firstName.setText(customer.getFirstName());
         lastName.setText(customer.getLastName());
-        currentPassword.setError(null);
+
+        makeTextWatcher(); // assign on data receive
     }
 }

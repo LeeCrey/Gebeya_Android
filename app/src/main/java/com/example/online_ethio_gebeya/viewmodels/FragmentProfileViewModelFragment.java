@@ -13,7 +13,6 @@ import com.example.online_ethio_gebeya.models.FormErrors;
 import com.example.online_ethio_gebeya.viewmodels.account.FragmentRegistrationsViewModel;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class FragmentProfileViewModelFragment extends FragmentRegistrationsViewModel {
     private final LiveData<Customer> oCustomer;
@@ -33,30 +32,33 @@ public class FragmentProfileViewModelFragment extends FragmentRegistrationsViewM
     public void updateAccount(@NonNull Context context) {
         Customer customer = new Customer().setFullName(super.map.get(context.getString(R.string.firstName)), super.map.get(context.getString(R.string.lastName)));
         customer.setPassword(map.get(context.getString(R.string.password)));
-        customer.setCurrentPassword(null);
+        customer.setCurrentPassword(map.get(context.getString(R.string.currentPassword)));
+        customer.setPasswordConfirmation(map.get(context.getString(R.string.passwordConfirmation)));
 
         repository.updateProfile(customer);
     }
 
     public void accountUpdateDataChanged(@NonNull Map<String, String> data, @NonNull Context context) {
-        super.map = data;
+        map = data;
 
         String fName = data.get(context.getString(R.string.firstName));
         String lName = data.get(context.getString(R.string.lastName));
-        String password = data.get(context.getString(R.string.currentPassword));
-        String pwd = Objects.requireNonNull(data.get(context.getString(R.string.password))).trim();
-        String pwdConfirmation = Objects.requireNonNull(data.get(context.getString(R.string.passwordConfirmation))).trim();
+        String password = data.get(context.getString(R.string.password));
+        String pwdConfirmation = data.get(context.getString(R.string.passwordConfirmation));
+        String currentPassword = data.get(context.getString(R.string.currentPassword));
 
         FormErrors errors = new FormErrors();
         errors.setFirstNameError(InputHelper.checkInput(fName, context));
         errors.setLastNameError(InputHelper.checkInput(lName, context));
-        errors.setPasswordError(InputHelper.checkPassword(password, context));
-        if (!pwd.isEmpty()) {
-            errors.setPasswordError(InputHelper.checkPassword(pwd, context));
-            errors.setPasswordConfirmationError(InputHelper.checkPasswordConfirmation(pwd, pwdConfirmation, context));
+        errors.setCurrentPasswordError(InputHelper.checkPassword(currentPassword, context));
+        if (password != null) {
+            if (!password.trim().isEmpty()) {
+                errors.setPasswordError(InputHelper.checkPassword(password, context));
+                errors.setPasswordConfirmationError(InputHelper.checkPasswordConfirmation(pwdConfirmation, password, context));
+            }
         }
 
-        super.mFormState.postValue(errors);
+        mFormState.postValue(errors);
     }
 
     public void getCurrentCustomer(String authorizationToken) {

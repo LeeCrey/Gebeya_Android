@@ -75,14 +75,12 @@ public class FragmentRegistrationsViewModel extends AndroidViewModel {
         }
     }
 
-    public void confirmAccount(@NonNull String confirmUrl) {
-        repository.confirmAccount(confirmUrl);
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();
 
+        mFormState.postValue(null);
+        mRegistrationResponse.postValue(null);
         if (null != repository) {
             repository.cancelConnection();
         }

@@ -46,24 +46,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/input_margin"
-        android:hint="@string/lbl_email_opt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lastNameLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
@@ -73,7 +55,7 @@
         app:helperText="@string/lbl_leave_blank_if_you_dont_want_it"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/email_layout">
+        app:layout_constraintTop_toBottomOf="@id/lastNameLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
@@ -108,6 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/input_margin"
         android:hint="@string/lbl_current_password"
+        app:endIconMode="password_toggle"
         app:helperText="@string/current_pwd_helper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -130,4 +113,16 @@
         android:text="@string/save_changes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/current_password_layout" />
+
+    <ProgressBar
+        android:id="@+id/progress_circular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circular"
+        android:padding="5dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/save_changes"
+        app:layout_constraintEnd_toEndOf="@+id/save_changes"
+        app:layout_constraintStart_toStartOf="@id/save_changes"
+        app:layout_constraintTop_toTopOf="@id/save_changes" />
 </androidx.constraintlayout.widget.ConstraintLayout>
