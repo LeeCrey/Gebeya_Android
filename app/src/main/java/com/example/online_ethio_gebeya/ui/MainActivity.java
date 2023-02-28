@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     private SharedPreferences.OnSharedPreferenceChangeListener listener;
     private SharedPreferences.OnSharedPreferenceChangeListener customListener;
     private SharedPreferences preferences;
-    private MenuItem editProfile, feedback, signOut, order, deleteAccount;
+    private MenuItem editProfile, feedback, signOut, order, deleteAccount, wallet;
 
     private AppBarConfiguration appBarConfiguration;
     private String locale;
@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         signOut = menu.findItem(R.id.logout);
         order = menu.findItem(R.id.navigation_orders);
         deleteAccount = menu.findItem(R.id.delete_account);
+        wallet = menu.findItem(R.id.navigation_wallet);
 
         // event
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -292,6 +293,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         feedback.setVisible(visibility);
         order.setVisible(visibility);
         deleteAccount.setVisible(visibility);
+        wallet.setVisible(visibility);
     }
 
     private void requestPermissions() {

@@ -27,6 +27,7 @@ import com.example.online_ethio_gebeya.callbacks.CartCallBackInterface;
 import com.example.online_ethio_gebeya.models.Cart;
 import com.example.online_ethio_gebeya.viewmodels.FragmentCartsViewModel;
 
+// @Author Solomon Boloshe   Jan 2023
 public class CartsFragment extends Fragment implements MenuProvider, CartCallBackInterface {
     private CartsAdapter cartsAdapter;
     private FragmentCartsViewModel viewModel;

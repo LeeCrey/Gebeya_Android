@@ -7,6 +7,11 @@
         android:icon="@drawable/ic_search"
         android:title="@string/lbl_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="always|collapseActionView" />
+        app:showAsAction="ifRoom|collapseActionView" />
 
+    <item
+        android:id="@+id/clear_search_history"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/clear_search_history"
+        app:showAsAction="never" />
 </menu>

@@ -16,31 +16,38 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/to_product_detail"
             app:destination="@id/navigation_product"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/open_sessions"
             app:destination="@id/navigation_sessions"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_navigation_home_to_feedbackFragment"
             app:destination="@id/navigation_feedback"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/open_profile_edit"
             app:destination="@id/navigation_profile_edit" />
+        <action
+            android:id="@+id/action_navigation_home_to_fragmentWallet"
+            app:destination="@id/navigation_wallet"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -54,7 +61,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -73,19 +80,19 @@
         <action
             android:id="@+id/action_navigation_product_self"
             app:destination="@id/navigation_product"
-            app:popUpTo="@id/navigation_product"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/navigation_product"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_navigation_product_to_rateFragment"
             app:destination="@id/navigation_rate"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="productId"
             android:defaultValue="-1L"
@@ -96,7 +103,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -110,14 +117,14 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_navigation_sessions_to_navigation_instructions"
             app:destination="@id/navigation_instructions"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -128,12 +135,12 @@
         <action
             android:id="@+id/open_instruction_sent_nav"
             app:destination="@id/navigation_instruction_sent"
-            app:popUpTo="@id/navigation_sessions"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/navigation_sessions"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -156,7 +163,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="unlockToken"
             android:defaultValue="@null"
@@ -174,12 +181,12 @@
         <action
             android:id="@+id/open_instruction_sent_nav"
             app:destination="@id/navigation_instruction_sent"
-            app:popUpTo="@id/navigation_sessions"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/navigation_sessions"
+            app:popUpToInclusive="true" />
         <deepLink
             android:id="@+id/deepLink"
             android:autoVerify="true"
@@ -213,7 +220,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -291,4 +298,10 @@
             android:id="@+id/forget_deep_link"
             app:uri="https://gebeya.loca.lt/customers/password/edit?reset_password_token={pwdToken}" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_wallet"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.temporary.FragmentWallet"
+        android:label="@string/lbl_balance"
+        tools:layout="@layout/fragment_wallet" />
 </navigation>

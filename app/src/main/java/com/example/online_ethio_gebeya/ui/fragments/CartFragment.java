@@ -28,6 +28,7 @@ import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.viewmodels.FragmentCartItemViewModel;
 
+// @Author Solomon Boloshe    Feb 28, 2023
 // show cart items
 public class CartFragment extends Fragment implements MenuProvider, CartItemCallBackInterface {
     private long cartId = -1L;

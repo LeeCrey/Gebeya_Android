@@ -133,4 +133,7 @@
     <string name="current_pwd_helper">We need your current password to confirm your changes.</string>
     <string name="lbl_leave_blank_if_you_dont_want_it">Leave blank if you don\'t want to change it</string>
     <string name="paid">Paid</string>
+    <string name="lbl_balance">Wallet</string>
+    <string name="clear_search_history">Clear history</string>
+    <string name="balance">Balance: </string>
 </resources>

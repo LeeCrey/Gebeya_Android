@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -20,6 +21,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Transition;
+import androidx.transition.TransitionInflater;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.online_ethio_gebeya.R;
@@ -105,6 +108,8 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         // config
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+
+        ViewCompat.setTransitionName(binding.toolbar, "tool_bar");
 
         // event ...
         addToCart.setOnClickListener(v -> cartItemRepository.addItemToCart(productId, addToCart, Objects.requireNonNull(viewModel.getQuantity().getValue())));

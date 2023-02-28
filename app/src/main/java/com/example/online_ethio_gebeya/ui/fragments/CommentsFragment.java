@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.online_ethio_gebeya.databinding.FragmentCommentsBinding;
 
+// @Author Solomon Boloshe  2023
 public class CommentsFragment extends Fragment {
     private FragmentCommentsBinding binding;
 

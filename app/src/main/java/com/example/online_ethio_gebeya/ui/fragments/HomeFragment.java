@@ -190,7 +190,9 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
 
         // product list
         productsRunnable = () -> requireActivity().runOnUiThread(() -> {
-            refreshLayout.setRefreshing(false);
+            if (refreshLayout != null) {
+                refreshLayout.setRefreshing(false);
+            }
             productAdapter.setProducts(productResponse.getProducts());
         });
         customHandler.postDelayed(productsRunnable, 2_000);

@@ -37,6 +37,8 @@ public class Customer {
     @JsonProperty("reset_password_token")
     private String resetPasswordToken;
 
+    @JsonProperty("balance")
+    private String balance;
 
     public String getLastName() {
         return lastName;
@@ -99,5 +101,9 @@ public class Customer {
 
     public void setCurrentPassword(String currentPassword) {
         this.currentPassword = currentPassword;
+    }
+
+    public String getBalance() {
+        return balance;
     }
 }

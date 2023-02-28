@@ -18,6 +18,11 @@
             android:id="@+id/navigation_orders"
             android:icon="@drawable/ic_cart_filled"
             android:title="@string/lbl_orders" />
+
+        <item
+            android:id="@+id/navigation_wallet"
+            android:icon="@drawable/ic_account"
+            android:title="@string/lbl_balance" />
     </group>
 
     <item android:title="@string/others">

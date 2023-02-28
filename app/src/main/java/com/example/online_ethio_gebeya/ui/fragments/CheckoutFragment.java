@@ -21,6 +21,7 @@ import com.example.online_ethio_gebeya.viewmodels.CheckoutFragmentViewModel;
 import com.example.online_ethio_gebeya.viewmodels.FragmentCartItemViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+// @Author Solomon Boloshe    Feb 2023
 public class CheckoutFragment extends BottomSheetDialogFragment {
     private final double totalMoney;
     private FragmentCheckoutAndPaymentBinding binding;
@@ -61,6 +62,7 @@ public class CheckoutFragment extends BottomSheetDialogFragment {
         ProgressBar loading = binding.progressCircular;
         /// event list
         btn.setText(getString(R.string.lbl_order));
+        btn.setEnabled(true);
         btn.setOnClickListener(v -> {
             loading.setVisibility(View.VISIBLE);
             btn.setEnabled(false);
