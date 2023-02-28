@@ -90,4 +90,17 @@
     <string name="lbl_shop">ሱቅ</string>
     <string name="lbl_order">እዘዝ</string>
     <string name="lbl_pay">ክፈል</string>
+    <string name="lbl_change">ለውጥ</string>
+    <string name="lbl_new_password_req">አዲስ የይለፍ ቃል</string>
+    <string name="lbl_attention_msg">ይህ ሊመለስ የማይችል ሂደት አይደለም ። አንዴ ካጠፋህ በኋላ አካውንትህ ለዘላለም ይደመሰስሃል።</string>
+    <string name="current_pwd_helper">የእርስዎን ለውጦች ለማረጋገጥ የአሁኑ የይለፍ ቃልዎ ያስፈልገናል.</string>
+    <string name="lbl_leave_blank_if_you_dont_want_it">መቀየር ካልፈለግህ ባዶ ትተህ</string>
+    <string name="lbl_attention">ትኩረት!!</string>
+    <string name="lbl_cancel">ተወው</string>
+    <string name="lbl_delete">አጥፉ</string>
+    <string name="are_u_sure">የይለፍ ቃልዎን ያስገቡ እባክዎ።</string>
+    <string name="lb_delete_account">አካውንት አጥፉ</string>
+    <string name="lbl_profile">ፕሮፋይል</string>
+    <string name="lbl_password_change">የይለፍ ቃል መለወጥ</string>
+    <string name="lbl_confirm_new_password">አዲስ የይለፍ ቃል አረጋግጥ</string>
 </resources>

@@ -103,8 +103,16 @@ public class ApplicationHelper {
     }
 
     // location
-    public static boolean isLocationAccessGranted(Context context) {
+    private static boolean isLocationAccessGranted(Context context) {
         return ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private static boolean isCoarseLocationAccessGranted(Context context) {
+        return ContextCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static boolean isLocationGranted(Context context) {
+        return isLocationAccessGranted(context) && isCoarseLocationAccessGranted(context);
     }
 
     public static void requestLocationAccessPermission(Activity context) {

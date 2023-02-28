@@ -2,7 +2,6 @@ package com.example.online_ethio_gebeya.ui.fragments;
 
 import android.app.Application;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,7 +111,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         btn.inflate(R.menu.floating_menu);
         btn.setOnActionSelectedListener(actionItem -> {
             if (actionItem.getId() == R.id.location) {
-                callBackInterface.openLocation(product.getShop().getLatitude(), product.getShop().getLongitude());
+                callBackInterface.openGoogleMap(product.getShop().getLatitude(), product.getShop().getLongitude());
             } else {
                 openRateProduct(arg);
             }

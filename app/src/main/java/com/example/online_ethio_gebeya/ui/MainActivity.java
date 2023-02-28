@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -34,6 +32,7 @@ import androidx.preference.PreferenceManager;
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.ActivityMainBinding;
+import com.example.online_ethio_gebeya.helpers.ApplicationHelper;
 import com.example.online_ethio_gebeya.helpers.LocaleHelper;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.models.Product;
@@ -77,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         locale = preferences.getString("language", "en");
         fontSize = preferences.getInt("font_size", 16);
         LocaleHelper.setLocale(this, locale);
+
+        if (!ApplicationHelper.isLocationGranted(this)) {
+            requestPermissions();
+        }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
@@ -228,15 +231,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         }
     }
 
-    @SuppressLint("QueryPermissionsNeeded")
     @Override
-    public void openLocation(double latitude, double longitude) {
+    public void openGoogleMap(double latitude, double longitude) {
         @SuppressLint("DefaultLocale") String ggl = String.format("google.navigation:q=%f,%f", latitude, longitude);
         Uri gmmIntentUri = Uri.parse(ggl);
         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
         mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+        try {
             startActivity(mapIntent);
+        } catch (Exception exception) {
+            Toast.makeText(this, exception.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -290,10 +294,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         deleteAccount.setVisible(visibility);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     private void requestPermissions() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.POST_NOTIFICATIONS}, REQUEST_CODE);
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
+                REQUEST_CODE);
     }
 
     @Override
@@ -310,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     }
 
     private void fetchLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (!ApplicationHelper.isLocationGranted(this)) {
             requestPermissions();
         } else {
             Task<Location> task = fusedLocationProviderClient.getLastLocation();
@@ -328,7 +332,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     }
 
     private void openConfirmModal() {
-        AccountDeleteFragment delete_account = new AccountDeleteFragment();
-        delete_account.show(getSupportFragmentManager(), "ModalBottomSheet");
+        new AccountDeleteFragment().show(getSupportFragmentManager(), "ModalBottomSheet");
     }
 }

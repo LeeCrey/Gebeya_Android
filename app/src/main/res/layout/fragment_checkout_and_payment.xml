@@ -43,6 +43,7 @@
         style="@style/custom_un_elevated_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:enabled="false"
         android:text="@string/lbl_pay"
         app:layout_constraintBottom_toBottomOf="parent" />
 

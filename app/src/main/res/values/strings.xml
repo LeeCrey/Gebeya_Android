@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Online Gebeya</string>
-    <!--        <string name="base_url" translatable="false">https://gebeya.up.railway.app/</string>-->
-    <string name="base_url" translatable="false">https://gebeya.loca.lt/</string>
+    <string name="base_url" translatable="false">https://gebeya.up.railway.app/</string>
+    <!--    <string name="base_url" translatable="false">https://gebeya.loca.lt/</string>-->
 
     <string name="language">Language</string>
     <string name="price_in_ethio">%1$.2f ETB</string>
@@ -80,7 +80,7 @@
     <string name="add_to_cart">Add to Cart</string>
     <string name="lbl_related_products">Related Products</string>
     <string name="feedback_msg">Please provide your feedback here</string>
-    <string name="terms_and_condition">By signing up, you\'re agree to our <a href="https://t.me/lee_crey">Terms &amp; Conditions</a> and <a href="https://googl.come"> Privacy Policy.</a> </string>
+    <string name="terms_and_condition">By signing up, you\'re agree to our <a href="https://gebeya.up.railway.app/terms">Terms &amp; Conditions</a> and <a href="https://gebeya.up.railway.app/privacy_policy"> Privacy Policy.</a> </string>
     <string name="lbl_confirm">Confirm Account</string>
     <string name="trending">Trending</string>
     <string name="location">Location</string>
@@ -132,4 +132,5 @@
     <string name="lbl_attention_msg">This is not reversible process. Once you delete, your account will be deleted forever.</string>
     <string name="current_pwd_helper">We need your current password to confirm your changes.</string>
     <string name="lbl_leave_blank_if_you_dont_want_it">Leave blank if you don\'t want to change it</string>
+    <string name="paid">Paid</string>
 </resources>

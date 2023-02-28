@@ -54,6 +54,7 @@ public class PaymentFragment extends BottomSheetDialogFragment {
         FragmentPaymentViewModel viewModel = new ViewModelProvider(this).get(FragmentPaymentViewModel.class);
         viewModel.setAuthorizationToken(PreferenceHelper.getAuthToken(requireContext()));
 
+        boolean paid = order.getStatus().equalsIgnoreCase("paid");
         // observer
         viewModel.getResponse().observe(getViewLifecycleOwner(), instructionsResponse -> {
             if (instructionsResponse == null) {
@@ -75,14 +76,15 @@ public class PaymentFragment extends BottomSheetDialogFragment {
                 return;
             }
 
+            if (paid) {
+                pay.setText(getString(R.string.paid));
+            } else {
+                pay.setEnabled(true);
+            }
             adapter.setList(items);
             binding.itemsLoading.setVisibility(View.GONE);
             binding.totalPrice.setText(getString(R.string.price_in_ethio, ProductHelper.getTotalMoney(items)));
         });
-
-        if (order.getStatus().equalsIgnoreCase("paid")) {
-            pay.setVisibility(View.GONE);
-        }
 
         // event
         pay.setOnClickListener(v -> {

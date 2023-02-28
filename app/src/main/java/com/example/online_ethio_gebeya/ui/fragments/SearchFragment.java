@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,6 +51,7 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
         callBackInterface = (MainActivityCallBackInterface) activity;
         viewModel = new ViewModelProvider(this).get(FragmentSearchViewModel.class);
         viewModel.setAuthToken(PreferenceHelper.getAuthToken(requireContext()));
+        ImageView productNotFound = binding.productNotFound;
 
         ProductAdapter productAdapter = ProductHelper.initProducts(this, binding.productsRecyclerView, true, false);
         productAdapter.setCalculateProductWidth(false);
@@ -58,7 +60,16 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
         // observers
         viewModel.getProductResponse().observe(getViewLifecycleOwner(), productResponse -> {
             List<Product> productList = productResponse.getProducts();
-            productAdapter.appendList(productList);
+            if (productList != null) {
+                boolean isEmpty = productList.isEmpty();
+                int v = isEmpty ? View.VISIBLE : View.GONE;
+                productNotFound.setVisibility(v);
+                if (!isEmpty) {
+                    productAdapter.appendList(productList);
+                }
+            } else {
+                productNotFound.setVisibility(View.VISIBLE);
+            }
         });
 
         // init

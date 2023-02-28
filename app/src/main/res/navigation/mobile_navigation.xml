@@ -12,20 +12,32 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_settingsFragment"
-            app:destination="@id/navigation_settings" />
+            app:destination="@id/navigation_settings"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/to_product_detail"
-            app:destination="@id/navigation_product" />
+            app:destination="@id/navigation_product"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/open_sessions"
             app:destination="@id/navigation_sessions"
-            app:enterAnim="@anim/to_left"
-            app:exitAnim="@anim/from_right"
-            app:popEnterAnim="@anim/to_right"
-            app:popExitAnim="@anim/from_left" />
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_navigation_home_to_feedbackFragment"
-            app:destination="@id/navigation_feedback" />
+            app:destination="@id/navigation_feedback"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/open_profile_edit"
             app:destination="@id/navigation_profile_edit" />
@@ -38,7 +50,11 @@
         tools:layout="@layout/fragment_carts">
         <action
             android:id="@+id/open_cart_items"
-            app:destination="@id/navigation_cart_items" />
+            app:destination="@id/navigation_cart_items"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -58,17 +74,29 @@
             android:id="@+id/action_navigation_product_self"
             app:destination="@id/navigation_product"
             app:popUpTo="@id/navigation_product"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_navigation_product_to_rateFragment"
-            app:destination="@id/navigation_rate" />
+            app:destination="@id/navigation_rate"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <argument
             android:name="productId"
             android:defaultValue="-1L"
             app:argType="long" />
         <action
             android:id="@+id/open_comments"
-            app:destination="@id/navigation_comments" />
+            app:destination="@id/navigation_comments"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -78,10 +106,18 @@
         tools:layout="@layout/fragment_sessions">
         <action
             android:id="@+id/open_navigation_registrations"
-            app:destination="@id/navigation_registrations" />
+            app:destination="@id/navigation_registrations"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_navigation_sessions_to_navigation_instructions"
-            app:destination="@id/navigation_instructions" />
+            app:destination="@id/navigation_instructions"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -93,7 +129,11 @@
             android:id="@+id/open_instruction_sent_nav"
             app:destination="@id/navigation_instruction_sent"
             app:popUpTo="@id/navigation_sessions"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -112,7 +152,11 @@
             app:nullable="true" />
         <action
             android:id="@+id/action_navigation_instructions_self"
-            app:destination="@id/navigation_instructions" />
+            app:destination="@id/navigation_instructions"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <argument
             android:name="unlockToken"
             android:defaultValue="@null"
@@ -131,7 +175,11 @@
             android:id="@+id/open_instruction_sent_nav"
             app:destination="@id/navigation_instruction_sent"
             app:popUpTo="@id/navigation_sessions"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <deepLink
             android:id="@+id/deepLink"
             android:autoVerify="true"
@@ -161,7 +209,11 @@
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/to_product_detail"
-            app:destination="@id/navigation_product" />
+            app:destination="@id/navigation_product"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -239,9 +291,4 @@
             android:id="@+id/forget_deep_link"
             app:uri="https://gebeya.loca.lt/customers/password/edit?reset_password_token={pwdToken}" />
     </fragment>
-    <fragment
-        android:id="@+id/navigation_profile_edit_with_web_view"
-        android:name="com.example.online_ethio_gebeya.ui.fragments.account.EditAccountFragment"
-        android:label="@string/lbl_profile"
-        tools:layout="@layout/fragment_edit_account" />
 </navigation>
