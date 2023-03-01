@@ -31,4 +31,15 @@ public class FragmentSearchViewModel extends AndroidViewModel {
     public void setAuthToken(String authToken) {
         repository.setAuthToken(authToken);
     }
+
+    public void clearSearchHistory() {
+        repository.clearSearchHistory();
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+
+        repository.cancelConnection();
+    }
 }

@@ -36,7 +36,7 @@ public class CategoryAdapter extends ListAdapter<Category, CategoryViewHolder> {
     };
     private final LayoutInflater inflater;
     private final Context context;
-    private final boolean isAmharic;
+    private boolean isAmharic;
     private int selectedCategoryPosition;
     private ProductCallBackInterface callBackInterface;
 
@@ -81,10 +81,6 @@ public class CategoryAdapter extends ListAdapter<Category, CategoryViewHolder> {
         }
     }
 
-    public int getSelectedCategoryPosition() {
-        return selectedCategoryPosition;
-    }
-
     public void setSelectedCategoryPosition(final @NonNull Integer position) {
         if (position == -1) {
             return;
@@ -115,5 +111,9 @@ public class CategoryAdapter extends ListAdapter<Category, CategoryViewHolder> {
         }
 
         submitList(categories);
+    }
+
+    public void setIsAmharic(boolean amharic) {
+        isAmharic = amharic;
     }
 }

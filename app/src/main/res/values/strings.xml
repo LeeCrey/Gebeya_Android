@@ -50,7 +50,7 @@
 
     <!-- Sync Preferences -->
     <string name="categories">Categories</string>
-    <string name="app_pref" translatable="false">Application</string>
+    <string name="app_pref">Application</string>
     <string name="night_mode">Night Mode</string>
     <string name="font_size_msg">Font size for text description of product.</string>
     <string name="font_size">Font Size</string>
@@ -132,8 +132,13 @@
     <string name="lbl_attention_msg">This is not reversible process. Once you delete, your account will be deleted forever.</string>
     <string name="current_pwd_helper">We need your current password to confirm your changes.</string>
     <string name="lbl_leave_blank_if_you_dont_want_it">Leave blank if you don\'t want to change it</string>
+
     <string name="paid">Paid</string>
     <string name="lbl_balance">Wallet</string>
     <string name="clear_search_history">Clear history</string>
     <string name="balance">Balance: </string>
+
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="automatic">Automatic</string>
 </resources>

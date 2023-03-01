@@ -92,7 +92,7 @@
     <string name="lbl_pay">ክፈል</string>
     <string name="lbl_change">ለውጥ</string>
     <string name="lbl_new_password_req">አዲስ የይለፍ ቃል</string>
-    <string name="lbl_attention_msg">ይህ ሊመለስ የማይችል ሂደት አይደለም ። አንዴ ካጠፋህ በኋላ አካውንትህ ለዘላለም ይደመሰስሃል።</string>
+    <string name="lbl_attention_msg">ይህ ሊመለስ የማይችል ሂደት ነዉ። አንዴ ካጠፉት በኋላ አካውንትህ ለዘላለም ይደመሴሳል።</string>
     <string name="current_pwd_helper">የእርስዎን ለውጦች ለማረጋገጥ የአሁኑ የይለፍ ቃልዎ ያስፈልገናል.</string>
     <string name="lbl_leave_blank_if_you_dont_want_it">መቀየር ካልፈለግህ ባዶ ትተህ</string>
     <string name="lbl_attention">ትኩረት!!</string>
@@ -103,4 +103,13 @@
     <string name="lbl_profile">ፕሮፋይል</string>
     <string name="lbl_password_change">የይለፍ ቃል መለወጥ</string>
     <string name="lbl_confirm_new_password">አዲስ የይለፍ ቃል አረጋግጥ</string>
+    <string name="clear_search_history">ያፅዱ</string>
+    <string name="paid">ተከፍሏል።</string>
+    <string name="lbl_balance">ዋለት</string>
+    <string name="balance">ቀሪ ሂሳብ</string>
+    <string name="app_pref">መተግበሪያ</string>
+
+    <string name="on">ክፈት</string>
+    <string name="off">አጥፋ</string>
+    <string name="automatic">አውቶማቲክ</string>
 </resources>

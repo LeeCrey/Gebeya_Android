@@ -114,6 +114,9 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
 
     @Override
     public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.clear_search_history) {
+            viewModel.clearSearchHistory();
+        }
         return false;
     }
 

@@ -69,6 +69,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/category_list" />
 
+            <ImageView
+                android:id="@+id/product_not_found"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/surface"
+                android:contentDescription="@string/content_description"
+                android:src="@drawable/product_not_found"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/category_list" />
+
             <TextView
                 android:id="@+id/title_recommended"
                 style="@style/TextAppearance.MaterialComponents.Headline6"

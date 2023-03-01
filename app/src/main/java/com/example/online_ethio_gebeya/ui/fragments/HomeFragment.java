@@ -9,10 +9,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
@@ -30,6 +32,7 @@ import com.example.online_ethio_gebeya.adapters.TrendingAdapter;
 import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.callbacks.ProductCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentHomeBinding;
+import com.example.online_ethio_gebeya.helpers.LocaleHelper;
 import com.example.online_ethio_gebeya.helpers.ProductHelper;
 import com.example.online_ethio_gebeya.models.Product;
 import com.example.online_ethio_gebeya.models.responses.ProductResponse;
@@ -52,8 +55,9 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
     private FragmentHomeViewModel viewModel;
     private CategoryAdapter categoryAdapter;
 
-    private RecyclerView trendingRecycler;
+    private RecyclerView trendingRecycler, productsRecyclerView;
     private TextView trendingTxt, recommendedTxt;
+    private ImageView noProductFound;
 
     @Nullable
     @Override
@@ -77,8 +81,11 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         refreshLayout = binding.refreshLayout;
         trendingTxt = binding.trending;
         recommendedTxt = binding.titleRecommended;
+        noProductFound = binding.productNotFound;
 
         trendingRecycler = binding.trendingProductList;
+        productsRecyclerView = binding.productsRecyclerView;
+
         // init
         requireActivity().addMenuProvider(this, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
         refreshLayout.setRefreshing(true);
@@ -86,7 +93,8 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         trendingAdapter.setCallBack(this);
         categoryAdapter = ProductHelper.initCategory(view, requireActivity());
         categoryAdapter.setCallBack(this);
-        productAdapter = ProductHelper.initProducts(this, binding.productsRecyclerView, true, false);
+        categoryAdapter.setIsAmharic(LocaleHelper.isAmharic(requireActivity()));
+        productAdapter = ProductHelper.initProducts(this, productsRecyclerView, true, false);
         productAdapter.setCalculateProductWidth(false);
         productAdapter.setCallBack(this);
         recommendedAdapter = ProductHelper.initRecommendedProducts(this, binding.recommendedProducts);
@@ -130,6 +138,8 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
         trendingRecycler = null;
         trendingTxt = null;
         recommendedTxt = null;
+        noProductFound = null;
+        productsRecyclerView = null;
     }
 
     @Override
@@ -193,7 +203,16 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
             if (refreshLayout != null) {
                 refreshLayout.setRefreshing(false);
             }
-            productAdapter.setProducts(productResponse.getProducts());
+
+            List<Product> products = productResponse.getProducts();
+            if (products != null) {
+                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) recommendedTxt.getLayoutParams();
+                boolean empty = products.isEmpty();
+                params.topToBottom = empty ? noProductFound.getId() : productsRecyclerView.getId();
+                int v = empty ? View.VISIBLE : View.GONE;
+                noProductFound.setVisibility(v);
+                productAdapter.setProducts(products);
+            }
         });
         customHandler.postDelayed(productsRunnable, 2_000);
 

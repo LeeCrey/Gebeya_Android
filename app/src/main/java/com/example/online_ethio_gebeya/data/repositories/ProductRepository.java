@@ -12,6 +12,7 @@ import com.example.online_ethio_gebeya.data.RetrofitConnectionUtil;
 import com.example.online_ethio_gebeya.data.apis.ProductApi;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.models.Category;
+import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 import com.example.online_ethio_gebeya.models.responses.ProductResponse;
 import com.example.online_ethio_gebeya.models.responses.ProductShowResponse;
 
@@ -35,6 +36,7 @@ public class ProductRepository {
     private Call<ProductResponse> productResponseCall;
     private Call<List<Category>> categoryCall;
     private Call<ProductShowResponse> showResponseCall;
+    private Call<InstructionsResponse> instructionsResponseCall;
 
     public ProductRepository(@NonNull Application application) {
         api = RetrofitConnectionUtil.getRetrofitInstance(application).create(ProductApi.class);
@@ -158,6 +160,28 @@ public class ProductRepository {
         });
     }
 
+    // clear search history
+    public void clearSearchHistory() {
+        cancelConnection();
+
+        instructionsResponseCall = api.clearSearchHistory(authorizationToken);
+        instructionsResponseCall.enqueue(new Callback<InstructionsResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: cleared");
+                } else {
+                    Log.d(TAG, "onResponse: not cleared");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<InstructionsResponse> call, @NonNull Throwable t) {
+                //
+            }
+        });
+    }
+
     public void cancelConnection() {
         if (productResponseCall != null) {
             productResponseCall.cancel();
@@ -169,6 +193,10 @@ public class ProductRepository {
 
         if (showResponseCall != null) {
             showResponseCall.cancel();
+        }
+
+        if (instructionsResponseCall != null) {
+            instructionsResponseCall.cancel();
         }
     }
 

@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -45,14 +48,10 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements MainActivityCallBackInterface {
     private final String authTokenKey = "auth_token";
+    private final String languageKey = "language";
     private NavController navController;
     private String authorizationToken;
-
-    private SharedPreferences.OnSharedPreferenceChangeListener listener;
-    private SharedPreferences.OnSharedPreferenceChangeListener customListener;
-    private SharedPreferences preferences;
     private MenuItem editProfile, feedback, signOut, order, deleteAccount, wallet;
-
     private AppBarConfiguration appBarConfiguration;
     private String locale;
     private int fontSize;
@@ -60,6 +59,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
 
     private final int REQUEST_CODE = 835;
     private Location lokation;
+
+    //    if pref change listener because locale var, the won't listen to any change
+    private SharedPreferences.OnSharedPreferenceChangeListener listener;
+    private SharedPreferences.OnSharedPreferenceChangeListener customListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,12 +73,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
 
         authorizationToken = PreferenceHelper.getAuthToken(this);
         lokation = PreferenceHelper.getLocation(this);
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences pref = PreferenceHelper.getSharePref(this);
 
-        locale = preferences.getString("language", "en");
-        fontSize = preferences.getInt("font_size", 16);
-        LocaleHelper.setLocale(this, locale);
+        locale = sharedPreferences1.getString(languageKey, "en");
+        fontSize = sharedPreferences1.getInt("font_size", 16);
 
         if (!ApplicationHelper.isLocationGranted(this)) {
             requestPermissions();
@@ -90,18 +92,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         final NavigationView navigationView = binding.navView;
 
         // listeners
-        listener = (sharedPreferences, key) -> {
+        listener = (preferences, key) -> {
             switch (key) {
                 case "theme_mode":
-                    onThemeChange(sharedPreferences);
+                    onThemeChange(preferences);
                     break;
                 case "language":
-                    // set lang first then recreate activity
-                    LocaleHelper.setLocale(MainActivity.this, preferences.getString(key, "en"));
                     recreate();
                     break;
                 case "font_size":
-                    fontSize = sharedPreferences.getInt(key, 16);
+                    fontSize = preferences.getInt(key, 16);
                     break;
             }
         };
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
             }
             setCurrentUser();
         };
-        preferences.registerOnSharedPreferenceChangeListener(listener);
+        sharedPreferences1.registerOnSharedPreferenceChangeListener(listener);
         pref.registerOnSharedPreferenceChangeListener(customListener);
 
         final int home = R.id.navigation_home;
@@ -186,6 +186,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         });
 
         setCurrentUser();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        SharedPreferences shf = PreferenceManager.getDefaultSharedPreferences(newBase);
+        String lkl = "en";
+        if (shf != null) {
+            lkl = shf.getString(languageKey, "en");
+        }
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, lkl));
     }
 
     @Override
@@ -277,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     }
 
     private void shareApp() {
-        final String appUri = getString(R.string.app_play_store_url);
+        final String appUri = getString(R.string.app_play_store_url) + getPackageName();
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, appUri);
@@ -297,9 +307,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     }
 
     private void requestPermissions() {
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
     }
 
     @Override
@@ -327,7 +335,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
                     }
                     PreferenceHelper.putLocation(MainActivity.this, location);
                 } else {
-                    Toast.makeText(this, "Go to settings and allow access to location.", Toast.LENGTH_SHORT).show();
+                    if ((lokation.getLatitude() == PreferenceHelper.location_default_value) || (lokation.getLongitude() == PreferenceHelper.location_default_value)) {
+                        locationEnabled();
+                    }
                 }
             });
         }
@@ -335,5 +345,29 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
 
     private void openConfirmModal() {
         new AccountDeleteFragment().show(getSupportFragmentManager(), "ModalBottomSheet");
+    }
+
+    private void locationEnabled() {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!gps_enabled && !network_enabled) {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setMessage("GPS Enable")
+                    .setPositiveButton("Settings", (paramDialogInterface, paramInt) -> startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
+                    .setNegativeButton("Cancel", (dialogInterface, i) -> {
+                        Toast.makeText(this, "No product will be shown", Toast.LENGTH_SHORT).show();
+                    }).show();
+        }
     }
 }
