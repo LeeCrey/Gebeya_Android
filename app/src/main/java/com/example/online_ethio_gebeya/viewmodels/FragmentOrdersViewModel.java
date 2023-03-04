@@ -2,11 +2,9 @@ package com.example.online_ethio_gebeya.viewmodels;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.online_ethio_gebeya.data.repositories.OrderRepository;
-import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.models.Order;
 
 import java.util.List;

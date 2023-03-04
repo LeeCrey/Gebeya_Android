@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,7 +57,6 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
     private Button addToCart;
     private FragmentProductDetailViewModel viewModel;
     private TextView seeAllComments;
-
     private boolean enableAddToCart;
 
     @Nullable
@@ -102,8 +100,8 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         seeAllComments = binding.seeAll;
 
         // view models
-        viewModel = new ViewModelProvider(this, new ProductDetailFragmentViewModelFactory(app, callBackInterface.getAuthorizationToken(), productId))
-                .get(FragmentProductDetailViewModel.class);
+        ProductDetailFragmentViewModelFactory factory = new ProductDetailFragmentViewModelFactory(app, callBackInterface.getAuthorizationToken(), productId);
+        viewModel = new ViewModelProvider(this, factory).get(FragmentProductDetailViewModel.class);
 
         // config
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
@@ -116,6 +114,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
             int v = View.GONE;
             incrementBtn.setVisibility(v);
             decrementBtn.setVisibility(v);
+            quantity.setVisibility(v);
         }
         btn.setOnActionSelectedListener(actionItem -> {
             if (actionItem.getId() == R.id.location) {
