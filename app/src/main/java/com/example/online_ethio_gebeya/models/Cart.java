@@ -1,12 +1,11 @@
 package com.example.online_ethio_gebeya.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
 
-@JsonRootName("cart")
+//@JsonRootName("cart")
 public class Cart {
     @JsonProperty("id")
-    private long id;
+    private Long id;
 
     @JsonProperty("name")
     private String name;

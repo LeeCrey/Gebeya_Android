@@ -104,6 +104,10 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="enableAddToCart"
+            app:argType="boolean"
+            android:defaultValue="true" />
     </fragment>
 
     <fragment
@@ -263,7 +267,15 @@
         android:id="@+id/navigation_orders"
         android:name="com.example.online_ethio_gebeya.ui.fragments.OrdersFragment"
         android:label="@string/lbl_orders"
-        tools:layout="@layout/fragment_orders" />
+        tools:layout="@layout/fragment_orders">
+        <action
+            android:id="@+id/open_order_items"
+            app:destination="@id/navigation_order_items"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_comments"
@@ -304,4 +316,24 @@
         android:name="com.example.online_ethio_gebeya.ui.fragments.temporary.FragmentWallet"
         android:label="@string/lbl_balance"
         tools:layout="@layout/fragment_wallet" />
+
+    <fragment
+        android:id="@+id/navigation_order_items"
+        android:name="com.example.online_ethio_gebeya.ui.fragments.PaymentFragment"
+        android:label="@string/order_items"
+        tools:layout="@layout/fragment_checkout_and_payment">
+        <action
+            android:id="@+id/to_product_detail"
+            app:destination="@id/navigation_product"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="orderId"
+            app:argType="long" />
+        <argument
+            android:name="orderStatus"
+            app:argType="string" />
+    </fragment>
 </navigation>

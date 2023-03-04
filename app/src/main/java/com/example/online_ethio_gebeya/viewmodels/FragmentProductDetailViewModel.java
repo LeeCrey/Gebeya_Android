@@ -11,8 +11,8 @@ import com.example.online_ethio_gebeya.models.responses.ProductShowResponse;
 public class FragmentProductDetailViewModel extends AndroidViewModel {
     private final LiveData<ProductShowResponse> showResponse;
     private final long productId;
-    private ProductRepository repository;
-    private MutableLiveData<Integer> quantity;
+    private final ProductRepository repository;
+    private final MutableLiveData<Integer> quantity;
     private int productQuantity;
 
     private boolean increment, decrement;

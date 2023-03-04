@@ -11,7 +11,7 @@ public interface MainActivityCallBackInterface {
 
     String getAuthorizationToken();
 
-    void onProductClick(@NonNull Product product);
+    void onProductClick(@NonNull Product product, boolean enable);
 
     int getFontSizeForDescription();
 

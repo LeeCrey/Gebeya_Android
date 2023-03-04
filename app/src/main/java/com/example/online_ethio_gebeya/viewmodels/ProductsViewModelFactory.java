@@ -12,7 +12,7 @@ import com.example.online_ethio_gebeya.data.repositories.ProductRepository;
 public class ProductsViewModelFactory implements ViewModelProvider.Factory {
     private final String authToken;
     private final Application application;
-    private Location location;
+    private final Location location;
 
     public ProductsViewModelFactory(@NonNull Application application, String token, Location _location) {
         authToken = token;

@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="3dp"
-    android:paddingHorizontal="@dimen/app_margin"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:paddingHorizontal="@dimen/app_margin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

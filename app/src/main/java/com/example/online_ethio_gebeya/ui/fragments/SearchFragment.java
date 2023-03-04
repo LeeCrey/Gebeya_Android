@@ -129,6 +129,6 @@ public class SearchFragment extends Fragment implements MenuProvider, SearchCall
 
     @Override
     public void onProductClick(Product product) {
-        callBackInterface.onProductClick(product);
+        callBackInterface.onProductClick(product, true);
     }
 }

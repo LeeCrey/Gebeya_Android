@@ -126,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         final int search = R.id.navigation_search;
         final int product = R.id.navigation_product;
         final int rate = R.id.navigation_rate;
+        final int orders = R.id.navigation_orders;
+        final int orderItem = R.id.navigation_order_items;
 
         setSupportActionBar(toolbar);
 
@@ -175,6 +177,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
                     bottomNavigationView.setVisibility(authorizationToken == null ? View.GONE : View.VISIBLE);
                     break;
                 case rate:
+                case orders:
+                case orderItem:
                     toolbar.setVisibility(View.VISIBLE);
                     bottomNavigationView.setVisibility(View.GONE);
                     break;
@@ -219,10 +223,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
     }
 
     @Override
-    public void onProductClick(@NonNull Product product) {
+    public void onProductClick(@NonNull Product product, boolean enable) {
         final Bundle args = new Bundle();
         args.putString("productName", product.getName());
         args.putLong("productId", product.getId());
+        args.putBoolean("enableAddToCart", enable);
         navController.navigate(R.id.to_product_detail, args);
     }
 
@@ -251,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityCallB
         try {
             startActivity(mapIntent);
         } catch (Exception exception) {
-            Toast.makeText(this, exception.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please install google map", Toast.LENGTH_SHORT).show();
         }
     }
 

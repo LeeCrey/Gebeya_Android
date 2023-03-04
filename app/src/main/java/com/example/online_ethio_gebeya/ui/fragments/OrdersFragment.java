@@ -9,22 +9,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.adapters.OrderAdapter;
+import com.example.online_ethio_gebeya.callbacks.ItemClickCallBackInterface;
+import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.callbacks.OrderCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentOrdersBinding;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
+import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.models.Order;
 import com.example.online_ethio_gebeya.viewmodels.FragmentOrderViewModelFactory;
 import com.example.online_ethio_gebeya.viewmodels.FragmentOrdersViewModel;
 
-public class OrdersFragment extends Fragment implements OrderCallBackInterface {
+public class OrdersFragment extends Fragment implements OrderCallBackInterface, ItemClickCallBackInterface {
     private FragmentOrdersBinding binding;
     private OrderAdapter adapter;
     private FragmentOrdersViewModel viewModel;
+    private NavController navController;
+    private MainActivityCallBackInterface callBackInterface;
 
     @Nullable
     @Override
@@ -38,6 +46,9 @@ public class OrdersFragment extends Fragment implements OrderCallBackInterface {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initOrderView();
 
+        navController = Navigation.findNavController(view);
+        callBackInterface = (MainActivityCallBackInterface) requireActivity();
+
         SwipeRefreshLayout refreshLayout = binding.refreshLayout;
         refreshLayout.setRefreshing(true);
 
@@ -46,12 +57,6 @@ public class OrdersFragment extends Fragment implements OrderCallBackInterface {
         viewModel = new ViewModelProvider(this, factory).get(FragmentOrdersViewModel.class);
 
         //observer
-        viewModel.getPaidOrderPosition().observe(getViewLifecycleOwner(), pos -> {
-            if (pos == null) {
-                return;
-            }
-            adapter.notifyItemChanged(pos);
-        });
         viewModel.getOrders().observe(getViewLifecycleOwner(), value -> {
             if (value == null) {
                 return;
@@ -68,6 +73,8 @@ public class OrdersFragment extends Fragment implements OrderCallBackInterface {
         binding = null;
         adapter = null;
         viewModel = null;
+        navController = null;
+        callBackInterface = null;
     }
 
     private void initOrderView() {
@@ -80,7 +87,14 @@ public class OrdersFragment extends Fragment implements OrderCallBackInterface {
 
     @Override
     public void onOrderClick(@NonNull Order order, int pos) {
-        PaymentFragment bottomSheet = new PaymentFragment(viewModel, order, pos);
-        bottomSheet.show(getParentFragmentManager(), "PaymentBottomSheet");
+        Bundle arg = new Bundle();
+        arg.putLong("orderId", order.getId());
+        arg.putString("orderStatus", order.getStatus());
+        navController.navigate(R.id.open_order_items, arg);
+    }
+
+    @Override
+    public void itemClick(@NonNull Item item) {
+        callBackInterface.onProductClick(item.getProduct(), false);
     }
 }

@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -57,8 +57,9 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
     private CommentAdapter commentAdapter;
     private Button addToCart;
     private FragmentProductDetailViewModel viewModel;
-
     private TextView seeAllComments;
+
+    private boolean enableAddToCart;
 
     @Nullable
     @Override
@@ -75,6 +76,7 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         callBackInterface = (MainActivityCallBackInterface) requireActivity();
         ProductFragmentArgs arg = ProductFragmentArgs.fromBundle(getArguments());
         final long productId = arg.getProductId();
+        enableAddToCart = arg.getEnableAddToCart();
 
         cartItemRepository = new CartItemRepository(app);
         cartItemRepository.setAuthorizationToken(callBackInterface.getAuthorizationToken());
@@ -107,11 +109,14 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
-        ViewCompat.setTransitionName(binding.toolbar, "tool_bar");
-
         // event ...
         addToCart.setOnClickListener(v -> cartItemRepository.addItemToCart(productId, addToCart, Objects.requireNonNull(viewModel.getQuantity().getValue())));
         btn.inflate(R.menu.floating_menu);
+        if (!enableAddToCart) {
+            int v = View.GONE;
+            incrementBtn.setVisibility(v);
+            decrementBtn.setVisibility(v);
+        }
         btn.setOnActionSelectedListener(actionItem -> {
             if (actionItem.getId() == R.id.location) {
                 callBackInterface.openGoogleMap(product.getShop().getLatitude(), product.getShop().getLongitude());
@@ -266,6 +271,10 @@ public class ProductFragment extends Fragment implements SingleProductCallBack {
         //
         viewModel.setProductQuantity(product.getQuantity());
         productImagesAdapter.setImagesList(product.getImages());
+
+        if (!enableAddToCart) {
+            addToCart.setVisibility(View.GONE);
+        }
     }
 
     private void stopShimmer(@NonNull ShimmerFrameLayout shimmerFrameLayout) {

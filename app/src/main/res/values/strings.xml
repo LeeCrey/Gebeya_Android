@@ -141,4 +141,6 @@
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="automatic">Automatic</string>
+
+    <string name="order_items">Order Items</string>
 </resources>

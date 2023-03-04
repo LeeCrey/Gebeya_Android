@@ -60,4 +60,11 @@ public class FragmentCartItemViewModel extends AndroidViewModel {
     public void setUpdateCartItem(int position) {
         mUpdatedCartItemPosition.postValue(position);
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+
+        repository.cancelConnection();
+    }
 }

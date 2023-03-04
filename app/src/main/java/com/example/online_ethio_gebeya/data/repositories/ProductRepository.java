@@ -145,7 +145,10 @@ public class ProductRepository {
             showResponseCall.cancel();
         }
 
-        showResponseCall = api.show(authorizationToken, productId);
+        // should be on Fragment
+        Location location = PreferenceHelper.getLocation(application);
+
+        showResponseCall = api.show(authorizationToken, productId, location.getLatitude(), location.getLatitude());
         showResponseCall.enqueue(new Callback<ProductShowResponse>() {
             @Override
             public void onResponse(@NonNull Call<ProductShowResponse> call, @NonNull Response<ProductShowResponse> response) {

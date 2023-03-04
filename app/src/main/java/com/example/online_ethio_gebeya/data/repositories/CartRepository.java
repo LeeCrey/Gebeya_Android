@@ -53,7 +53,6 @@ public class CartRepository {
 
             @Override
             public void onFailure(@NonNull Call<CartResponse> call, @NonNull Throwable t) {
-
             }
         });
     }

@@ -165,7 +165,7 @@ public class HomeFragment extends Fragment implements MenuProvider, ProductCallB
     @Override
     public void onProductClick(Product product) {
         viewModel.setCurrentProduct(product);
-        callBackInterface.onProductClick(product); // do the navigation part
+        callBackInterface.onProductClick(product, true); // do the navigation part
     }
 
     @Override

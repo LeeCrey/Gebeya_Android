@@ -66,7 +66,6 @@ public class CheckoutFragment extends BottomSheetDialogFragment {
         btn.setOnClickListener(v -> {
             loading.setVisibility(View.VISIBLE);
             btn.setEnabled(false);
-
             viewModel.createOrder(authorizationToken, cartId);
         });
 

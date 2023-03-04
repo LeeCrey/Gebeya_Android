@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 
 import com.example.online_ethio_gebeya.data.repositories.PaymentRepository;
 import com.example.online_ethio_gebeya.models.Item;
-import com.example.online_ethio_gebeya.models.Order;
 import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
 import java.util.List;
@@ -30,8 +29,8 @@ public class FragmentPaymentViewModel extends AndroidViewModel {
         return oResponse;
     }
 
-    public void makePayment(@NonNull Order order) {
-        repository.makePayment(order);
+    public void makePayment(long orderId) {
+        repository.makePayment(orderId);
     }
 
     public LiveData<List<Item>> getItems() {

@@ -50,4 +50,11 @@ public class FragmentHomeViewModel extends ProductsViewModel {
     public void setLocation(Location location) {
         repository.setLocation(location);
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+
+        repository.cancelConnection();
+    }
 }

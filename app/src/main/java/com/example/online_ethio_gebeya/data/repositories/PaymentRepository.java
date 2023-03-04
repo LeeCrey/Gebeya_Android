@@ -10,7 +10,6 @@ import com.example.online_ethio_gebeya.data.RetrofitConnectionUtil;
 import com.example.online_ethio_gebeya.data.apis.PaymentApi;
 import com.example.online_ethio_gebeya.helpers.JsonHelper;
 import com.example.online_ethio_gebeya.models.Item;
-import com.example.online_ethio_gebeya.models.Order;
 import com.example.online_ethio_gebeya.models.responses.InstructionsResponse;
 
 import java.io.IOException;
@@ -63,10 +62,10 @@ public class PaymentRepository {
         });
     }
 
-    public void makePayment(@NonNull Order order) {
+    public void makePayment(long orderId) {
         cancelConnection();
 
-        call = api.makePayment(authToken, order.getId());
+        call = api.makePayment(authToken, orderId);
         call.enqueue(new Callback<InstructionsResponse>() {
             @Override
             public void onResponse(@NonNull Call<InstructionsResponse> call, @NonNull Response<InstructionsResponse> response) {

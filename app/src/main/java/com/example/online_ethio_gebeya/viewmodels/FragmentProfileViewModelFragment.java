@@ -69,7 +69,7 @@ public class FragmentProfileViewModelFragment extends FragmentRegistrationsViewM
     protected void onCleared() {
         super.onCleared();
 
-        super.mFormState.setValue(null);
+        mFormState.setValue(null);
     }
 
     public void setAuthorizationToken(String authToken) {

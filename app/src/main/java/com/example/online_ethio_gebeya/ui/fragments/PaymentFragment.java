@@ -10,33 +10,26 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.online_ethio_gebeya.R;
 import com.example.online_ethio_gebeya.adapters.CheckOutAdapter;
+import com.example.online_ethio_gebeya.callbacks.ItemClickCallBackInterface;
+import com.example.online_ethio_gebeya.callbacks.MainActivityCallBackInterface;
 import com.example.online_ethio_gebeya.databinding.FragmentCheckoutAndPaymentBinding;
 import com.example.online_ethio_gebeya.helpers.ApplicationHelper;
 import com.example.online_ethio_gebeya.helpers.PreferenceHelper;
 import com.example.online_ethio_gebeya.helpers.ProductHelper;
-import com.example.online_ethio_gebeya.models.Order;
-import com.example.online_ethio_gebeya.viewmodels.FragmentOrdersViewModel;
+import com.example.online_ethio_gebeya.models.Item;
 import com.example.online_ethio_gebeya.viewmodels.FragmentPaymentViewModel;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class PaymentFragment extends BottomSheetDialogFragment {
-    private Order order;
-    private final int position;
+public class PaymentFragment extends Fragment implements ItemClickCallBackInterface {
     private FragmentCheckoutAndPaymentBinding binding;
-    private FragmentOrdersViewModel ordersViewModel;
     private Button pay;
     private ProgressBar loading;
     private CheckOutAdapter adapter;
-
-    public PaymentFragment(@NonNull FragmentOrdersViewModel _viewModel, @NonNull Order _order, int _pos) {
-        order = _order;
-        position = _pos;
-        ordersViewModel = _viewModel;
-    }
+    private MainActivityCallBackInterface callBackInterface;
 
     @Nullable
     @Override
@@ -49,12 +42,17 @@ public class PaymentFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         adapter = ApplicationHelper.initItems(requireActivity(), binding);
+        adapter.setCallBackInterface(this);
+
+        callBackInterface = (MainActivityCallBackInterface) requireActivity();
         pay = binding.finishOperation;
         loading = binding.progressCircular;
         FragmentPaymentViewModel viewModel = new ViewModelProvider(this).get(FragmentPaymentViewModel.class);
         viewModel.setAuthorizationToken(PreferenceHelper.getAuthToken(requireContext()));
+        PaymentFragmentArgs args = PaymentFragmentArgs.fromBundle(getArguments());
 
-        boolean paid = order.getStatus().equalsIgnoreCase("paid");
+        String paidStr = "paid";
+        boolean paid = args.getOrderStatus().equalsIgnoreCase(paidStr);
         // observer
         viewModel.getResponse().observe(getViewLifecycleOwner(), instructionsResponse -> {
             if (instructionsResponse == null) {
@@ -62,9 +60,9 @@ public class PaymentFragment extends BottomSheetDialogFragment {
             }
 
             if (instructionsResponse.getOkay()) {
-                ordersViewModel.makePaid(position);
-                order.setStatus("Paid");
-                dismiss();
+                pay.setText(paidStr);
+                pay.setEnabled(false);
+                loading.setVisibility(View.GONE);
             } else {
                 setStatus(true);
             }
@@ -88,12 +86,12 @@ public class PaymentFragment extends BottomSheetDialogFragment {
 
         // event
         pay.setOnClickListener(v -> {
-            viewModel.makePayment(order);
+            viewModel.makePayment(args.getOrderId());
             setStatus(false);
         });
 
         //
-        viewModel.makeGetItemList(order.getId());
+        viewModel.makeGetItemList(args.getOrderId());
     }
 
     @Override
@@ -102,15 +100,18 @@ public class PaymentFragment extends BottomSheetDialogFragment {
 
         pay = null;
         loading = null;
-        order = null;
         binding = null;
-        ordersViewModel = null;
         adapter = null;
+        callBackInterface = null;
     }
 
     private void setStatus(boolean status) {
         pay.setEnabled(status);
-        setCancelable(status);
         loading.setVisibility(status ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void itemClick(@NonNull Item item) {
+        callBackInterface.onProductClick(item.getProduct(), false);
     }
 }
